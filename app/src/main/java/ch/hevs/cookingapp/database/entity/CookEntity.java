@@ -10,16 +10,14 @@ public class CookEntity implements Comparable
 {
     @NonNull
     private String email;   // On va l'utiliser comme foreing KEY
-
     @ColumnInfo(name = "first_name") // Nom dans la database
     private String firstName;
-
     @ColumnInfo(name = "last_name")
     private String lastName;
-
     private String password;
-
     private String phoneNumber;
+    // TODO : Oublié de rajouter LISTE DE RECETTES ?
+    // TODO : private Iterable <RecipeEntity> recipes;
 
     // C O N S T R U C T E U R
     @Ignore                 //On ne le veut pas dans la DB & on veut utiliser l'autre constructeur qui contient les data

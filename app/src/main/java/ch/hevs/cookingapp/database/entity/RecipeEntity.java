@@ -40,9 +40,9 @@ public class RecipeEntity
     {
     }
 
-    public RecipeEntity(Long id, String creator, @NonNull String name, int prepTime, @NonNull String ingredients, @NonNull String preparation)
+    // TODO : Ajouter les FOREING KEY en paramètres ?
+    public RecipeEntity(String creator, @NonNull String name, int prepTime, @NonNull String ingredients, @NonNull String preparation)
     {
-        this.id = id;
         this.creator = creator;
         this.name = name;
         this.prepTime = prepTime;
@@ -51,6 +51,17 @@ public class RecipeEntity
     }
 
     // G E T T E R S   S E T T E R S
+
+    public int getCategory()
+    {
+        return category;
+    }
+
+    public void setCategory(int category)
+    {
+        this.category = category;
+    }
+
     public Long getId()
     {
         return id;
