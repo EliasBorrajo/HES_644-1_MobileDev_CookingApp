@@ -34,11 +34,10 @@ public class DatabaseInitializer
         db.cookDao().insert(cook);
     }
 
-    // TODO : verifier paramètre "int category"
-    private static void addRecipe(final AppDatabase db, final String creator, final int category, final String name,
+    private static void addRecipe(final AppDatabase db, final String creator, final long category, final String name,
                                   final int prepTime,   final String ingredients, final String preparation)
     {
-        RecipeEntity recipe = new RecipeEntity(creator, name, prepTime, ingredients, preparation);
+        RecipeEntity recipe = new RecipeEntity(creator, category, name, prepTime, ingredients, preparation);
         db.recipeDao().insert(recipe);
     }
 
@@ -52,7 +51,6 @@ public class DatabaseInitializer
     {
         db.cookDao().deleteAll();
         db.recipeDao().deleteAll(); // TODO : Supprimer si on delete en cascade
-        // TODO : Category DAO ajouter ?
         db.categoryDao().deleteAll();
 
         // Remplir Cook

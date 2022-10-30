@@ -6,7 +6,7 @@ import androidx.room.Relation;
 import java.util.List;
 
 import ch.hevs.cookingapp.database.entity.RecipeEntity;
-
+//TODO regarder si on peut la supprimer, d'apèrs nous pas besoin de le garder parce qu'il a autemps de catégorie que de recette
 public class CategoryWithRecipes {
     @Embedded
     public RecipeEntity recipe;

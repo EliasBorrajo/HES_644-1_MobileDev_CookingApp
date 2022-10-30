@@ -15,7 +15,6 @@ import ch.hevs.cookingapp.database.entity.CategoryEntity;
 
 public interface CategoryDao
 {
-    //TODO demander si insert, delete update utile comme il peut quand meme choissir une des options
     @Query("SELECT * FROM category WHERE id = :id")   // REQUETE SQL obligatoire
     LiveData<CategoryEntity> getById(Long id);        // Metode liée à la requete SQL
 
