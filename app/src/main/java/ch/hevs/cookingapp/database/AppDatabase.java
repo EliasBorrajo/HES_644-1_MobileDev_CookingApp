@@ -33,7 +33,7 @@ public abstract class AppDatabase extends RoomDatabase
     public abstract RecipeDao   recipeDao();
     public  abstract CategoryDao categoryDao();
 
-    private final MutableLiveData<Boolean> mIsDatabaseCreated = new MutableLiveData<>();    //TODO : a quoi ça set ?
+    private final MutableLiveData<Boolean> mIsDatabaseCreated = new MutableLiveData<>();    //TODO : a quoi ça sert ?
 
     // SINGLETON PATTERN
     public static AppDatabase getInstance(final Context context)

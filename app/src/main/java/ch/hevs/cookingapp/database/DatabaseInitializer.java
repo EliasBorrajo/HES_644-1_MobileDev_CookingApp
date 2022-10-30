@@ -75,7 +75,6 @@ public class DatabaseInitializer
         addCategory(db, false, false, true, true, false, false, true, false, true, true, false);
 
         // Remplir Recipe
-        // TODO : Changer Category dans le seed ici en bas
         addRecipe(db, "xolo@gmail.com", 1, "Crêpes", 15, "Oeufs, Lait, Beurre", "Melanger fortement le tout");
         addRecipe(db, "xolo@gmail.com", 2, "Sandiwch", 10, "Pain, Beurre, Jambon, tomate", "Empiler par tranches shouaités");
         addRecipe(db, "milena@gmail.com", 3, "Cookies", 45, "Oeufs, Lait, Beurre, Chocolat, Un tas de bonnes choses, Agent chimique X", "Melanger fortement le tout, puis lancer dans le four.");
