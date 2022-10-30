@@ -4,8 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.Ignore;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
-
+//TODO regarder pour les indexes
 @Entity(tableName = "recipe",
         foreignKeys = {
             @ForeignKey(
@@ -17,14 +18,21 @@ import androidx.room.PrimaryKey;
                     entity = CategoryEntity.class,
                     parentColumns = "id",    // Sera la clé primaire de la table COOK
                     childColumns  = "category"   // Sera le nom de la clé étrangère dans la table Recipe
-                        )}
+                        )},
+        indices = {
+                @Index(
+                        value = {"creator"}
+                ),
+                @Index(
+                        value = {"category"}
+                )}
         )
 public class RecipeEntity
 {
     @PrimaryKey(autoGenerate = true)
     private Long id;
     private String creator;
-    private long category;
+    private Long category;
     @NonNull
     private String name;
     private int prepTime;   //temps de préparation de la recette en minutes
@@ -40,7 +48,7 @@ public class RecipeEntity
     {
     }
 
-    public RecipeEntity(String creator, long category, @NonNull String name, int prepTime, @NonNull String ingredients, @NonNull String preparation)
+    public RecipeEntity(String creator, Long category, @NonNull String name, int prepTime, @NonNull String ingredients, @NonNull String preparation)
     {
         this.creator = creator;
         this.category = category;
@@ -52,12 +60,12 @@ public class RecipeEntity
 
     // G E T T E R S   S E T T E R S
 
-    public long getCategory()
+    public Long getCategory()
     {
         return category;
     }
 
-    public void setCategory(int category)
+    public void setCategory(Long category)
     {
         this.category = category;
     }
@@ -65,6 +73,10 @@ public class RecipeEntity
     public Long getId()
     {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getCreator()

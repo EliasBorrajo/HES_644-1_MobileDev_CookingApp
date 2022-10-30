@@ -18,8 +18,8 @@ import ch.hevs.cookingapp.database.entity.CategoryEntity;
 import ch.hevs.cookingapp.database.entity.CookEntity;
 import ch.hevs.cookingapp.database.entity.RecipeEntity;
 
-// CREATION DE LA DB
-@Database(entities = {CookEntity.class, RecipeEntity.class, CategoryEntity.class}, version = 1)
+// CREATION DE LA DB TODO export schema
+@Database(entities = {CookEntity.class, RecipeEntity.class, CategoryEntity.class}, version = 1/*, exportSchema = false*/)
 public abstract class AppDatabase extends RoomDatabase
 {
     // A T T R I B U T S

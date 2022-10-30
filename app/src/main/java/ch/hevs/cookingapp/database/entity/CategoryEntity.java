@@ -16,9 +16,22 @@ public class CategoryEntity
 {
     @PrimaryKey(autoGenerate = true)
     private Long id;
-    private Diet[] diets;
-    private Allergy[] allergies;
-    private Meal[] meals;
+    //Diet
+    private boolean vegetarian;
+    private boolean vegan;
+    private boolean meat;
+    private boolean fish;
+
+    // Allergy
+    private boolean peanut;
+    private boolean lactose;
+    private boolean nut;
+    private boolean gluten;
+
+    // Meal Time
+    private boolean morning;
+    private boolean midday;
+    private boolean evening;
 
     // C O N S T R U C T E U R
     @Ignore
@@ -26,41 +39,115 @@ public class CategoryEntity
     {
     }
 
-    public CategoryEntity(Diet[] diets, Allergy[] allergies, Meal[] meals)
-    {
-        this.diets = diets;
-        this.allergies = allergies;
-        this.meals = meals;
+    public CategoryEntity(boolean vegetarian, boolean vegan, boolean meat, boolean fish, boolean peanut, boolean lactose, boolean nut, boolean gluten, boolean morning, boolean midday, boolean evening) {
+        this.vegetarian = vegetarian;
+        this.vegan = vegan;
+        this.meat = meat;
+        this.fish = fish;
+        this.peanut = peanut;
+        this.lactose = lactose;
+        this.nut = nut;
+        this.gluten = gluten;
+        this.morning = morning;
+        this.midday = midday;
+        this.evening = evening;
     }
 
     // G E T T E R S   S E T T E R S
-
     public Long getId() {
         return id;
     }
 
-    public Diet[] getDiets() {
-        return diets;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public void setDiets(Diet[] diets) {
-        this.diets = diets;
+    public boolean isVegetarian() {
+        return vegetarian;
     }
 
-    public Allergy[] getAllergies() {
-        return allergies;
+    public void setVegetarian(boolean vegetarian) {
+        this.vegetarian = vegetarian;
     }
 
-    public void setAllergies(Allergy[] allergies) {
-        this.allergies = allergies;
+    public boolean isVegan() {
+        return vegan;
     }
 
-    public Meal[] getMeals() {
-        return meals;
+    public void setVegan(boolean vegan) {
+        this.vegan = vegan;
     }
 
-    public void setMeals(Meal[] meals) {
-        this.meals = meals;
+    public boolean isMeat() {
+        return meat;
+    }
+
+    public void setMeat(boolean meat) {
+        this.meat = meat;
+    }
+
+    public boolean isFish() {
+        return fish;
+    }
+
+    public void setFish(boolean fish) {
+        this.fish = fish;
+    }
+
+    public boolean isPeanut() {
+        return peanut;
+    }
+
+    public void setPeanut(boolean peanut) {
+        this.peanut = peanut;
+    }
+
+    public boolean isLactose() {
+        return lactose;
+    }
+
+    public void setLactose(boolean lactose) {
+        this.lactose = lactose;
+    }
+
+    public boolean isNut() {
+        return nut;
+    }
+
+    public void setNut(boolean nut) {
+        this.nut = nut;
+    }
+
+    public boolean isGluten() {
+        return gluten;
+    }
+
+    public void setGluten(boolean gluten) {
+        this.gluten = gluten;
+    }
+
+    public boolean isMorning() {
+        return morning;
+    }
+
+    public void setMorning(boolean morning) {
+        this.morning = morning;
+    }
+
+    public boolean isMidday() {
+        return midday;
+    }
+
+    public void setMidday(boolean midday) {
+        this.midday = midday;
+    }
+
+    public boolean isEvening() {
+        return evening;
+    }
+
+    public void setEvening(boolean evening) {
+        this.evening = evening;
     }
 
     // O V E R R I D E
@@ -79,30 +166,17 @@ public class CategoryEntity
     @Override
     public String toString() {
         return "CategoryEntity{" +
-                "id=" + id +
-                ", diets=" + Arrays.toString(diets) +
-                ", allergies=" + Arrays.toString(allergies) +
-                ", meals=" + Arrays.toString(meals) +
+                "vegetarian=" + vegetarian +
+                ", vegan=" + vegan +
+                ", meat=" + meat +
+                ", fish=" + fish +
+                ", peanut=" + peanut +
+                ", lactose=" + lactose +
+                ", nut=" + nut +
+                ", gluten=" + gluten +
+                ", morning=" + morning +
+                ", midday=" + midday +
+                ", evening=" + evening +
                 '}';
     }
-
-    /* Diet
-    private boolean vegetarian;
-    private boolean vegan;
-    private boolean meat;
-    private boolean fish;
-
-    Allergy
-    private boolean peanut;
-    private boolean lactose;
-    private boolean nut;
-    private boolean gluten;
-
-    Meal Time
-    private boolean morning;
-    private boolean midday;
-    private boolean evening;
-     */
-    // ENUMS ? @TODO
-    //private Diet diet;
 }

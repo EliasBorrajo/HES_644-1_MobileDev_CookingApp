@@ -41,9 +41,9 @@ public class DatabaseInitializer
         db.recipeDao().insert(recipe);
     }
 
-    private static void addCategory(final AppDatabase db, final Diet[] diets, final Allergy[] allergies, final Meal[] meals)
+    private static void addCategory(final AppDatabase db, final boolean vegetarian, final boolean vegan, final boolean meat, final boolean fish, final boolean peanut, final boolean lactose, final boolean nut, final boolean gluten, final boolean morning, final boolean midday, final boolean evening)
     {
-        CategoryEntity category = new CategoryEntity(diets, allergies, meals);
+        CategoryEntity category = new CategoryEntity(vegetarian, vegan, meat, fish, peanut, lactose, nut, gluten, morning, midday, evening);
         db.categoryDao().insert(category);
     }
 
@@ -69,15 +69,17 @@ public class DatabaseInitializer
         }
 
         // Remplir Category
-        addCategory(db, new Diet[]{Diet.VEGETARIAN},new Allergy[]{}, new Meal[]{});
-        addCategory(db, new Diet[]{Diet.MEAT},new Allergy[]{}, new Meal[]{});
+        addCategory(db, true, false, false, false, false, false, true, true, true, false, true);
+        addCategory(db, false, false, true, true, false, false, true, false, true, true, false);
+        addCategory(db, false, false, true, true, false, false, true, false, true, true, false);
+        addCategory(db, false, false, true, true, false, false, true, false, true, true, false);
 
         // Remplir Recipe
         // TODO : Changer Category dans le seed ici en bas
         addRecipe(db, "xolo@gmail.com", 1, "Crêpes", 15, "Oeufs, Lait, Beurre", "Melanger fortement le tout");
         addRecipe(db, "xolo@gmail.com", 2, "Sandiwch", 10, "Pain, Beurre, Jambon, tomate", "Empiler par tranches shouaités");
-        addRecipe(db, "milena@gmail.com", 1, "Cookies", 45, "Oeufs, Lait, Beurre, Chocolat, Un tas de bonnes choses, Agent chimique X", "Melanger fortement le tout, puis lancer dans le four.");
-        addRecipe(db, "milena@gmail.com", 2, "CrockScooby", 55, "Chien, agent secret, Sucre", "Melanger fortement le tout et mettre dans le burger à Zach");
+        addRecipe(db, "milena@gmail.com", 3, "Cookies", 45, "Oeufs, Lait, Beurre, Chocolat, Un tas de bonnes choses, Agent chimique X", "Melanger fortement le tout, puis lancer dans le four.");
+        addRecipe(db, "milena@gmail.com", 4, "CrockScooby", 55, "Chien, agent secret, Sucre", "Melanger fortement le tout et mettre dans le burger à Zach");
     }
 
 

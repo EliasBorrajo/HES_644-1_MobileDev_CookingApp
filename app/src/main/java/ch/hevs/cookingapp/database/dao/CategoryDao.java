@@ -3,6 +3,7 @@ package ch.hevs.cookingapp.database.dao;
 import android.database.sqlite.SQLiteConstraintException;
 
 import androidx.lifecycle.LiveData;
+import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
@@ -13,6 +14,7 @@ import java.util.List;
 
 import ch.hevs.cookingapp.database.entity.CategoryEntity;
 
+@Dao
 public interface CategoryDao
 {
     @Query("SELECT * FROM category WHERE id = :id")   // REQUETE SQL obligatoire
