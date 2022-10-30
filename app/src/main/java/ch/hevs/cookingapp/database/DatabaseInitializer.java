@@ -3,8 +3,12 @@ package ch.hevs.cookingapp.database;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import ch.hevs.cookingapp.database.entity.CategoryEntity;
 import ch.hevs.cookingapp.database.entity.CookEntity;
 import ch.hevs.cookingapp.database.entity.RecipeEntity;
+import ch.hevs.cookingapp.database.enumeration.Allergy;
+import ch.hevs.cookingapp.database.enumeration.Diet;
+import ch.hevs.cookingapp.database.enumeration.Meal;
 
 /**
  * Generates dummy data
@@ -38,11 +42,18 @@ public class DatabaseInitializer
         db.recipeDao().insert(recipe);
     }
 
+    private static void addCategory(final AppDatabase db, final Diet[] diets, final Allergy[] allergies, final Meal[] meals)
+    {
+        CategoryEntity category = new CategoryEntity(diets, allergies, meals);
+        db.categoryDao().insert(category);
+    }
+
     private static void populateWithTestData (AppDatabase db)
     {
         db.cookDao().deleteAll();
         db.recipeDao().deleteAll(); // TODO : Supprimer si on delete en cascade
         // TODO : Category DAO ajouter ?
+        db.categoryDao().deleteAll();
 
         // Remplir Cook
         addCook(db, "xolo@gmail.com",     "Xolo",     "Survivor",  "RIA",       "078 820 64 30");
@@ -53,19 +64,22 @@ public class DatabaseInitializer
         addCook(db, "arthur@gmail.com",   "Arthur",   "Avez",      "slowly",    "078 820 64 35");
 
         try {
-            // Let's ensure that the clients are already stored in the database before we continue.
+            // Let's ensure that the cooks are already stored in the database before we continue.
             Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        // Remplir Receipe
+        // Remplir Category
+        addCategory(db, new Diet[]{Diet.VEGETARIAN},new Allergy[]{}, new Meal[]{});
+        addCategory(db, new Diet[]{Diet.MEAT},new Allergy[]{}, new Meal[]{});
+
+        // Remplir Recipe
         // TODO : Changer Category dans le seed ici en bas
         addRecipe(db, "xolo@gmail.com", 1, "Crêpes", 15, "Oeufs, Lait, Beurre", "Melanger fortement le tout");
         addRecipe(db, "xolo@gmail.com", 2, "Sandiwch", 10, "Pain, Beurre, Jambon, tomate", "Empiler par tranches shouaités");
         addRecipe(db, "milena@gmail.com", 1, "Cookies", 45, "Oeufs, Lait, Beurre, Chocolat, Un tas de bonnes choses, Agent chimique X", "Melanger fortement le tout, puis lancer dans le four.");
         addRecipe(db, "milena@gmail.com", 2, "CrockScooby", 55, "Chien, agent secret, Sucre", "Melanger fortement le tout et mettre dans le burger à Zach");
-
     }
 
 

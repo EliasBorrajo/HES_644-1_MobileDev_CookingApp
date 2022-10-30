@@ -1,4 +1,4 @@
-package ch.hevs.cookingapp.database.async.Category;
+package ch.hevs.cookingapp.database.async.category;
 
 import android.app.Application;
 import android.os.AsyncTask;

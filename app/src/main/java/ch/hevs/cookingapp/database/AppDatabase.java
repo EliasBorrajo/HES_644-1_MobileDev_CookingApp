@@ -31,7 +31,7 @@ public abstract class AppDatabase extends RoomDatabase
     // Les DAO qu'il utilisera pour parler avec la ROOM
     public abstract CookDao     cookDao();
     public abstract RecipeDao   recipeDao();
-    // TODO : Ajouter DAO Category ?$
+    // TODO : Ajouter DAO Category ?
     public  abstract CategoryDao categoryDao();
 
     private final MutableLiveData<Boolean> mIsDatabaseCreated = new MutableLiveData<>();    //TODO : a quoi ça set ?
@@ -113,8 +113,8 @@ public abstract class AppDatabase extends RoomDatabase
 
                         database.cookDao().deleteAll();
                         database.recipeDao().deleteAll();
-                        database.categoryDao().deleteAll();
                         // TODO : Ajouter CategoryDAO ?
+                        database.categoryDao().deleteAll();
                     });
             });
     }

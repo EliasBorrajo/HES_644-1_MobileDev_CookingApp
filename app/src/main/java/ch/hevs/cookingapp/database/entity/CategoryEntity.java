@@ -26,9 +26,8 @@ public class CategoryEntity
     {
     }
 
-    public CategoryEntity(Long id, Diet[] diets, Allergy[] allergies, Meal[] meals)
+    public CategoryEntity(Diet[] diets, Allergy[] allergies, Meal[] meals)
     {
-        this.id = id;
         this.diets = diets;
         this.allergies = allergies;
         this.meals = meals;

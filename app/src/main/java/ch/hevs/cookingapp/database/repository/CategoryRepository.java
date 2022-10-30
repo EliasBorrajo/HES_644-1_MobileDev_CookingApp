@@ -7,9 +7,9 @@ import androidx.lifecycle.LiveData;
 import java.util.List;
 
 import ch.hevs.cookingapp.BaseApp;
-import ch.hevs.cookingapp.database.async.Category.CreateCategory;
-import ch.hevs.cookingapp.database.async.Category.DeleteCategory;
-import ch.hevs.cookingapp.database.async.Category.UpdateCategory;
+import ch.hevs.cookingapp.database.async.category.CreateCategory;
+import ch.hevs.cookingapp.database.async.category.DeleteCategory;
+import ch.hevs.cookingapp.database.async.category.UpdateCategory;
 import ch.hevs.cookingapp.database.entity.CategoryEntity;
 import ch.hevs.cookingapp.util.OnAsyncEventListener;
 

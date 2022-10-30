@@ -24,7 +24,7 @@ public class RecipeEntity
     @PrimaryKey(autoGenerate = true)
     private Long id;
     private String creator;
-    private int category;
+    private long category;
     @NonNull
     private String name;
     private int prepTime;   //temps de préparation de la recette en minutes
@@ -52,7 +52,7 @@ public class RecipeEntity
 
     // G E T T E R S   S E T T E R S
 
-    public int getCategory()
+    public long getCategory()
     {
         return category;
     }
@@ -65,11 +65,6 @@ public class RecipeEntity
     public Long getId()
     {
         return id;
-    }
-
-    public void setId(Long id)
-    {
-        this.id = id;
     }
 
     public String getCreator()

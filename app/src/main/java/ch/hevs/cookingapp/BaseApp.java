@@ -23,4 +23,6 @@ public class BaseApp extends Application {
     public RecipeRepository getClientRepository() {
         return RecipeRepository.getInstance();
     }
+
+    public CookRepository getCategoryRepository() {return CookRepository.getInstance();}
 }
