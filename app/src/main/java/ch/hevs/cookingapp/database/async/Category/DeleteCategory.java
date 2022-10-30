@@ -1,28 +1,29 @@
-package ch.hevs.cookingapp.database.async.cook;
+package ch.hevs.cookingapp.database.async.Category;
 
 import android.app.Application;
 import android.os.AsyncTask;
 
 import ch.hevs.cookingapp.BaseApp;
-import ch.hevs.cookingapp.database.entity.CookEntity;
+import ch.hevs.cookingapp.database.entity.CategoryEntity;
 import ch.hevs.cookingapp.util.OnAsyncEventListener;
 
-public class CreateCook extends AsyncTask<CookEntity, Void, Void> {
+public class DeleteCategory extends AsyncTask<CategoryEntity, Void, Void> {
 
     private Application application;
     private OnAsyncEventListener callback;
     private Exception exception;
 
-    public CreateCook(Application application, OnAsyncEventListener callback) {
+    public DeleteCategory(Application application, OnAsyncEventListener callback) {
         this.application = application;
         this.callback = callback;
     }
 
+
     @Override
-    protected Void doInBackground(CookEntity... params) {
+    protected Void doInBackground(CategoryEntity... params) {
         try {
-            for (CookEntity cook : params)
-                ((BaseApp) application).getDatabase().cookDao().insert(cook);
+            for (CategoryEntity category : params)
+                ((BaseApp) application).getDatabase().categoryDao().delete(category);
         } catch (Exception e) {
             exception = e;
         }

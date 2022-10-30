@@ -11,29 +11,29 @@ import androidx.room.Update;
 
 import java.util.List;
 
-import ch.hevs.cookingapp.database.entity.RecipeEntity;
+import ch.hevs.cookingapp.database.entity.CategoryEntity;
 
 public interface CategoryDao
 {
     //TODO demander si insert, delete update utile comme il peut quand meme choissir une des options
-    @Query("SELECT * FROM recipe WHERE id = :id")   // REQUETE SQL obligatoire
-    LiveData<RecipeEntity> getById(Long id);        // Metode liée à la requete SQL
+    @Query("SELECT * FROM category WHERE id = :id")   // REQUETE SQL obligatoire
+    LiveData<CategoryEntity> getById(Long id);        // Metode liée à la requete SQL
 
-    @Query("SELECT * FROM recipe")
-    LiveData<List<RecipeEntity>> getAll();
+    @Query("SELECT * FROM category")
+    LiveData<List<CategoryEntity>> getAll();
 
     @Insert
-    long insert(RecipeEntity recipe) throws SQLiteConstraintException;
+    long insert(CategoryEntity category) throws SQLiteConstraintException;
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(List<RecipeEntity> recipes);
+    void insertAll(List<CategoryEntity> categorys);
 
     @Update
-    void update(RecipeEntity recipe);
+    void update(CategoryEntity category);
 
     @Delete
-    void delete(RecipeEntity recipe);
+    void delete(CategoryEntity category);
 
-    @Query("DELETE FROM recipe")
+    @Query("DELETE FROM category")
     void deleteAll();
 }

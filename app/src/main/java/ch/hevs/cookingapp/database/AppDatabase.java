@@ -10,6 +10,8 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 import java.util.concurrent.Executors;
+
+import ch.hevs.cookingapp.database.dao.CategoryDao;
 import ch.hevs.cookingapp.database.dao.CookDao;
 import ch.hevs.cookingapp.database.dao.RecipeDao;
 import ch.hevs.cookingapp.database.entity.CategoryEntity;
@@ -29,7 +31,8 @@ public abstract class AppDatabase extends RoomDatabase
     // Les DAO qu'il utilisera pour parler avec la ROOM
     public abstract CookDao     cookDao();
     public abstract RecipeDao   recipeDao();
-    // TODO : Ajouter DAO Category ?
+    // TODO : Ajouter DAO Category ?$
+    public  abstract CategoryDao categoryDao();
 
     private final MutableLiveData<Boolean> mIsDatabaseCreated = new MutableLiveData<>();    //TODO : a quoi ça set ?
 
@@ -110,6 +113,7 @@ public abstract class AppDatabase extends RoomDatabase
 
                         database.cookDao().deleteAll();
                         database.recipeDao().deleteAll();
+                        database.categoryDao().deleteAll();
                         // TODO : Ajouter CategoryDAO ?
                     });
             });

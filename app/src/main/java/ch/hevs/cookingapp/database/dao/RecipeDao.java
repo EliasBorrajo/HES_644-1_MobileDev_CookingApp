@@ -12,7 +12,6 @@ import androidx.room.Update;
 
 import java.util.List;
 
-import ch.hevs.cookingapp.database.entity.CookEntity;
 import ch.hevs.cookingapp.database.entity.RecipeEntity;
 
 @Dao

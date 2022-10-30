@@ -2,6 +2,7 @@ package ch.hevs.cookingapp;
 
 import android.app.Application;
 
+import ch.hevs.cookingapp.database.AppDatabase;
 import ch.hevs.cookingapp.database.repository.CookRepository;
 import ch.hevs.cookingapp.database.repository.RecipeRepository;
 
@@ -15,7 +16,7 @@ public class BaseApp extends Application {
         return AppDatabase.getInstance(this);
     }
 
-    public CookRepository getAccountRepository() {
+    public CookRepository getCookRepository() {
         return CookRepository.getInstance();
     }
 

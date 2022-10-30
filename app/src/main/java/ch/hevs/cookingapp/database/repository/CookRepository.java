@@ -1,14 +1,17 @@
 package ch.hevs.cookingapp.database.repository;
 
 import android.app.Application;
-import android.util.Pair;
 
 import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
 import ch.hevs.cookingapp.BaseApp;
+import ch.hevs.cookingapp.database.async.cook.CreateCook;
+import ch.hevs.cookingapp.database.async.cook.DeleteCook;
+import ch.hevs.cookingapp.database.async.cook.UpdateCook;
 import ch.hevs.cookingapp.database.entity.CookEntity;
+import ch.hevs.cookingapp.util.OnAsyncEventListener;
 
 public class CookRepository
 {
@@ -28,7 +31,7 @@ public class CookRepository
         return instance;
     }
 
-    public LiveData<CookEntity> getCook(final Long accountId, Application application) {
+    public LiveData<CookEntity> getCook(final String accountId, Application application) {
         return ((BaseApp) application).getDatabase().cookDao().getById(accountId);
     }
 
@@ -36,18 +39,18 @@ public class CookRepository
         return ((BaseApp) application).getDatabase().cookDao().getAll();
     }
 
-    public void insert(final CookEntity account, OnAsyncEventListener callback,
+    public void insert(final CookEntity cook, OnAsyncEventListener callback,
                        Application application) {
-        new CreateCook(application, callback).execute(account);
+        new CreateCook(application, callback).execute(cook);
     }
 
-    public void update(final CookEntity account, OnAsyncEventListener callback,
+    public void update(final CookEntity cook, OnAsyncEventListener callback,
                        Application application) {
-        new UpdateCook(application, callback).execute(account);
+        new UpdateCook(application, callback).execute(cook);
     }
 
-    public void delete(final CookEntity account, OnAsyncEventListener callback,
+    public void delete(final CookEntity cook, OnAsyncEventListener callback,
                        Application application) {
-        new DeleteCook(application, callback).execute(account);
+        new DeleteCook(application, callback).execute(cook);
     }
 }

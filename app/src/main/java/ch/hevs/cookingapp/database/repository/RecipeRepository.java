@@ -7,7 +7,7 @@ import androidx.lifecycle.LiveData;
 import java.util.List;
 
 import ch.hevs.cookingapp.BaseApp;
-import ch.hevs.cookingapp.database.entity.CookEntity;
+import ch.hevs.cookingapp.database.entity.RecipeEntity;
 
 public class RecipeRepository
 {
@@ -27,11 +27,11 @@ public class RecipeRepository
         return instance;
     }
 
-    public LiveData<CookEntity> getCook(final Long accountId, Application application) {
-        return ((BaseApp) application).getDatabase().cookDao().getById(accountId);
+    public LiveData<RecipeEntity> getRecipe(final Long accountId, Application application) {
+        return ((BaseApp) application).getDatabase().recipeDao().getById(accountId);
     }
 
-    public LiveData<List<CookEntity>> getCooks(Application application) {
-        return ((BaseApp) application).getDatabase().cookDao().getAll();
+    public LiveData<List<RecipeEntity>> getRecipes(Application application) {
+        return ((BaseApp) application).getDatabase().recipeDao().getAll();
     }
 }

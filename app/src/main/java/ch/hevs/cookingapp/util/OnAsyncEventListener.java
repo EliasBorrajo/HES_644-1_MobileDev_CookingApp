@@ -7,5 +7,5 @@ package ch.hevs.cookingapp.util;
 public interface OnAsyncEventListener
 {
     void onSuccess();
-    void onFailure();
+    void onFailure(Exception exception);
 }
