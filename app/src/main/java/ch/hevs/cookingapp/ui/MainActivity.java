@@ -1,8 +1,10 @@
-package ch.hevs.cookingapp;
+package ch.hevs.cookingapp.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import ch.hevs.cookingapp.R;
 
 public class MainActivity extends AppCompatActivity
 {
