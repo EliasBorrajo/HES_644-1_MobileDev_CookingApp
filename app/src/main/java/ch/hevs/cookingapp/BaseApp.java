@@ -6,6 +6,8 @@ import ch.hevs.cookingapp.database.AppDatabase;
 import ch.hevs.cookingapp.database.repository.CookRepository;
 import ch.hevs.cookingapp.database.repository.RecipeRepository;
 
+// Classe qui AURA LES METHODES POUR ALLER CHERCHER LES INFORMATIONS DANS LA ROOM & DB.
+// On l'epellera quand on vet getDatabase avec la DAO vers la partie UI
 public class BaseApp extends Application {
     @Override
     public void onCreate() {

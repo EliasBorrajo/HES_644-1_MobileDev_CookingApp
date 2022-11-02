@@ -6,25 +6,18 @@ import androidx.room.ForeignKey;
 import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
-//TODO regarder pour les indexes
+
+// Cook <-1------*-> Recipe
 @Entity(tableName = "recipe",
         foreignKeys = {
             @ForeignKey(
                     entity = CookEntity.class,
                     parentColumns = "email",    // Sera la clé primaire de la table COOK
                     childColumns  = "creator"   // Sera le nom de la clé étrangère dans la table Recipe
-                        ),
-            @ForeignKey(
-                    entity = CategoryEntity.class,
-                    parentColumns = "id",    // Sera la clé primaire de la table COOK
-                    childColumns  = "category"   // Sera le nom de la clé étrangère dans la table Recipe
                         )},
         indices = {
                 @Index(
                         value = {"creator"}
-                ),
-                @Index(
-                        value = {"category"}
                 )}
         )
 public class RecipeEntity
@@ -32,7 +25,7 @@ public class RecipeEntity
     @PrimaryKey(autoGenerate = true)
     private Long id;
     private String creator;
-    private Long category;
+    //private Long category;
     @NonNull
     private String name;
     private int prepTime;   //temps de préparation de la recette en minutes
@@ -41,6 +34,8 @@ public class RecipeEntity
     @NonNull
     private String preparation; //instructions de la recette
 
+    private String diet; // TODO : On selectionne de la liste des enums quelle string on veut stocker. Enum sera apellé Lorsque on rentre les champs dans l'activité & quand on sauvegarde dans la DB
+    private String
 
     // C O N S T R U C T E U R
     @Ignore
