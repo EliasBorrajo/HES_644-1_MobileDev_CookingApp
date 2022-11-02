@@ -8,6 +8,7 @@ import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 // Cook <-1------*-> Recipe
+// TODO Verifier la classe quand on supprime Categroy
 @Entity(tableName = "recipe",
         foreignKeys = {
             @ForeignKey(
@@ -35,7 +36,8 @@ public class RecipeEntity
     private String preparation; //instructions de la recette
 
     private String diet; // TODO : On selectionne de la liste des enums quelle string on veut stocker. Enum sera apellé Lorsque on rentre les champs dans l'activité & quand on sauvegarde dans la DB
-    private String
+    private String allergy;
+    private String mealTime;
 
     // C O N S T R U C T E U R
     @Ignore
@@ -43,10 +45,11 @@ public class RecipeEntity
     {
     }
 
+    // TODO : Refaire car attributs ont changés
     public RecipeEntity(String creator, Long category, @NonNull String name, int prepTime, @NonNull String ingredients, @NonNull String preparation)
     {
         this.creator = creator;
-        this.category = category;
+        //this.category = category;
         this.name = name;
         this.prepTime = prepTime;
         this.ingredients = ingredients;
@@ -54,15 +57,34 @@ public class RecipeEntity
     }
 
     // G E T T E R S   S E T T E R S
-
-    public Long getCategory()
+    public String getDiet()
     {
-        return category;
+        return diet;
     }
 
-    public void setCategory(Long category)
+    public void setDiet(String diet)
     {
-        this.category = category;
+        this.diet = diet;
+    }
+
+    public String getAllergy()
+    {
+        return allergy;
+    }
+
+    public void setAllergy(String allergy)
+    {
+        this.allergy = allergy;
+    }
+
+    public String getMealTime()
+    {
+        return mealTime;
+    }
+
+    public void setMealTime(String mealTime)
+    {
+        this.mealTime = mealTime;
     }
 
     public Long getId()
@@ -149,6 +171,9 @@ public class RecipeEntity
                 ", prepTime=" + prepTime +
                 ", ingredients='" + ingredients + '\'' +
                 ", preparation='" + preparation + '\'' +
+                ", diet='" + diet + '\'' +
+                ", allergy='" + allergy + '\'' +
+                ", mealTime='" + mealTime + '\'' +
                 '}';
     }
 }
