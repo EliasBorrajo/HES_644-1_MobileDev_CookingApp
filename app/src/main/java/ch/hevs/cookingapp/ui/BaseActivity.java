@@ -14,6 +14,8 @@ import ch.hevs.cookingapp.R;
 
 public class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener
 {
+    public static final String PREFS_NAME = "SharedPrefs";
+    public static final String PREFS_USER = "LoggedIn";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)

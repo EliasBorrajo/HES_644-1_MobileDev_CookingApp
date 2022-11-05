@@ -99,7 +99,7 @@ public abstract class AppDatabase extends RoomDatabase
     }
 
     // Apelle la DB_INITIALIZER
-    private static void initializeData(final AppDatabase database)
+    public static void initializeData(final AppDatabase database)
     {
         Executors.newSingleThreadExecutor().execute( () ->
             {
@@ -109,6 +109,8 @@ public abstract class AppDatabase extends RoomDatabase
 
                         database.cookDao().deleteAll();
                         database.recipeDao().deleteAll();
+
+                        DatabaseInitializer.populateDatabase(database);
                     });
             });
     }
