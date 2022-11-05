@@ -14,6 +14,13 @@
         android:theme="@style/Theme.CookingApp"
         tools:targetApi="31">
         <activity
+            android:name=".ui.BaseActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".ui.recipe.RecipeEditActivity"
             android:exported="false">
             <meta-data
