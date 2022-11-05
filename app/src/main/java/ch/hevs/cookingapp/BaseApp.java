@@ -22,9 +22,7 @@ public class BaseApp extends Application {
         return CookRepository.getInstance();
     }
 
-    public RecipeRepository getClientRepository() {
+    public RecipeRepository getRecipeRepository() {
         return RecipeRepository.getInstance();
     }
-
-    public CookRepository getCategoryRepository() {return CookRepository.getInstance();}
 }
