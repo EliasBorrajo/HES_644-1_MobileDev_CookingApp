@@ -7,7 +7,7 @@ import android.os.Bundle;
 import ch.hevs.cookingapp.R;
 
 // Page principale de l'application, Activité classique comme les autres
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends BaseActivity
 {
 
     @Override
