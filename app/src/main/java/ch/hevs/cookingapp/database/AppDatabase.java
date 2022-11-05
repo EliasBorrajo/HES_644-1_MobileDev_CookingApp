@@ -11,15 +11,13 @@ import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 import java.util.concurrent.Executors;
 
-import ch.hevs.cookingapp.database.dao.CategoryDao;
 import ch.hevs.cookingapp.database.dao.CookDao;
 import ch.hevs.cookingapp.database.dao.RecipeDao;
-import ch.hevs.cookingapp.database.entity.CategoryEntity;
 import ch.hevs.cookingapp.database.entity.CookEntity;
 import ch.hevs.cookingapp.database.entity.RecipeEntity;
 
 // CREATION DE LA DB TODO export schema
-@Database(entities = {CookEntity.class, RecipeEntity.class, CategoryEntity.class}, version = 1/*, exportSchema = false*/)
+@Database(entities = {CookEntity.class, RecipeEntity.class}, version = 1/*, exportSchema = false*/)
 public abstract class AppDatabase extends RoomDatabase
 {
     // A T T R I B U T S
@@ -31,7 +29,6 @@ public abstract class AppDatabase extends RoomDatabase
     // Les DAO qu'il utilisera pour parler avec la ROOM
     public abstract CookDao     cookDao();
     public abstract RecipeDao   recipeDao();
-    public  abstract CategoryDao categoryDao();
 
     private final MutableLiveData<Boolean> mIsDatabaseCreated = new MutableLiveData<>();    //TODO : a quoi ça sert ?
 
@@ -112,7 +109,6 @@ public abstract class AppDatabase extends RoomDatabase
 
                         database.cookDao().deleteAll();
                         database.recipeDao().deleteAll();
-                        database.categoryDao().deleteAll();
                     });
             });
     }

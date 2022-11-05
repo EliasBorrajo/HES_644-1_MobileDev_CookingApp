@@ -8,7 +8,6 @@ import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 // Cook <-1------*-> Recipe
-// TODO Verifier la classe quand on supprime Categroy
 @Entity(tableName = "recipe",
         foreignKeys = {
             @ForeignKey(
@@ -45,15 +44,17 @@ public class RecipeEntity
     {
     }
 
-    // TODO : Refaire car attributs ont changés
-    public RecipeEntity(String creator, Long category, @NonNull String name, int prepTime, @NonNull String ingredients, @NonNull String preparation)
+
+    public RecipeEntity(String creator, @NonNull String name, int prepTime, @NonNull String ingredients, @NonNull String preparation, String diet, String allergy, String mealTime)
     {
         this.creator = creator;
-        //this.category = category;
         this.name = name;
         this.prepTime = prepTime;
         this.ingredients = ingredients;
         this.preparation = preparation;
+        this.diet = diet;
+        this.allergy = allergy;
+        this.mealTime = mealTime;
     }
 
     // G E T T E R S   S E T T E R S

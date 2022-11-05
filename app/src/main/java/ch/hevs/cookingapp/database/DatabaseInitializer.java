@@ -3,7 +3,6 @@ package ch.hevs.cookingapp.database;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import ch.hevs.cookingapp.database.entity.CategoryEntity;
 import ch.hevs.cookingapp.database.entity.CookEntity;
 import ch.hevs.cookingapp.database.entity.RecipeEntity;
 import ch.hevs.cookingapp.database.enumeration.Allergy;
@@ -34,24 +33,18 @@ public class DatabaseInitializer
         db.cookDao().insert(cook);
     }
 
-    private static void addRecipe(final AppDatabase db, final String creator, final long category, final String name,
-                                  final int prepTime,   final String ingredients, final String preparation)
+    private static void addRecipe(final AppDatabase db, final String creator, final String name,
+                                  final int prepTime,   final String ingredients, final String preparation, final String diet, final String allergy, final String mealTime)
     {
-        RecipeEntity recipe = new RecipeEntity(creator, category, name, prepTime, ingredients, preparation);
+        RecipeEntity recipe = new RecipeEntity(creator, name, prepTime, ingredients, preparation, diet, allergy, mealTime);
         db.recipeDao().insert(recipe);
     }
 
-    private static void addCategory(final AppDatabase db, final boolean vegetarian, final boolean vegan, final boolean meat, final boolean fish, final boolean peanut, final boolean lactose, final boolean nut, final boolean gluten, final boolean morning, final boolean midday, final boolean evening)
-    {
-        CategoryEntity category = new CategoryEntity(vegetarian, vegan, meat, fish, peanut, lactose, nut, gluten, morning, midday, evening);
-        db.categoryDao().insert(category);
-    }
 
     private static void populateWithTestData (AppDatabase db)
     {
         db.cookDao().deleteAll();
-        db.recipeDao().deleteAll(); // TODO : Supprimer si on delete en cascade
-        db.categoryDao().deleteAll();
+        db.recipeDao().deleteAll();
 
         // Remplir Cook
         addCook(db, "xolo@gmail.com",     "Xolo",     "Survivor",  "RIA",       "078 820 64 30");
@@ -68,17 +61,11 @@ public class DatabaseInitializer
             e.printStackTrace();
         }
 
-        // Remplir Category
-        addCategory(db, true, false, false, false, false, false, true, true, true, false, true);
-        addCategory(db, false, false, true, true, false, false, true, false, true, true, false);
-        addCategory(db, false, false, true, true, false, false, true, false, true, true, false);
-        addCategory(db, false, false, true, true, false, false, true, false, true, true, false);
-
         // Remplir Recipe
-        addRecipe(db, "xolo@gmail.com", 1, "Crêpes", 15, "Oeufs, Lait, Beurre", "Melanger fortement le tout");
-        addRecipe(db, "xolo@gmail.com", 2, "Sandiwch", 10, "Pain, Beurre, Jambon, tomate", "Empiler par tranches shouaités");
-        addRecipe(db, "milena@gmail.com", 3, "Cookies", 45, "Oeufs, Lait, Beurre, Chocolat, Un tas de bonnes choses, Agent chimique X", "Melanger fortement le tout, puis lancer dans le four.");
-        addRecipe(db, "milena@gmail.com", 4, "CrockScooby", 55, "Chien, agent secret, Sucre", "Melanger fortement le tout et mettre dans le burger à Zach");
+        addRecipe(db, "xolo@gmail.com", "Crêpes", 15, "Oeufs, Lait, Beurre", "Melanger fortement le tout", Diet.VEGETARIAN.toString(), Allergy.GLUTEN.toString(), Meal.BREAKFAST.toString());
+        addRecipe(db, "xolo@gmail.com", "Sandiwch", 10, "Pain, Beurre, Jambon, tomate", "Empiler par tranches shouaités",Diet.FISH.toString(), Allergy.GLUTEN.toString(), Meal.BREAKFAST.toString());
+        addRecipe(db, "milena@gmail.com", "Cookies", 45, "Oeufs, Lait, Beurre, Chocolat, Un tas de bonnes choses, Agent chimique X", "Melanger fortement le tout, puis lancer dans le four.",Diet.MEAT.toString(), Allergy.GLUTEN.toString(), Meal.BREAKFAST.toString());
+        addRecipe(db, "milena@gmail.com", "CrockScooby", 55, "Chien, agent secret, Sucre", "Melanger fortement le tout et mettre dans le burger à Zach",Diet.VEGAN.toString(), Allergy.GLUTEN.toString(), Meal.BREAKFAST.toString());
     }
 
 
