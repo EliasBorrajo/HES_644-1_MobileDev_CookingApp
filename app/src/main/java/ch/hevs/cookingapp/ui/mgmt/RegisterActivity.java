@@ -93,7 +93,7 @@ public class RegisterActivity extends AppCompatActivity
         }).execute(newCook);
     }
 
-    // TODO : Que fait ette methode ?
+    // En fonction de si on arrive à enregistrer le cook dans la ROOM, on peut ouvrir une nouvelle activité, ou rester sur la même fenêtre.
     private void setResponse(Boolean response)
     {   // Si on arrive a créer un Cook dans la ROOM
         if (response)
