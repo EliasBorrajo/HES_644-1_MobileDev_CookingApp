@@ -12,9 +12,8 @@
     <string name="error_edit_invalid_password">You need to specify a password</string>
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
-    <string name="permission_rationale">"Contacts permissions are needed for providing email
-        completions."
-    </string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email completions."</string>
+
 
     <!-- Actions -->
     <string name="action_register">Register</string>
@@ -25,6 +24,13 @@
 
     <string name="demo_data_initiated">Demo data initiated</string>
     <string name="reset_msg">Do you really want to reset the database?</string>
+
+
+    <!-- Register -->
+    <string name="cook_firstName">First Name</string>
+    <string name="cook_name">Last Name</string>
+    <string name="cook_repeat_password">Repeat Password</string>
+    <string name="cook_created">Client created</string>
 
 
 </resources>
