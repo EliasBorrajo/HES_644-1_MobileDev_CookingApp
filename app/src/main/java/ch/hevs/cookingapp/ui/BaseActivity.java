@@ -2,26 +2,69 @@ package ch.hevs.cookingapp.ui;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.FrameLayout;
 
 import com.google.android.material.navigation.NavigationView;
 
 import ch.hevs.cookingapp.R;
 
+// CE QUI EST EN COMMUN POUR TOUTES LES ACTIVITES : MENU / LAYOUT / BOUTONS / INTERRACTIONS
+// C'est la fênetre FRAGMENT qui s'ouvre sur le coté gacuhe
 public class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener
 {
     public static final String PREFS_NAME = "SharedPrefs";
     public static final String PREFS_USER = "LoggedIn";
+
+    /**
+     *  Frame layout: Which is going to be used as parent layout for child activity layout.
+     *  This layout is protected so that child activity can access this
+     */
+    protected FrameLayout frameLayout;          //is designed to block out an area on the screen to display a single item
+
+    protected DrawerLayout drawerLayout;        // acts as a top-level container for window content that allows for
+                                                // interactive "drawer" views to be pulled out from one or both vertical edges of the window.
+
+    protected NavigationView navigationView;    //Represents a standard navigation menu for application. The menu contents can be populated by a menu resource file.
+
+    /**
+     * Static variable for selected item position. Which can be used in child activity to know which item is selected from the list.
+     */
+    protected static int position;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);// Display icon in the toolbar
+
+
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setLogo(R.mipmap.ic_launcher);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
+
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);  // Boutton retour en arrière
+        //getActionBar().setDisplayHomeAsUpEnabled(true);         // Boutton retour en arrière
+
+    }
+
+    // Menu icons are inflated just as they were with actionbar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
     }
 
     @Override

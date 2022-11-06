@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    C'est le menu de navigation dans l'application
+    Ce sera notre "tirroir" qui s'étend sur le côté gauche.
+ -->
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:title="@string/title_activity_home"
+            android:icon="@android:color/darker_gray"
+            />
+        <item
+            android:id="@+id/nav_myProfile"
+            android:title="@string/title_activity_myCook"
+            android:icon="@android:color/darker_gray"
+            />
+        <item
+            android:id="@+id/nav_myRecipe"
+            android:title="@string/title_activity_myRecipe"
+            android:icon="@android:color/darker_gray"
+            />
+        <item
+            android:id="@+id/nav_logout"
+            android:title="@string/action_logout"
+            android:icon="@android:color/darker_gray"
+            />
+        <item
+            android:id="@+id/nav_none"
+            android:title=""
+            android:visible="false"/>
+    </group>
+
+
+</menu>

@@ -67,14 +67,14 @@ public class LoginActivity extends AppCompatActivity {
         super.onPostResume();
     }
 
-    private void attemptLogin() {
-
+    private void attemptLogin()
+    {
         // Reset errors.
         emailView.setError(null);
         passwordView.setError(null);
 
         // Store values at the time of the login attempt.
-        String email = emailView.getText().toString();
+        String email    = emailView.getText().toString();
         String password = passwordView.getText().toString();
 
         boolean cancel = false;
@@ -144,10 +144,13 @@ public class LoginActivity extends AppCompatActivity {
         alertDialog.setTitle(getString(R.string.action_demo_data));
         alertDialog.setCancelable(false);
         alertDialog.setMessage(getString(R.string.reset_msg));
-        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getString(R.string.action_reset), (dialog, which) ->{
-            initializeData(AppDatabase.getInstance(this));
-            Toast.makeText(this, getString(R.string.demo_data_initiated), Toast.LENGTH_LONG).show();
-        });
+        // Syntaxe : setButton (param1, param2, param3-->Lambda)
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getString(R.string.action_reset), (dialog, which) ->
+                                {
+                                    initializeData(AppDatabase.getInstance(this));
+                                    Toast.makeText(this, getString(R.string.demo_data_initiated), Toast.LENGTH_LONG).show();
+                                }
+                             );
         alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, getString(R.string.action_cancel), (dialog, which) -> alertDialog.dismiss());
         alertDialog.show();
     }

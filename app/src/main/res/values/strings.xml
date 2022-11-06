@@ -20,6 +20,7 @@
     <string name="action_demo_data">Reset Demo Data</string>
     <string name="action_reset">Reset</string>
     <string name="action_cancel">Cancel</string>
+    <string name="action_logout">Logout</string>
 
     <string name="title_activity_login">Login</string>
     <string name="demo_data_initiated">Demo data initiated</string>
@@ -31,6 +32,14 @@
     <string name="cook_name">Last Name</string>
     <string name="cook_repeat_password">Repeat Password</string>
     <string name="cook_created">Client created</string>
+
+    <!-- Base Activity : System Settings -->
+    <string name="settings_name">SETTINGS</string>
+
+    <!-- Base Activity : Navigation Settings -->
+    <string name="title_activity_home">Home</string>
+    <string name="title_activity_myCook">My infos</string>
+    <string name="title_activity_myRecipe">My recipe</string>
 
 
 </resources>
