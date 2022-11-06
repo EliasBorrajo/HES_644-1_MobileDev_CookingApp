@@ -1,6 +1,7 @@
 package ch.hevs.cookingapp.ui;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
@@ -46,16 +47,28 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_base);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        // Sets the Toolbar to act as the ActionBar for this Activity window.
+        // Make sure the toolbar exists in the activity and is not null
         setSupportActionBar(toolbar);// Display icon in the toolbar
 
-
+/*
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.mipmap.ic_launcher);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
-
+*/
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);  // Boutton retour en arrière
         //getActionBar().setDisplayHomeAsUpEnabled(true);         // Boutton retour en arrière
 
+        frameLayout = findViewById(R.id.flContent);
+
+        drawerLayout = findViewById(R.id.base_drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
+        navigationView = findViewById(R.id.base_nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
     }
 
     // Menu icons are inflated just as they were with actionbar

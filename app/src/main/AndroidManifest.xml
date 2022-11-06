@@ -16,6 +16,7 @@
         tools:targetApi="31">
         <activity
             android:name=".ui.BaseActivity"
+            android:theme="@style/Theme.CookingApp.NoActionBar"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -23,6 +24,7 @@
         </activity>
         <activity
             android:name=".ui.recipe.RecipeEditActivity"
+            android:theme="@style/Theme.CookingApp.NoActionBar"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -30,6 +32,7 @@
         </activity>
         <activity
             android:name=".ui.recipe.RecipeDetailActivity"
+            android:theme="@style/Theme.CookingApp.NoActionBar"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -37,6 +40,7 @@
         </activity>
         <activity
             android:name=".ui.MainActivity"
+            android:theme="@style/Theme.CookingApp.NoActionBar"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -44,6 +48,7 @@
         </activity>
         <activity
             android:name=".ui.mgmt.RegisterActivity"
+            android:theme="@style/Theme.CookingApp.NoActionBar"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -51,6 +56,7 @@
         </activity>
         <activity
             android:name=".ui.mgmt.SettingsActivity"
+            android:theme="@style/Theme.CookingApp.NoActionBar"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -58,6 +64,7 @@
         </activity>
         <activity
             android:name=".ui.recipe.RecipesActivity"
+            android:theme="@style/Theme.CookingApp.NoActionBar"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -65,6 +72,7 @@
         </activity>
         <activity
             android:name=".ui.cook.CookActivity"
+            android:theme="@style/Theme.CookingApp.NoActionBar"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

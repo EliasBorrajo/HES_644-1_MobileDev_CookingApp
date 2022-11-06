@@ -40,6 +40,10 @@
     <string name="title_activity_home">Home</string>
     <string name="title_activity_myCook">My infos</string>
     <string name="title_activity_myRecipe">My recipe</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="disclaimer" translatable="false">Copyright &#169; 2017\nHES-SO Valais//Wallis Sierre</string>
+    <string name="impressum" translatable="false">644-1 Mobile &amp; Cloud Computing</string>
 
 
 </resources>
