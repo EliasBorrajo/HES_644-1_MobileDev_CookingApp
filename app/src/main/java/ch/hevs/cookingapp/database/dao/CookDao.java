@@ -37,6 +37,4 @@ public interface CookDao
 
     @Query("DELETE FROM cook")
     void deleteAll();
-
-
 }

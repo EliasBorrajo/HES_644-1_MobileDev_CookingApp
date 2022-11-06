@@ -25,7 +25,6 @@ public class RecipeEntity
     @PrimaryKey(autoGenerate = true)
     private Long id;
     private String creator;
-    //private Long category;
     @NonNull
     private String name;
     private int prepTime;   //temps de préparation de la recette en minutes

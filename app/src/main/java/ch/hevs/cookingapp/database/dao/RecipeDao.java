@@ -13,6 +13,8 @@ import androidx.room.Update;
 import java.util.List;
 
 import ch.hevs.cookingapp.database.entity.RecipeEntity;
+import ch.hevs.cookingapp.database.pojo.CookWithRecipes;
+
 //DAOs abstract access to the database in a clean way
 @Dao
 public interface RecipeDao
@@ -25,6 +27,9 @@ public interface RecipeDao
 
     @Query("SELECT * FROM recipe WHERE creator=:creator")
     LiveData<List<RecipeEntity>> getOwned(String creator);
+
+    @Query("SELECT * FROM recipe WHERE mealTime=:mealTime")
+    LiveData<List<RecipeEntity>> getByMeal(String mealTime);
 
     @Insert
     long insert(RecipeEntity recipe) throws SQLiteConstraintException;

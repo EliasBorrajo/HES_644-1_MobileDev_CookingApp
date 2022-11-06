@@ -14,6 +14,7 @@ import java.util.List;
 import ch.hevs.cookingapp.BaseApp;
 import ch.hevs.cookingapp.database.entity.RecipeEntity;
 import ch.hevs.cookingapp.database.pojo.CookWithRecipes;
+import ch.hevs.cookingapp.database.repository.CookRepository;
 import ch.hevs.cookingapp.database.repository.RecipeRepository;
 import ch.hevs.cookingapp.util.OnAsyncEventListener;
 
@@ -33,13 +34,11 @@ public class RecipeListViewModel extends AndroidViewModel {
 
         this.application = application;
 
-        repository = recipeRepository;
-
         observableOwnRecipes = new MediatorLiveData<>();
         // set by default null, until we get data from the database.
         observableOwnRecipes.setValue(null);
 
-        LiveData<List<RecipeEntity>> ownRecipes = repository.getByCreator(creator, application);
+        LiveData<List<RecipeEntity>> ownRecipes = recipeRepository.getByCreator(creator, application);
 
         // observe the changes of the entities from the database and forward them
         observableOwnRecipes.addSource(ownRecipes, observableOwnRecipes::setValue);

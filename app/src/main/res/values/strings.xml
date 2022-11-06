@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">CookingApp</string>
 
+    <string name="action_settings">Settings</string>
+
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
@@ -14,24 +16,26 @@
     <string name="error_field_required">This field is required</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email completions."</string>
 
+    <string name="title_activity_login">Login</string>
+    <string name="demo_data_initiated">Demo data initiated</string>
+    <string name="reset_msg">Do you really want to reset the database?</string>
 
-    <!-- Actions -->
+    <!-- Actions related to login-->
     <string name="action_register">Register</string>
     <string name="action_demo_data">Reset Demo Data</string>
     <string name="action_reset">Reset</string>
     <string name="action_cancel">Cancel</string>
     <string name="action_logout">Logout</string>
 
-    <string name="title_activity_login">Login</string>
-    <string name="demo_data_initiated">Demo data initiated</string>
-    <string name="reset_msg">Do you really want to reset the database?</string>
-
-
-    <!-- Register -->
+    <!-- Strings related to register -->
     <string name="cook_firstName">First Name</string>
     <string name="cook_name">Last Name</string>
     <string name="cook_repeat_password">Repeat Password</string>
-    <string name="cook_created">Client created</string>
+    <string name="cook_created">User created</string>
+
+    <!-- String related to MainActivity -->
+    <string name="title_activity_main">Let\'s cook!</string>
+    <string name="logout_msg">Do you really want to logout?</string>
 
     <!-- Base Activity : System Settings -->
     <string name="settings_name">SETTINGS</string>
@@ -45,5 +49,17 @@
     <string name="disclaimer" translatable="false">Copyright &#169; 2017\nHES-SO Valais//Wallis Sierre</string>
     <string name="impressum" translatable="false">644-1 Mobile &amp; Cloud Computing</string>
 
+    <!-- Actions related to MainActivity -->
+    <string name="action_breakfast">Pour le matin</string>
+    <string name="action_lunch">Pour le midi</string>
+    <string name="action_dinner">Pour le soir</string>
+
+    <!-- String related to Recipes -->
+    <string name="title_activity_recipes">Recettes</string>
+
+    <!-- String related to activity_main_drawer -->
+    <string name="title_activity_mainmenu">Menu principal</string>
+    <string name="title_activity_myrecipes">Mes recettes</string>
+    <string name="title_activity_myinfos">Mes infos</string>
 
 </resources>

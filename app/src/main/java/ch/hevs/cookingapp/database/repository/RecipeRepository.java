@@ -11,6 +11,7 @@ import ch.hevs.cookingapp.database.async.recipe.CreateRecipe;
 import ch.hevs.cookingapp.database.async.recipe.DeleteRecipe;
 import ch.hevs.cookingapp.database.async.recipe.UpdateRecipe;
 import ch.hevs.cookingapp.database.entity.RecipeEntity;
+import ch.hevs.cookingapp.database.pojo.CookWithRecipes;
 import ch.hevs.cookingapp.util.OnAsyncEventListener;
 
 public class RecipeRepository
@@ -22,7 +23,7 @@ public class RecipeRepository
 
     public static RecipeRepository getInstance() {
         if (instance == null) {
-            synchronized (CookRepository.class) {
+            synchronized (RecipeRepository.class) {
                 if (instance == null) {
                     instance = new RecipeRepository();
                 }
@@ -41,6 +42,10 @@ public class RecipeRepository
 
     public LiveData<List<RecipeEntity>> getByCreator(final String creator, Application application) {
         return ((BaseApp) application).getDatabase().recipeDao().getOwned(creator);
+    }
+
+    public LiveData<List<RecipeEntity>> getByMeal(final String mealTime, Application application) {
+        return ((BaseApp) application).getDatabase().recipeDao().getByMeal(mealTime);
     }
 
     public void insert(final RecipeEntity recipe, OnAsyncEventListener callback,

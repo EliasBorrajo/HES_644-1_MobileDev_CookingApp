@@ -9,12 +9,12 @@ import ch.hevs.cookingapp.util.OnAsyncEventListener;
 
 public class UpdateCook extends AsyncTask<CookEntity, Void, Void> {
     private Application application;
-    private OnAsyncEventListener calback;
+    private OnAsyncEventListener callback;
     private Exception exception;
 
     public UpdateCook(Application application, OnAsyncEventListener callback) {
         this.application = application;
-        calback = callback;
+        this.callback = callback;
     }
 
     @Override
@@ -30,11 +30,11 @@ public class UpdateCook extends AsyncTask<CookEntity, Void, Void> {
 
     @Override
     protected void onPostExecute(Void aVoid) {
-        if (calback != null) {
+        if (callback != null) {
             if (exception == null) {
-                calback.onSuccess();
+                callback.onSuccess();
             } else {
-                calback.onFailure(exception);
+                callback.onFailure(exception);
             }
         }
     }

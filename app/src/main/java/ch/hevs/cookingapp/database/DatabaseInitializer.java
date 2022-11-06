@@ -43,8 +43,8 @@ public class DatabaseInitializer
 
     private static void populateWithTestData (AppDatabase db)
     {
-        db.cookDao().deleteAll();
         db.recipeDao().deleteAll();
+        db.cookDao().deleteAll();
 
         // Remplir Cook
         addCook(db, "xolo@gmail.com",     "Xolo",     "Survivor",  "RIA",       "078 820 64 30");
@@ -81,7 +81,7 @@ public class DatabaseInitializer
         }
 
         @Override
-        protected Void doInBackground(final Void... voidsParam)
+        protected Void doInBackground(final Void... params)
         {
             populateWithTestData(DATABASE);
             return null;

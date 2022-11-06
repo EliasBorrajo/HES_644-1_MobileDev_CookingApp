@@ -107,8 +107,8 @@ public abstract class AppDatabase extends RoomDatabase
                     {
                         Log.i(TAG, "Wipe database.");
 
-                        database.cookDao().deleteAll();
                         database.recipeDao().deleteAll();
+                        database.cookDao().deleteAll();
 
                         DatabaseInitializer.populateDatabase(database);
                     });
