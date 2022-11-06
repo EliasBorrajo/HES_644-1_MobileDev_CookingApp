@@ -54,8 +54,7 @@
         <activity
             android:name=".ui.mgmt.RegisterActivity"
             android:exported="false"
-            android:parentActivityName=".ui.mgmt.LoginActivity"
-            android:theme="@style/Theme.CookingApp.NoActionBar" >
+            android:parentActivityName=".ui.mgmt.LoginActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ch.hevs.cookingapp.ui.mgmt.LoginActivity"/>
