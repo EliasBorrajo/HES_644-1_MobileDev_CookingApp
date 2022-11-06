@@ -30,13 +30,13 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
     public static final String PREFS_USER = "LoggedIn";
 
     /**
-     *  Frame layout: Which is going to be used as parent layout for child activity layout.
-     *  This layout is protected so that child activity can access this
+     * Frame layout: Which is going to be used as parent layout for child activity layout.
+     * This layout is protected so that child activity can access this
      */
     protected FrameLayout frameLayout;          //is designed to block out an area on the screen to display a single item
 
     protected DrawerLayout drawerLayout;        // acts as a top-level container for window content that allows for
-                                                // interactive "drawer" views to be pulled out from one or both vertical edges of the window.
+    // interactive "drawer" views to be pulled out from one or both vertical edges of the window.
 
     protected NavigationView navigationView;    //Represents a standard navigation menu for application. The menu contents can be populated by a menu resource file.
 
@@ -67,13 +67,16 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
-    protected void onResume() {
+    protected void onResume()
+    {
         super.onResume();
     }
 
     @Override
-    public void onBackPressed() {
-        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+    public void onBackPressed()
+    {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START))
+        {
             drawerLayout.closeDrawer(GravityCompat.START);
             return;
         }
@@ -83,18 +86,21 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
 
     // Menu icons are inflated
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        if (item.getItemId() == R.id.action_settings) {
+        if (item.getItemId() == R.id.action_settings)
+        {
             Intent intent = new Intent(this, SettingsActivity.class);
             startActivity(intent);
         }
@@ -108,7 +114,8 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == BaseActivity.position) {
+        if (id == BaseActivity.position)
+        {
             drawerLayout.closeDrawer(GravityCompat.START);
             return false;
         }
@@ -117,16 +124,24 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
 
         navigationView.setCheckedItem(id);
 
-        if (id == R.id.nav_cook) {
+        if (id == R.id.nav_myProfile)
+        {
             intent = new Intent(this, CookActivity.class);
-        } else if (id == R.id.nav_recipes) {
+        }
+        else if (id == R.id.nav_myRecipe)
+        {
             intent = new Intent(this, RecipesActivity.class);
-        } else if (id == R.id.nav_main) {
+        }
+        else if (id == R.id.nav_home)
+        {
             intent = new Intent(this, MainActivity.class);
-        } else if (id == R.id.nav_logout) {
+        }
+        else if (id == R.id.nav_logout)
+        {
             logout();
         }
-        if (intent != null) {
+        if (intent != null)
+        {
             intent.setFlags(
                     Intent.FLAG_ACTIVITY_NO_ANIMATION
             );
@@ -136,7 +151,8 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    public void logout() {
+    public void logout()
+    {
         SharedPreferences.Editor editor = getSharedPreferences(BaseActivity.PREFS_NAME, 0).edit();
         editor.remove(BaseActivity.PREFS_USER);
         editor.apply();

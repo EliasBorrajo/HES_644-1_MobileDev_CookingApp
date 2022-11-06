@@ -9,8 +9,8 @@
 
     <!-- Settings : Show = never, should always be in the overflow -->
     <item
-        android:title="@string/settings_name"
         android:id="@+id/action_settings"
+        android:title="@string/settings_name"
         android:orderInCategory="100"
         app:showAsAction="never"
         />
