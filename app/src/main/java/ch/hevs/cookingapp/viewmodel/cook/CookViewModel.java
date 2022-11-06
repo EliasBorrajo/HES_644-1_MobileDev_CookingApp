@@ -14,7 +14,8 @@ import ch.hevs.cookingapp.database.entity.CookEntity;
 import ch.hevs.cookingapp.database.repository.CookRepository;
 import ch.hevs.cookingapp.util.OnAsyncEventListener;
 
-public class CookViewModel extends AndroidViewModel {
+public class CookViewModel extends AndroidViewModel
+{
 
     private Application application;
 
@@ -24,14 +25,15 @@ public class CookViewModel extends AndroidViewModel {
     private final MediatorLiveData<CookEntity> observableCook;
 
     public CookViewModel(@NonNull Application application,
-                         final String email, CookRepository cookRepository) {
-       super(application);
+                         final String email, CookRepository cookRepository)
+    {
+        super(application);
 
-       this.application = application;
+        this.application = application;
 
-       repository = cookRepository;
+        repository = cookRepository;
 
-       observableCook = new MediatorLiveData<>();
+        observableCook = new MediatorLiveData<>();
         // set by default null, until we get data from the database.
         observableCook.setValue(null);
 
@@ -44,7 +46,8 @@ public class CookViewModel extends AndroidViewModel {
     /**
      * A creator is used to inject the account id into the ViewModel
      */
-    public static class Factory extends ViewModelProvider.NewInstanceFactory {
+    public static class Factory extends ViewModelProvider.NewInstanceFactory
+    {
 
         @NonNull
         private final Application application;
@@ -53,14 +56,16 @@ public class CookViewModel extends AndroidViewModel {
 
         private final CookRepository repository;
 
-        public Factory(@NonNull Application application, String email) {
+        public Factory(@NonNull Application application, String email)
+        {
             this.application = application;
             this.email = email;
             repository = ((BaseApp) application).getCookRepository();
         }
 
         @Override
-        public <T extends ViewModel> T create(Class<T> modelClass) {
+        public <T extends ViewModel> T create(Class<T> modelClass)
+        {
             //noinspection unchecked
             return (T) new CookViewModel(application, email, repository);
         }
@@ -69,19 +74,23 @@ public class CookViewModel extends AndroidViewModel {
     /**
      * Expose the LiveData ClientEntity query so the UI can observe it.
      */
-    public LiveData<CookEntity> getCook() {
+    public LiveData<CookEntity> getCook()
+    {
         return observableCook;
     }
 
-    public void createCook(CookEntity cook, OnAsyncEventListener callback) {
+    public void createCook(CookEntity cook, OnAsyncEventListener callback)
+    {
         repository.insert(cook, callback, application);
     }
 
-    public void updateCook(CookEntity cook, OnAsyncEventListener callback) {
+    public void updateCook(CookEntity cook, OnAsyncEventListener callback)
+    {
         repository.update(cook, callback, application);
     }
 
-    public void deleteCook(CookEntity cook, OnAsyncEventListener callback) {
+    public void deleteCook(CookEntity cook, OnAsyncEventListener callback)
+    {
         repository.delete(cook, callback, application);
 
     }
