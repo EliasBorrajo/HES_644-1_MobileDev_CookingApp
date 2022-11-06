@@ -1,7 +1,7 @@
 package ch.hevs.cookingapp.ui.recipe;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -11,22 +11,21 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.locks.ReentrantLock;
 
 import ch.hevs.cookingapp.R;
 import ch.hevs.cookingapp.adapter.RecyclerAdapter;
 import ch.hevs.cookingapp.database.entity.RecipeEntity;
+import ch.hevs.cookingapp.database.pojo.CookWithRecipes;
 import ch.hevs.cookingapp.ui.BaseActivity;
 import ch.hevs.cookingapp.util.RecyclerViewItemClickListener;
 import ch.hevs.cookingapp.viewmodel.recipe.RecipeListViewModel;
 
-public class RecipesActivity extends AppCompatActivity {
+public class RecipesActivity extends BaseActivity {
 
     private static final String TAG = "RecipesActivity";
 
@@ -77,10 +76,9 @@ public class RecipesActivity extends AppCompatActivity {
             }
         });
 
-
         RecipeListViewModel.Factory factory = new RecipeListViewModel.Factory(
                 getApplication(), user);
-        viewModel = ViewModelProviders.of(this, factory).get(RecipeListViewModel.class);
+        viewModel = ViewModelProviders.of((FragmentActivity) this, (ViewModelProvider.Factory) factory).get(RecipeListViewModel.class);
         //TODO get recipes matin ou midi ou soir
         viewModel.getOwnRecipes().observe(this, recipeEntities -> {
             if (recipeEntities != null) {

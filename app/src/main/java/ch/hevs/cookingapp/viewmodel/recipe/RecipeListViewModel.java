@@ -25,7 +25,7 @@ public class RecipeListViewModel extends AndroidViewModel {
     private RecipeRepository repository;
 
     // MediatorLiveData can observe other LiveData objects and react on their emissions.
-    private final MediatorLiveData<List<CookWithRecipes>> observableOwnRecipes;
+    private final MediatorLiveData<List<RecipeEntity>> observableOwnRecipes;
 
     public RecipeListViewModel(@NonNull Application application,
                                 final String creator,
@@ -38,7 +38,7 @@ public class RecipeListViewModel extends AndroidViewModel {
         // set by default null, until we get data from the database.
         observableOwnRecipes.setValue(null);
 
-        LiveData<List<CookWithRecipes>> ownRecipes = recipeRepository.getByCreator(creator, application);
+        LiveData<List<RecipeEntity>> ownRecipes = recipeRepository.getByCreator(creator, application);
 
         // observe the changes of the entities from the database and forward them
         observableOwnRecipes.addSource(ownRecipes, observableOwnRecipes::setValue);
@@ -72,7 +72,7 @@ public class RecipeListViewModel extends AndroidViewModel {
     /**
      * Expose the LiveData AccountEntities query so the UI can observe it.
      */
-    public LiveData<List<CookWithRecipes>> getOwnRecipes() {
+    public LiveData<List<RecipeEntity>> getOwnRecipes() {
         return observableOwnRecipes;
     }
 

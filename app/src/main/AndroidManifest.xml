@@ -13,67 +13,83 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CookingApp"
-        tools:targetApi="31">
+        tools:targetApi="31" >
+
         <activity
             android:name=".ui.BaseActivity"
-            android:exported="false">
+            android:parentActivityName=".ui.mgmt.LoginActivity"
+            android:exported="false"
+            android:theme="@style/Theme.CookingApp.NoActionBar" >
             <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ch.hevs.cookingapp.ui.mgmt.LoginActivity"/>
         </activity>
         <activity
             android:name=".ui.recipe.RecipeEditActivity"
-            android:exported="false">
+            android:parentActivityName=".ui.recipe.RecipeDetailActivity"
+            android:exported="false"
+            android:theme="@style/Theme.CookingApp.NoActionBar" >
             <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ch.hevs.cookingapp.ui.recipe.RecipeDetailActivity"/>
         </activity>
         <activity
             android:name=".ui.recipe.RecipeDetailActivity"
-            android:exported="false">
+            android:exported="false"
+            android:parentActivityName=".ui.recipe.RecipesActivity"
+            android:theme="@style/Theme.CookingApp.NoActionBar" >
             <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ch.hevs.cookingapp.ui.recipe.RecipesActivity"/>
         </activity>
         <activity
             android:name=".ui.MainActivity"
-            android:exported="false">
+            android:exported="false"
+            android:parentActivityName=".ui.mgmt.LoginActivity"
+            android:theme="@style/Theme.CookingApp.NoActionBar" >
             <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ch.hevs.cookingapp.ui.mgmt.LoginActivity"/>
         </activity>
         <activity
             android:name=".ui.mgmt.RegisterActivity"
-            android:exported="false">
+            android:exported="false"
+            android:parentActivityName=".ui.mgmt.LoginActivity">
             <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ch.hevs.cookingapp.ui.mgmt.LoginActivity"/>
         </activity>
         <activity
             android:name=".ui.mgmt.SettingsActivity"
-            android:exported="false">
+            android:exported="false"
+            android:parentActivityName=".ui.MainActivity"
+            android:theme="@style/Theme.CookingApp.NoActionBar" >
             <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ch.hevs.cookingapp.ui.MainActivity"/>
         </activity>
         <activity
             android:name=".ui.recipe.RecipesActivity"
-            android:exported="false">
+            android:exported="false"
+            android:parentActivityName=".ui.MainActivity"
+            android:theme="@style/Theme.CookingApp.NoActionBar" >
             <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ch.hevs.cookingapp.ui.MainActivity"/>
         </activity>
         <activity
             android:name=".ui.cook.CookActivity"
-            android:exported="false">
+            android:exported="false"
+            android:parentActivityName=".ui.MainActivity"
+            android:theme="@style/Theme.CookingApp.NoActionBar" >
             <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ch.hevs.cookingapp.ui.MainActivity"/>
         </activity>
         <activity
             android:name=".ui.mgmt.LoginActivity"
-            android:exported="true">
-
+            android:label="@string/app_name"
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

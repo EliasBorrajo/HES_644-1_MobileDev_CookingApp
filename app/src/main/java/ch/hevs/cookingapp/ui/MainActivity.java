@@ -17,7 +17,9 @@ public class MainActivity extends BaseActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        getLayoutInflater().inflate(R.layout.activity_main, frameLayout);
+        setTitle(getString(R.string.app_name));
+        navigationView.setCheckedItem(R.id.nav_none);
     }
 
     //TODO matin midi soir avec scroll faire juste 3 boutons pour montrer toutes les recetttes du midi soir et matin

@@ -40,7 +40,7 @@ public class RecipeRepository
         return ((BaseApp) application).getDatabase().recipeDao().getAll();
     }
 
-    public LiveData<List<CookWithRecipes>> getByCreator(final String creator, Application application) {
+    public LiveData<List<RecipeEntity>> getByCreator(final String creator, Application application) {
         return ((BaseApp) application).getDatabase().recipeDao().getOwned(creator);
     }
 
