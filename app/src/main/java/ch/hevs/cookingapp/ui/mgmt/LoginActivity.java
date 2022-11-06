@@ -33,7 +33,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle("Login");
+        setTitle(R.string.title_activity_login);
 
         setContentView(R.layout.activity_login);
 
@@ -55,6 +55,16 @@ public class LoginActivity extends AppCompatActivity {
         demoDataButton.setOnClickListener(view -> reinitializeDatabase());
 
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
     }
 
     private void attemptLogin() {

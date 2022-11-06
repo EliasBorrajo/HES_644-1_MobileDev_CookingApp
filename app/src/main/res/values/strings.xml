@@ -21,7 +21,7 @@
     <string name="action_reset">Reset</string>
     <string name="action_cancel">Cancel</string>
 
-
+    <string name="title_activity_login">Login</string>
     <string name="demo_data_initiated">Demo data initiated</string>
     <string name="reset_msg">Do you really want to reset the database?</string>
 

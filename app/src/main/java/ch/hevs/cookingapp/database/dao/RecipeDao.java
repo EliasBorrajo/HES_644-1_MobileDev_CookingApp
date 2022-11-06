@@ -23,6 +23,9 @@ public interface RecipeDao
     @Query("SELECT * FROM recipe")
     LiveData<List<RecipeEntity>> getAll();
 
+    @Query("SELECT * FROM recipe WHERE creator=:creator")
+    LiveData<List<RecipeEntity>> getOwned(String creator);
+
     @Insert
     long insert(RecipeEntity recipe) throws SQLiteConstraintException;
 
