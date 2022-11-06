@@ -36,11 +36,10 @@ public class RecipesActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_recipe);
         getLayoutInflater().inflate(R.layout.activity_recipes, frameLayout);
 
         setTitle(getString(R.string.title_activity_recipes));
-        //navigationView.setCheckedItem(position);
+        navigationView.setCheckedItem(position);
 
         RecyclerView recyclerView = findViewById(R.id.recipesRecyclerView);
 

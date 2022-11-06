@@ -35,10 +35,11 @@
     <string name="cook_repeat_password">Repeat Password</string>
     <string name="cook_created">User created</string>
 
-    <!-- String related to main -->
+    <!-- String related to MainActivity -->
     <string name="title_activity_main">Let\'s cook!</string>
+    <string name="logout_msg">Do you really want to logout?</string>
 
-    <!-- Actions related to main -->
+    <!-- Actions related to MainActivity -->
     <string name="action_breakfast">Pour le matin</string>
     <string name="action_lunch">Pour le midi</string>
     <string name="action_dinner">Pour le soir</string>
@@ -55,6 +56,4 @@
     <string name="title_activity_myrecipes">Mes recettes</string>
     <string name="title_activity_myinfos">Mes infos</string>
     <string name="action_logout">Logout</string>
-
-
 </resources>
