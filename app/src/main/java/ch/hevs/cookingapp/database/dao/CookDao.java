@@ -13,7 +13,7 @@ import androidx.room.Update;
 import java.util.List;
 
 import ch.hevs.cookingapp.database.entity.CookEntity;
-
+//DAOs abstract access to the database in a clean way
 @Dao
 public interface CookDao
 {

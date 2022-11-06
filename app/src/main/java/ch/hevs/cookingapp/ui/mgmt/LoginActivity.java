@@ -41,7 +41,6 @@ public class LoginActivity extends AppCompatActivity {
 
         // Set up the login form.
         emailView = findViewById(R.id.email);
-
         passwordView = findViewById(R.id.password);
 
         Button emailSignInButton = findViewById(R.id.email_sign_in_button);
@@ -54,6 +53,8 @@ public class LoginActivity extends AppCompatActivity {
 
         Button demoDataButton = findViewById(R.id.demo_data_button);
         demoDataButton.setOnClickListener(view -> reinitializeDatabase());
+
+
     }
 
     private void attemptLogin() {
