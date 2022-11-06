@@ -54,10 +54,11 @@
 
     <!-- String related to Recipes -->
     <string name="title_activity_recipes">Recettes</string>
+    <string name="tv_firstName">First Name</string>
+    <string name="tv_lastName">Last Name</string>
+    <string name="tv_mail">\@mail</string>
+    <string name="tv_phone">Phone Number</string>
+    <string name="action_submit">Submit</string>
 
-    <!-- String related to activity_main_drawer -->
-    <string name="title_activity_mainmenu">Home</string>
-    <string name="title_activity_myrecipes">My recipe</string>
-    <string name="title_activity_myinfos">My infos</string>
 
 </resources>

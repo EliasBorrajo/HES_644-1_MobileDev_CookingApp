@@ -11,6 +11,8 @@ public class CookActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cook);
+        getLayoutInflater().inflate(R.layout.activity_cook, frameLayout);
+
+        setTitle(getString(R.string.title_activity_myCook));
     }
 }
