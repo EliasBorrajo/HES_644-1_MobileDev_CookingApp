@@ -14,6 +14,7 @@ import java.util.List;
 import ch.hevs.cookingapp.BaseApp;
 import ch.hevs.cookingapp.database.entity.RecipeEntity;
 import ch.hevs.cookingapp.database.pojo.CookWithRecipes;
+import ch.hevs.cookingapp.database.repository.CookRepository;
 import ch.hevs.cookingapp.database.repository.RecipeRepository;
 import ch.hevs.cookingapp.util.OnAsyncEventListener;
 
@@ -24,7 +25,7 @@ public class RecipeListViewModel extends AndroidViewModel {
     private RecipeRepository repository;
 
     // MediatorLiveData can observe other LiveData objects and react on their emissions.
-    private final MediatorLiveData<List<RecipeEntity>> observableOwnRecipes;
+    private final MediatorLiveData<List<CookWithRecipes>> observableOwnRecipes;
 
     public RecipeListViewModel(@NonNull Application application,
                                 final String creator,
@@ -33,13 +34,11 @@ public class RecipeListViewModel extends AndroidViewModel {
 
         this.application = application;
 
-        repository = recipeRepository;
-
         observableOwnRecipes = new MediatorLiveData<>();
         // set by default null, until we get data from the database.
         observableOwnRecipes.setValue(null);
 
-        LiveData<List<RecipeEntity>> ownRecipes = repository.getByCreator(creator, application);
+        LiveData<List<CookWithRecipes>> ownRecipes = recipeRepository.getByCreator(creator, application);
 
         // observe the changes of the entities from the database and forward them
         observableOwnRecipes.addSource(ownRecipes, observableOwnRecipes::setValue);
@@ -73,7 +72,7 @@ public class RecipeListViewModel extends AndroidViewModel {
     /**
      * Expose the LiveData AccountEntities query so the UI can observe it.
      */
-    public LiveData<List<RecipeEntity>> getOwnRecipes() {
+    public LiveData<List<CookWithRecipes>> getOwnRecipes() {
         return observableOwnRecipes;
     }
 
