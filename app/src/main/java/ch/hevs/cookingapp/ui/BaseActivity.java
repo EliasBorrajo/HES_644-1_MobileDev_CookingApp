@@ -51,11 +51,11 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         // Make sure the toolbar exists in the activity and is not null
         setSupportActionBar(toolbar);// Display icon in the toolbar
 
-/*
+        /*
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.mipmap.ic_launcher);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
-*/
+        */
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);  // Boutton retour en arrière
         //getActionBar().setDisplayHomeAsUpEnabled(true);         // Boutton retour en arrière
 
@@ -71,7 +71,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
     }
 
-    // Menu icons are inflated just as they were with actionbar
+    // Menu icons are inflated
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
