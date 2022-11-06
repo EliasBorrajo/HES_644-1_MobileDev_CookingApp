@@ -30,7 +30,7 @@
     <string name="cook_firstName">First Name</string>
     <string name="cook_name">Last Name</string>
     <string name="cook_repeat_password">Repeat Password</string>
-    <string name="cook_created">Client created</string>
+    <string name="cook_created">Cook created</string>
 
 
 </resources>

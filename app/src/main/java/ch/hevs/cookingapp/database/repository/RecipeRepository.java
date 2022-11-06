@@ -22,7 +22,7 @@ public class RecipeRepository
 
     public static RecipeRepository getInstance() {
         if (instance == null) {
-            synchronized (CookRepository.class) {
+            synchronized (RecipeRepository.class) {
                 if (instance == null) {
                     instance = new RecipeRepository();
                 }

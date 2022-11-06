@@ -40,4 +40,6 @@ public interface RecipeDao
 
     @Query("DELETE FROM recipe")
     void deleteAll();
+
+    //TODO est-ce qu'on a toute les requêtes dont on a besoin?
 }
