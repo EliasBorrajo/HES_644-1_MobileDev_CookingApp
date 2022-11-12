@@ -18,6 +18,7 @@ import com.google.android.material.navigation.NavigationView;
 
 import ch.hevs.cookingapp.R;
 import ch.hevs.cookingapp.ui.cook.CookActivity;
+import ch.hevs.cookingapp.ui.mgmt.AboutActivity;
 import ch.hevs.cookingapp.ui.mgmt.LoginActivity;
 import ch.hevs.cookingapp.ui.mgmt.SettingsActivity;
 import ch.hevs.cookingapp.ui.recipe.RecipesActivity;
@@ -107,6 +108,11 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         if (item.getItemId() == R.id.action_settings)
         {
             Intent intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);
+        }
+        if (item.getItemId() == R.id.action_about)
+        {
+            Intent intent = new Intent(this, AboutActivity.class);
             startActivity(intent);
         }
 
