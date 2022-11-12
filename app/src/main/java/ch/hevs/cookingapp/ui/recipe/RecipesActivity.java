@@ -61,7 +61,7 @@ public class RecipesActivity extends BaseActivity {
         String user = settings.getString(BaseActivity.PREFS_USER, null);
 
         String meals = getIntent().getStringExtra(String.valueOf(R.string.meals));
-
+        //TODO demander comment revenir en arriver sur le bon intent (details -> recipes)
         recipes = new ArrayList<>();
         adapter = new RecyclerAdapter<>(new RecyclerViewItemClickListener() {
             @Override
@@ -87,10 +87,8 @@ public class RecipesActivity extends BaseActivity {
         RecipeListViewModel.Factory factory = new RecipeListViewModel.Factory(
                 getApplication(), user);
         viewModel = ViewModelProviders.of((FragmentActivity) this, (ViewModelProvider.Factory) factory).get(RecipeListViewModel.class);
-        //TODO get recipes matin ou midi ou soir
-        LiveData<List<RecipeEntity>> recipesMeals = null;
 
-        System.out.println("Recipes for " + meals);
+        LiveData<List<RecipeEntity>> recipesMeals = null;
 
         switch (meals) {
             case "Breakfast":

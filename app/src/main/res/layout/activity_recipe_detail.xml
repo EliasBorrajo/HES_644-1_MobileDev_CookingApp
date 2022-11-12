@@ -1,9 +1,293 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.recipe.RecipeDetailActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/tv_recipe_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/tv_title_recipe"
+            android:textAlignment="center"
+            android:textSize="25sp"/>
+
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="match_parent"
+            android:layout_height="156dp"
+            android:layout_margin="20dp"
+            app:srcCompat="@android:drawable/ic_menu_gallery"
+            android:contentDescription="@string/ib_descritpion"/>
+
+        <LinearLayout
+            android:id="@+id/ll_PrepTime"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/tv_prep_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:text="@string/tv_prep_time"
+                android:textSize="16sp"
+                tools:layout_editor_absoluteX="29dp"
+                tools:layout_editor_absoluteY="13dp" />
+
+            <TextView
+                android:id="@+id/tv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/et_prep_time"
+                android:textSize="16sp"
+                tools:layout_editor_absoluteX="185dp"
+                tools:layout_editor_absoluteY="10dp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_TitleMeal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="15dp"
+            android:text="@string/tv_meal"
+            android:textSize="16sp"
+            android:layout_marginTop="20dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <CheckBox
+                android:id="@+id/checkBoxBreakfast"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/cb_breakfast"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:enabled="false"
+                android:focusable="false"/>
+
+            <CheckBox
+                android:id="@+id/checkBoxLunch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/cb_lunch"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:enabled="false"
+                android:focusable="false"/>
+
+            <CheckBox
+                android:id="@+id/checkBoxDinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/cb_dinner"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:enabled="false"
+                android:focusable="false"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_TitleDiet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="15dp"
+            android:text="@string/tv_diet"
+            android:textSize="16sp"
+            android:layout_marginTop="20dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="80dp"
+                android:orientation="vertical">
+
+                <CheckBox
+                    android:id="@+id/checkBoxMeat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/cb_meat"
+                    android:layout_marginEnd="12dp"
+                    android:enabled="false"
+                    android:focusable="false"/>
+
+                <CheckBox
+                    android:id="@+id/checkBoxFish"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/cb_fish"
+                    android:enabled="false"
+                    android:focusable="false"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <CheckBox
+                    android:id="@+id/checkBoxVegetarian"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/cb_vegetarian"
+                    android:enabled="false"
+                    android:focusable="false"/>
+
+                <CheckBox
+                    android:id="@+id/checkBoxVegan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/cb_vegan"
+                    android:enabled="false"
+                    android:focusable="false"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_TitleAllergy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/tv_allergy"
+            android:textSize="16sp"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="15dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="83dp"
+                android:orientation="vertical">
+
+                <CheckBox
+                    android:id="@+id/checkBoxNuts"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/cb_nuts"
+                    android:enabled="false"
+                    android:focusable="false"/>
+
+                <CheckBox
+                    android:id="@+id/checkBoxPeanuts"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/cb_peanuts"
+                    android:enabled="false"
+                    android:focusable="false"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <CheckBox
+                    android:id="@+id/checkBoxLactose"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/cb_lactose"
+                    android:layout_marginEnd="17dp"
+                    android:enabled="false"
+                    android:focusable="false"/>
+
+                <CheckBox
+                    android:id="@+id/checkBoxGluten"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/cb_gluten"
+                    android:enabled="false"
+                    android:focusable="false"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_title_ingredients"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:text="@string/tv_ingredients"
+            android:textSize="16sp"
+            android:layout_marginTop="20dp"/>
+
+        <TextView
+            android:id="@+id/tv_ingredients"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/tv_ingredients"
+            android:textSize="16sp"
+            android:minHeight="48dp" />
+
+        <TextView
+            android:id="@+id/tv_tilte_preparation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:text="@string/tv_preparation"
+            android:textSize="16sp"
+            android:layout_marginTop="20dp"/>
+
+        <TextView
+            android:id="@+id/tv_preparation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/tv_preparation"
+            android:textSize="16sp"
+            android:inputType="textMultiLine"
+            android:minHeight="48dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="30dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/button_save"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:text="@string/btn_edit" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>
