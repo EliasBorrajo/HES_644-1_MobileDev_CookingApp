@@ -38,11 +38,13 @@
     <!-- String related to MainActivity -->
     <string name="title_activity_main">Let\'s cook!</string>
     <string name="logout_msg">Do you really want to logout?</string>
+    <string name="meals">Meals</string>
 
     <!-- Actions related to MainActivity -->
     <string name="action_breakfast">Pour le matin</string>
     <string name="action_lunch">Pour le midi</string>
     <string name="action_dinner">Pour le soir</string>
+    <string name="action_newRecipe">Créer une nouvelle recette</string>
 
     <!-- String related to Recipes -->
     <string name="title_activity_recipes">Recettes</string>
@@ -56,4 +58,41 @@
     <string name="title_activity_myrecipes">Mes recettes</string>
     <string name="title_activity_myinfos">Mes infos</string>
     <string name="action_logout">Logout</string>
+
+    <!-- String related to activity create recipe -->
+    <string name="recipe_created">Recipe created</string>
+    <string name="tv_title_create">Create new recipe</string>
+    <string name="ib_descritpion">Photo of your meal</string>
+    <string name="tv_recipe_name">Recipe name</string>
+    <string name="et_recipe_name">Name</string>
+    <string name="tv_prep_time">Preparation time</string>
+    <string name="et_prep_time">Time</string>
+    <string name="tv_time">min.</string>
+
+    <string name="tv_meal">Meal</string>
+    <string name="cb_breakfast">Breakfast</string>
+    <string name="cb_lunch">Lunch</string>
+    <string name="cb_dinner">Dinner</string>
+
+    <string name="tv_diet">Diet</string>
+    <string name="cb_vegan">Vegan</string>
+    <string name="cb_vegetarian">Vegetarian</string>
+    <string name="cb_meat">Meat</string>
+    <string name="cb_fish">Fish</string>
+
+    <string name="tv_allergy">Allergy</string>
+    <string name="cb_lactose">Lactose</string>
+    <string name="cb_gluten">Gluten</string>
+    <string name="cb_nuts">Nuts</string>
+    <string name="cb_peanuts">Peanut</string>
+
+    <string name="tv_ingredients">Which ingredients</string>
+    <string name="tv_preparation">How to prepare</string>
+
+    <string name="btn_save">Save</string>
+    <string name="btn_cancel">Cancel</string>
+
+    <string name="error_empty_recipe_name">Please, give a name to your recipe</string>
+    <string name="error_empty_ingredient">please provide ingredients</string>
+    <string name="error_empty_preparation">please, give indications of preparation</string>
 </resources>

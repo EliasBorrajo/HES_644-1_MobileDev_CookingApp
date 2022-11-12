@@ -17,13 +17,13 @@ public enum Allergy
     NUT() {
         @Override
         public String toString() {
-            return "Noix";
+            return "Nuts";
         }
     },
     PEANUT() {
         @Override
         public String toString() {
-            return "Arachide";
+            return "Peanut";
         }
     };
 }
