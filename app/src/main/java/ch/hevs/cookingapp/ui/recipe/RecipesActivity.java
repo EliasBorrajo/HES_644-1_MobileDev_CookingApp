@@ -1,6 +1,9 @@
 package ch.hevs.cookingapp.ui.recipe;
 
+import androidx.annotation.NonNull;
+import androidx.core.view.GravityCompat;
 import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -11,6 +14,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 
 import java.util.ArrayList;
@@ -20,6 +24,8 @@ import java.util.concurrent.locks.ReentrantLock;
 import ch.hevs.cookingapp.R;
 import ch.hevs.cookingapp.adapter.RecyclerAdapter;
 import ch.hevs.cookingapp.database.entity.RecipeEntity;
+import ch.hevs.cookingapp.database.enumeration.Diet;
+import ch.hevs.cookingapp.database.enumeration.Meal;
 import ch.hevs.cookingapp.database.pojo.CookWithRecipes;
 import ch.hevs.cookingapp.ui.BaseActivity;
 import ch.hevs.cookingapp.util.RecyclerViewItemClickListener;
@@ -43,6 +49,7 @@ public class RecipesActivity extends BaseActivity {
 
         RecyclerView recyclerView = findViewById(R.id.recipesRecyclerView);
 
+        // use a linear layout manager
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
@@ -52,6 +59,8 @@ public class RecipesActivity extends BaseActivity {
 
         SharedPreferences settings = getSharedPreferences(BaseActivity.PREFS_NAME, 0);
         String user = settings.getString(BaseActivity.PREFS_USER, null);
+
+        String meals = getIntent().getStringExtra(String.valueOf(R.string.meals));
 
         recipes = new ArrayList<>();
         adapter = new RecyclerAdapter<>(new RecyclerViewItemClickListener() {
@@ -63,7 +72,7 @@ public class RecipesActivity extends BaseActivity {
                 Intent intent = new Intent(RecipesActivity.this, RecipeDetailActivity.class);
                 intent.setFlags(
                         Intent.FLAG_ACTIVITY_NO_ANIMATION |
-                                Intent.FLAG_ACTIVITY_NO_HISTORY
+                        Intent.FLAG_ACTIVITY_NO_HISTORY
                 );
                 intent.putExtra("recipeId", recipes.get(position).getId());
                 startActivity(intent);
@@ -79,7 +88,25 @@ public class RecipesActivity extends BaseActivity {
                 getApplication(), user);
         viewModel = ViewModelProviders.of((FragmentActivity) this, (ViewModelProvider.Factory) factory).get(RecipeListViewModel.class);
         //TODO get recipes matin ou midi ou soir
-        viewModel.getOwnRecipes().observe(this, recipeEntities -> {
+        LiveData<List<RecipeEntity>> recipesMeals = null;
+
+        System.out.println("Recipes for " + meals);
+
+        switch (meals) {
+            case "Breakfast":
+                recipesMeals = viewModel.getBreakfastRecipes();
+                break;
+            case "Lunch":
+                recipesMeals = viewModel.getLunchRecipes();
+                break;
+            case "Dinner":
+                recipesMeals = viewModel.getDinnerRecipes();
+                break;
+            case "ownRecipes":
+                recipesMeals = viewModel.getOwnRecipes();
+                break;
+        }
+        recipesMeals.observe(this, recipeEntities -> {
             if (recipeEntities != null) {
                 recipes = recipeEntities;
                 adapter.setData(recipes);
@@ -87,7 +114,4 @@ public class RecipesActivity extends BaseActivity {
         });
         recyclerView.setAdapter(adapter);
     }
-
-    //TODO onNavigationItemSelected
-
 }

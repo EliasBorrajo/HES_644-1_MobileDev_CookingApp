@@ -5,25 +5,25 @@ public enum Diet
     VEGAN() {
         @Override
         public String toString() {
-            return "Végane";
+            return "Vegan";
         }
     },
     MEAT() {
         @Override
         public String toString() {
-            return "Viande";
+            return "Meat";
         }
     },
     FISH() {
         @Override
         public String toString() {
-            return "Poisson";
+            return "Fish";
         }
     },
     VEGETARIAN() {
         @Override
         public String toString() {
-            return "Végétarien";
+            return "Vegetarian";
         }
     };
 }

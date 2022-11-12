@@ -89,7 +89,6 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         super.onBackPressed();
     }
 
-    // Menu icons are inflated
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
