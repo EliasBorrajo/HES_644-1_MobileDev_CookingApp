@@ -3,6 +3,7 @@ package ch.hevs.cookingapp.ui;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -34,6 +35,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
      */
     public static final String PREFS_NAME = "SharedPrefs";      // Nom de la HashMap
     public static final String PREFS_USER = "LoggedIn";         // Nom de la clé de la hashmap, on ajoutera une valeur au LogIn
+    public static final String PREFS_THEME= "Theme";
 
     /**
      * Frame layout: Which is going to be used as parent layout for child activity layout.
@@ -70,6 +72,22 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
 
         navigationView = findViewById(R.id.base_nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        setPreferenceTheme();
+
+    }
+
+    private void setPreferenceTheme()
+    {
+        // On dit quelle thème on veut utiliser
+        SharedPreferences settings = getSharedPreferences(BaseActivity.PREFS_THEME, 0);
+        String theme = settings.getString(PREFS_THEME, "1");
+        int modeNight = Integer.parseInt(theme);
+
+        System.out.println("REMEMBERED THEME : "+theme);
+
+        // On l'applique.
+        AppCompatDelegate.setDefaultNightMode(modeNight);
     }
 
     @Override
