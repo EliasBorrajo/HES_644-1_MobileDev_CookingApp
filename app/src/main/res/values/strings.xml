@@ -34,6 +34,8 @@
     <string name="cook_repeat_password">Repeat Password</string>
     <string name="cook_created">User created</string>
 
+
+
     <!-- String related to MainActivity -->
     <string name="title_activity_main">Let\'s cook!</string>
     <string name="logout_msg">Do you really want to logout?</string>
@@ -63,6 +65,8 @@
     <string name="tv_phone">Phone Number</string>
     <string name="action_submit">Submit</string>
 
-
+    <!-- Cook Activity -->
+    <string name="cook_updated">User updated</string>
+    <string name="delete_msg">Do you really want to delete your client account?</string>
 
 </resources>

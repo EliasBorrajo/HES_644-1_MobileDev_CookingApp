@@ -69,6 +69,8 @@
             android:imeOptions="actionNext"
             android:paddingLeft="10dp"
             android:singleLine="true"
+            android:focusable="false"
+            android:enabled="false"
             android:textColor="@color/black" />
     </LinearLayout>
 
@@ -105,6 +107,8 @@
             android:imeOptions="actionNext"
             android:paddingLeft="10dp"
             android:singleLine="true"
+            android:focusable="false"
+            android:enabled="false"
             android:textColor="@color/black" />
     </LinearLayout>
     <!-- create a Linear Layout with horizontal orientation and weightSum property -->
@@ -141,6 +145,8 @@
             android:imeOptions="actionNext"
             android:paddingLeft="10dp"
             android:singleLine="true"
+            android:focusable="false"
+            android:enabled="false"
             android:textColor="@color/black" />
     </LinearLayout>
     <!-- fourth Child Layout -->
@@ -175,8 +181,58 @@
             android:imeOptions="actionNext"
             android:paddingLeft="10dp"
             android:singleLine="true"
+            android:focusable="false"
+            android:enabled="false"
             android:textColor="@color/black" />
     </LinearLayout>
+
+
+    <!-- En mode EDIT, le password Layout va s'afficher, sinon inexistant -->
+    <LinearLayout
+        android:id="@+id/layout_passwordLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:weightSum="2">
+
+        <!-- Séparateur -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginBottom="12dp"
+            android:layout_marginTop="12dp"
+            android:background="@android:color/darker_gray" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/prompt_password"
+                android:inputType="textPassword" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/passwordRep"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/cook_repeat_password"
+                android:inputType="textPassword"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
+
 
     <LinearLayout
         android:id="@+id/layout_actionButtons"
@@ -184,6 +240,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:orientation="horizontal"
+        android:visibility="gone"
         android:weightSum="2">
 
         <Button

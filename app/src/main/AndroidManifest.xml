@@ -86,15 +86,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ch.hevs.cookingapp.ui.MainActivity"/>
         </activity>
-        <activity
-            android:name=".ui.cook.CookEditActivity"
-            android:parentActivityName=".ui.cook.CookActivity"
-            android:exported="false"
-            android:theme="@style/Theme.CookingApp.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="ch.hevs.cookingapp.ui.cook.CookActivity"/>
-        </activity>
+
         <activity
             android:name=".ui.mgmt.LoginActivity"
             android:label="@string/app_name"

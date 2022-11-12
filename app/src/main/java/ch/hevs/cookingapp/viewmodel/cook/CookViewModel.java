@@ -22,7 +22,10 @@ public class CookViewModel extends AndroidViewModel
     private CookRepository repository;
 
     // MediatorLiveData can observe other LiveData objects and react on their emissions.
+    // Possède les informtions sources de la DB
     private final MediatorLiveData<CookEntity> observableCook;
+
+    // todo : Creer mediator de chaque liste BREAKFASTE etc
 
     public CookViewModel(@NonNull Application application,
                          final String email, CookRepository cookRepository)
@@ -37,14 +40,17 @@ public class CookViewModel extends AndroidViewModel
         // set by default null, until we get data from the database.
         observableCook.setValue(null);
 
-        LiveData<CookEntity> account = repository.getCook(email, application);
+        LiveData<CookEntity> cook = repository.getCook(email, application); //TODO RENOMER
+        // todo : Live Data de chaqque liste. qui apelle la bonne methode
 
         // observe the changes of the account entity from the database and forward them
-        observableCook.addSource(account, observableCook::setValue);
+        observableCook.addSource(cook, observableCook::setValue);
+
+        // todo : Add source, mapper Mediator avec liveData
     }
 
     /**
-     * A creator is used to inject the account id into the ViewModel
+     * A creator is used to inject the cook id into the ViewModel
      */
     public static class Factory extends ViewModelProvider.NewInstanceFactory
     {
