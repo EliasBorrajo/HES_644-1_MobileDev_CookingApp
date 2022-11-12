@@ -5,19 +5,19 @@ public enum Meal
     BREAKFAST() {
         @Override
         public String toString() {
-            return "Déjeuné";
+            return "Breakfast";
         }
     },
     LUNCH() {
         @Override
         public String toString() {
-            return "Dîné";
+            return "Lunch";
         }
     },
     DINNER() {
         @Override
         public String toString() {
-            return "Soupé";
+            return "Dinner";
         }
     };
 }

@@ -4,18 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.recipe.RecipeDetailActivity">
+    tools:context=".ui.recipe.RecipeCreateActivity"
+    >
+
     <LinearLayout
+        android:id="@+id/radioGroup_Allergy"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/tv_recipe_name"
+            android:id="@+id/textViewTitleCreate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="@string/tv_title_recipe"
+            android:text="@string/tv_title_create"
             android:textAlignment="center"
             android:textSize="25sp"/>
 
@@ -25,18 +28,46 @@
             android:layout_height="156dp"
             android:layout_margin="20dp"
             app:srcCompat="@android:drawable/ic_menu_gallery"
-            android:contentDescription="@string/ib_descritpion"/>
+            android:contentDescription="@string/ib_descritpion" />
 
         <LinearLayout
-            android:id="@+id/ll_PrepTime"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
             android:gravity="center"
-            android:visibility="gone">
+            android:layout_marginTop="20dp">
 
             <TextView
-                android:id="@+id/tv_prep_time"
+                android:id="@+id/textViewRecipeName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:text="@string/tv_recipe_name"
+
+                android:textSize="16sp"
+                tools:layout_editor_absoluteX="29dp"
+                tools:layout_editor_absoluteY="13dp" />
+
+            <EditText
+                android:id="@+id/editText_RecipeName"
+                android:layout_width="249dp"
+                android:layout_height="48dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:hint="@string/et_recipe_name"
+                tools:layout_editor_absoluteX="185dp"
+                tools:layout_editor_absoluteY="10dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="20dp">
+
+            <TextView
+                android:id="@+id/textViewPrepTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
@@ -45,18 +76,19 @@
                 tools:layout_editor_absoluteX="29dp"
                 tools:layout_editor_absoluteY="13dp" />
 
-            <TextView
-                android:id="@+id/tv_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/et_prep_time"
-                android:textSize="16sp"
+            <EditText
+                android:id="@+id/editText_PrepTime"
+                android:layout_width="162dp"
+                android:layout_height="48dp"
+                android:ems="10"
+                android:inputType="number"
+                android:hint="@string/et_prep_time"
                 tools:layout_editor_absoluteX="185dp"
                 tools:layout_editor_absoluteY="10dp" />
         </LinearLayout>
 
         <TextView
-            android:id="@+id/tv_TitleMeal"
+            android:id="@+id/textViewRadioTitleMeal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -79,8 +111,7 @@
                 android:text="@string/cb_breakfast"
                 android:layout_marginRight="20dp"
                 android:layout_marginLeft="20dp"
-                android:enabled="false"
-                android:focusable="false"/>
+                android:onClick="onCheckedMeal" />
 
             <CheckBox
                 android:id="@+id/checkBoxLunch"
@@ -90,8 +121,7 @@
                 android:text="@string/cb_lunch"
                 android:layout_marginRight="20dp"
                 android:layout_marginLeft="20dp"
-                android:enabled="false"
-                android:focusable="false"/>
+                android:onClick="onCheckedMeal"/>
 
             <CheckBox
                 android:id="@+id/checkBoxDinner"
@@ -101,12 +131,11 @@
                 android:text="@string/cb_dinner"
                 android:layout_marginRight="20dp"
                 android:layout_marginLeft="20dp"
-                android:enabled="false"
-                android:focusable="false"/>
+                android:onClick="onCheckedMeal"/>
         </LinearLayout>
 
         <TextView
-            android:id="@+id/tv_TitleDiet"
+            android:id="@+id/textViewRadioTitleDiet"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -134,8 +163,7 @@
                     android:layout_weight="1"
                     android:text="@string/cb_meat"
                     android:layout_marginEnd="12dp"
-                    android:enabled="false"
-                    android:focusable="false"/>
+                    android:onClick="onCheckedDiet" />
 
                 <CheckBox
                     android:id="@+id/checkBoxFish"
@@ -143,8 +171,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/cb_fish"
-                    android:enabled="false"
-                    android:focusable="false"/>
+                    android:onClick="onCheckedDiet" />
             </LinearLayout>
 
             <LinearLayout
@@ -158,8 +185,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/cb_vegetarian"
-                    android:enabled="false"
-                    android:focusable="false"/>
+                    android:onClick="onCheckedDiet" />
 
                 <CheckBox
                     android:id="@+id/checkBoxVegan"
@@ -167,20 +193,20 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/cb_vegan"
-                    android:enabled="false"
-                    android:focusable="false"/>
+                    android:onClick="onCheckedDiet"/>
             </LinearLayout>
         </LinearLayout>
 
         <TextView
-            android:id="@+id/tv_TitleAllergy"
+            android:id="@+id/textViewRadioTitleAllergy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/tv_allergy"
             android:textSize="16sp"
             android:layout_marginTop="20dp"
-            android:layout_marginStart="15dp"/>
+            android:layout_marginStart="15dp"
+            />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -200,8 +226,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/cb_nuts"
-                    android:enabled="false"
-                    android:focusable="false"/>
+                    android:onClick="onCheckedAllegry"/>
 
                 <CheckBox
                     android:id="@+id/checkBoxPeanuts"
@@ -209,8 +234,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/cb_peanuts"
-                    android:enabled="false"
-                    android:focusable="false"/>
+                    android:onClick="onCheckedAllegry"/>
             </LinearLayout>
 
             <LinearLayout
@@ -225,8 +249,7 @@
                     android:layout_weight="1"
                     android:text="@string/cb_lactose"
                     android:layout_marginEnd="17dp"
-                    android:enabled="false"
-                    android:focusable="false"/>
+                    android:onClick="onCheckedAllegry"/>
 
                 <CheckBox
                     android:id="@+id/checkBoxGluten"
@@ -234,13 +257,12 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/cb_gluten"
-                    android:enabled="false"
-                    android:focusable="false"/>
+                    android:onClick="onCheckedAllegry"/>
             </LinearLayout>
         </LinearLayout>
 
         <TextView
-            android:id="@+id/tv_title_ingredients"
+            android:id="@+id/textView_ingredients"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
@@ -248,16 +270,18 @@
             android:textSize="16sp"
             android:layout_marginTop="20dp"/>
 
-        <TextView
-            android:id="@+id/tv_ingredients"
+        <EditText
+            android:id="@+id/editText_ingredients"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/tv_ingredients"
-            android:textSize="16sp"
+            android:ems="10"
+            android:gravity="start|top"
+            android:hint="@string/tv_ingredients"
+            android:inputType="textMultiLine"
             android:minHeight="48dp" />
 
         <TextView
-            android:id="@+id/tv_tilte_preparation"
+            android:id="@+id/textView_preparation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
@@ -265,12 +289,13 @@
             android:textSize="16sp"
             android:layout_marginTop="20dp"/>
 
-        <TextView
-            android:id="@+id/tv_preparation"
+        <EditText
+            android:id="@+id/editText_preparation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:ems="10"
+            android:gravity="start|top"
             android:hint="@string/tv_preparation"
-            android:textSize="16sp"
             android:inputType="textMultiLine"
             android:minHeight="48dp" />
 
@@ -287,7 +312,16 @@
                 android:layout_weight="1"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:text="@string/btn_edit" />
+                android:text="@string/btn_save" />
+
+            <Button
+                android:id="@+id/button_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:text="@string/btn_cancel" />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

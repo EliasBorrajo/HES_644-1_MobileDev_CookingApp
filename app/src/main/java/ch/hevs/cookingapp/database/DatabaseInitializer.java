@@ -65,7 +65,6 @@ public class DatabaseInitializer
         addRecipe(db, "xolo@gmail.com", "Crêpes", 15, "Oeufs, Lait, Beurre", "Melanger fortement le tout", Diet.VEGETARIAN.toString(), Allergy.GLUTEN.toString(), Meal.BREAKFAST.toString());
         addRecipe(db, "xolo@gmail.com", "Sandiwch", 10, "Pain, Beurre, Jambon, tomate", "Empiler par tranches shouaités",Diet.FISH.toString(), Allergy.GLUTEN.toString(), Meal.BREAKFAST.toString());
         addRecipe(db, "milena@gmail.com", "Cookies", 45, "Oeufs, Lait, Beurre, Chocolat, Un tas de bonnes choses, Agent chimique X", "Melanger fortement le tout, puis lancer dans le four.",Diet.MEAT.toString(), Allergy.GLUTEN.toString(), Meal.BREAKFAST.toString());
-        addRecipe(db, "milena@gmail.com", "CrockScooby", 55, "Chien, agent secret, Sucre", "Melanger fortement le tout et mettre dans le burger à Zach",Diet.VEGAN.toString(), Allergy.GLUTEN.toString(), Meal.BREAKFAST.toString());
     }
 
 

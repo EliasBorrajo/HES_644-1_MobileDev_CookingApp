@@ -6,11 +6,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.view.GravityCompat;
 
+import java.util.List;
+
 import ch.hevs.cookingapp.R;
+import ch.hevs.cookingapp.database.entity.RecipeEntity;
+import ch.hevs.cookingapp.ui.recipe.RecipeCreateActivity;
 import ch.hevs.cookingapp.ui.recipe.RecipesActivity;
 
 // Page principale de l'application, Activité classique comme les autres
@@ -58,8 +63,13 @@ public class MainActivity extends BaseActivity
         breakfastBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent recipeActivity = new Intent(MainActivity.this, RecipesActivity.class);
-                startActivity(recipeActivity);
+                Intent recipesActivity = new Intent(MainActivity.this, RecipesActivity.class);
+                recipesActivity.setFlags(
+                        Intent.FLAG_ACTIVITY_NO_ANIMATION |
+                                Intent.FLAG_ACTIVITY_NO_HISTORY
+                );
+                recipesActivity.putExtra(String.valueOf(R.string.meals), "Breakfast");
+                startActivity(recipesActivity);
             }
         });
 
@@ -68,6 +78,11 @@ public class MainActivity extends BaseActivity
             @Override
             public void onClick(View view) {
                 Intent recipeActivity = new Intent(MainActivity.this, RecipesActivity.class);
+                recipeActivity.setFlags(
+                        Intent.FLAG_ACTIVITY_NO_ANIMATION |
+                                Intent.FLAG_ACTIVITY_NO_HISTORY
+                );
+                recipeActivity.putExtra(String.valueOf(R.string.meals), "Lunch");
                 startActivity(recipeActivity);
             }
         });
@@ -77,6 +92,20 @@ public class MainActivity extends BaseActivity
             @Override
             public void onClick(View view) {
                 Intent recipeActivity = new Intent(MainActivity.this, RecipesActivity.class);
+                recipeActivity.setFlags(
+                        Intent.FLAG_ACTIVITY_NO_ANIMATION |
+                                Intent.FLAG_ACTIVITY_NO_HISTORY
+                );
+                recipeActivity.putExtra(String.valueOf(R.string.meals), "Dinner");
+                startActivity(recipeActivity);
+            }
+        });
+
+        Button newRecipeBtn = findViewById(R.id.buttonNewRecipe);
+        newRecipeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent recipeActivity = new Intent(MainActivity.this, RecipeCreateActivity.class);
                 startActivity(recipeActivity);
             }
         });
