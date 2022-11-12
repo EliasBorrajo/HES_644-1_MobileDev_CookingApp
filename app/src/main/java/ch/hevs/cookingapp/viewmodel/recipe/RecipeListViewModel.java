@@ -47,7 +47,6 @@ public class RecipeListViewModel extends AndroidViewModel {
         observableRecipeDinner.setValue(null);
 
         LiveData<List<RecipeEntity>> ownRecipes = recipeRepository.getByCreator(creator, application);
-        //LiveData<List<RecipeEntity>> breakfastRecipes = recipeRepository.getByMeal("Breakfast", application);
         LiveData<List<RecipeEntity>> breakfastRecipes = recipeRepository.getByMeal("Breakfast", application);
         LiveData<List<RecipeEntity>> lunchRecipes = recipeRepository.getByMeal("Lunch", application);
         LiveData<List<RecipeEntity>> dinnerRecipes = recipeRepository.getByMeal("Dinner", application);

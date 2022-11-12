@@ -115,6 +115,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
             intent = new Intent(this, CookActivity.class);
         } else if (id == R.id.nav_recipes) {
             intent = new Intent(this, RecipesActivity.class);
+            intent.putExtra(String.valueOf(R.string.meals), "ownRecipes");
         } else if (id == R.id.nav_main) {
             intent = new Intent(this, MainActivity.class);
         } else if (id == R.id.nav_logout) {

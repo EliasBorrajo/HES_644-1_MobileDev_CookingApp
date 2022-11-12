@@ -62,13 +62,13 @@ public class MainActivity extends BaseActivity
         breakfastBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent recipeActivity = new Intent(MainActivity.this, RecipesActivity.class);
-                recipeActivity.setFlags(
+                Intent recipesActivity = new Intent(MainActivity.this, RecipesActivity.class);
+                recipesActivity.setFlags(
                         Intent.FLAG_ACTIVITY_NO_ANIMATION |
                                 Intent.FLAG_ACTIVITY_NO_HISTORY
                 );
-                recipeActivity.putExtra(String.valueOf(R.string.meals), "Breakfast");
-                startActivity(recipeActivity);
+                recipesActivity.putExtra(String.valueOf(R.string.meals), "Breakfast");
+                startActivity(recipesActivity);
             }
         });
 

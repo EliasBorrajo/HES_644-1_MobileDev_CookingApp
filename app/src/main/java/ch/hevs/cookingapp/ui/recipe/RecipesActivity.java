@@ -91,19 +91,8 @@ public class RecipesActivity extends BaseActivity {
         LiveData<List<RecipeEntity>> recipesMeals = null;
 
         System.out.println("Recipes for " + meals);
-        //meals.contains("Breakfast")
-        //recipes.contains(Meal.BREAKFAST)
 
-        if (meals.contains("Breakfast"))
-            recipesMeals = viewModel.getBreakfastRecipes();
-        else if (recipes.contains(Meal.LUNCH))
-            recipesMeals = viewModel.getLunchRecipes();
-        else if (recipes.contains(Meal.DINNER))
-            recipesMeals = viewModel.getDinnerRecipes();
-        else
-            recipesMeals = viewModel.getOwnRecipes();
-
-        /*switch (meals) {
+        switch (meals) {
             case "Breakfast":
                 recipesMeals = viewModel.getBreakfastRecipes();
                 break;
@@ -116,7 +105,7 @@ public class RecipesActivity extends BaseActivity {
             case "ownRecipes":
                 recipesMeals = viewModel.getOwnRecipes();
                 break;
-        }*/
+        }
         recipesMeals.observe(this, recipeEntities -> {
             if (recipeEntities != null) {
                 recipes = recipeEntities;

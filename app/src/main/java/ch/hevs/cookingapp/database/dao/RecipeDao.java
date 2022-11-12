@@ -28,9 +28,7 @@ public interface RecipeDao
     @Query("SELECT * FROM recipe WHERE creator=:creator")
     LiveData<List<RecipeEntity>> getOwned(String creator);
 
-   // @Query("SELECT * FROM recipe WHERE mealTime=:mealTime")
-
-    @Query("SELECT * FROM recipe WHERE mealTime=:mealTime")
+    @Query("SELECT * FROM recipe WHERE mealTime LIKE '%'||:mealTime||'%'")
     LiveData<List<RecipeEntity>> getByMeal(String mealTime);
 
     @Insert
