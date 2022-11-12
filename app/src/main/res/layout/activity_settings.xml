@@ -12,11 +12,11 @@
 
     <Switch
         android:id="@+id/switch_Theme"
-        android:text="@string/switch_name"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:minHeight="50dp"
         android:onClick="changeTheme"
-         />
+        android:text="@string/switch_name" />
 
 </LinearLayout>
