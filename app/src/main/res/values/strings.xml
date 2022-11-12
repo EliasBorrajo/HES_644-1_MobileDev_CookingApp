@@ -24,6 +24,9 @@
     <string name="action_reset">Reset</string>
     <string name="action_cancel">Cancel</string>
     <string name="action_logout">Logout</string>
+    <string name="action_edit">Edit</string>
+    <string name="action_delete">Delete</string>
+
 
     <!-- Strings related to register -->
     <string name="cook_firstName">First Name</string>

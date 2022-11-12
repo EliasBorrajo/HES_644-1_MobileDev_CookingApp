@@ -26,8 +26,13 @@ import ch.hevs.cookingapp.ui.recipe.RecipesActivity;
 // C'est la fênetre FRAGMENT qui s'ouvre sur le coté gacuhe
 public class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener
 {
-    public static final String PREFS_NAME = "SharedPrefs";
-    public static final String PREFS_USER = "LoggedIn";
+    /**
+     * On aura accès à ces 2 variables, partout dans le code,
+     * c'est comme un singleton en hashmap disponible pour accèder à ces informations
+     * sans avir besoin de le mettre dans un intent à chaque fois
+     */
+    public static final String PREFS_NAME = "SharedPrefs";      // Nom de la HashMap
+    public static final String PREFS_USER = "LoggedIn";         // Nom de la clé de la hashmap, on ajoutera une valeur au LogIn
 
     /**
      * Frame layout: Which is going to be used as parent layout for child activity layout.

@@ -108,9 +108,9 @@ public class LoginActivity extends AppCompatActivity {
                     if (cookEntity.getPassword().equals(password)) {
                         // We need an Editor object to make preference changes.
                         // All objects are from android.context.Context
-                        SharedPreferences.Editor editor = getSharedPreferences(BaseActivity.PREFS_NAME, 0).edit();
-                        editor.putString(BaseActivity.PREFS_USER, cookEntity.getEmail());
-                        editor.apply();
+                        SharedPreferences.Editor editor = getSharedPreferences(BaseActivity.PREFS_NAME, 0).edit();  // On vient editer notre HASHTABLE LOGIN
+                        editor.putString(BaseActivity.PREFS_USER, cookEntity.getEmail());       // ON MET LA VALEUR A LA CLE
+                        editor.apply();                                                         // On n'oublie pas d'appliquer les changements
 
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(intent);

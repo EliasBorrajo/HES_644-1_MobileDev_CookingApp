@@ -23,6 +23,7 @@ public class CookEntity implements Comparable
     {
     }
 
+
     public CookEntity(@NonNull String email, String firstName, String lastName, String password, String phoneNumber)
     {
         this.email = email;

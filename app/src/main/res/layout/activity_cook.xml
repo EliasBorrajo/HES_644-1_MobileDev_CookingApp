@@ -194,7 +194,7 @@
             android:layout_weight="1"
             android:background="@color/colorPrimary"
             android:text="@string/action_cancel"
-            android:textColor="@color/black" />
+            android:textColor="#CFD8DC" />
 
         <Button
             android:id="@+id/btn_submit"
@@ -204,7 +204,7 @@
             android:layout_weight="1"
             android:background="@color/colorPrimary"
             android:text="@string/action_submit"
-            android:textColor="@color/black"/>
+            android:textColor="#CFD8DC" />
 
     </LinearLayout>
 </LinearLayout>
