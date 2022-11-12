@@ -25,6 +25,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="@string/prompt_email"
+                android:gravity="center_horizontal"
                 android:inputType="textEmailAddress" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -46,6 +47,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="@string/cook_firstName"
+                android:gravity="center_horizontal"
                 android:inputType="textPersonName" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -59,6 +61,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="@string/cook_name"
+                android:gravity="center_horizontal"
                 android:inputType="textPersonName" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -72,6 +75,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="@string/prompt_password"
+                android:gravity="center_horizontal"
                 android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -85,6 +89,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="@string/cook_repeat_password"
+                android:gravity="center_horizontal"
                 android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -92,6 +97,7 @@
             android:id="@+id/editButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/white"
             android:text="@string/action_register" />
 
     </LinearLayout>
