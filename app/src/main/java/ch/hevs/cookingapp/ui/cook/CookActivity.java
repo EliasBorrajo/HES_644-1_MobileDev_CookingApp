@@ -17,6 +17,9 @@ import androidx.core.view.GravityCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import ch.hevs.cookingapp.R;
 import ch.hevs.cookingapp.database.entity.CookEntity;
 import ch.hevs.cookingapp.ui.BaseActivity;
@@ -70,8 +73,6 @@ public class CookActivity extends BaseActivity {
                     updateContent(); //Si il y a un changement en DB, on UPDATE
                 }
             });
-
-
     }
 
 
@@ -91,6 +92,7 @@ public class CookActivity extends BaseActivity {
         if (cook != null) {
             etFirstName.setText(cook.getFirstName());
             etLastName.setText(cook.getLastName());
+            etPhone.setText(cook.getPhoneNumber());
             etEmail.setText(cook.getEmail());
             etPhone.setText(cook.getPhoneNumber());
         }
@@ -118,24 +120,36 @@ public class CookActivity extends BaseActivity {
     {
         super.onCreateOptionsMenu(menu);
 
-        menu.add(0, EDIT_COOK, Menu.NONE, getString(R.string.action_edit))
-                .setIcon(R.drawable.ic_edit_white_24dp)
-                .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        //  Si c'est bien moi-même qui visite mon profil, la toolbar va avoir le bouton EDIT & DELETE en plus
+        // Si c'est un autre user qui vient voir mon profil, ces bouttons e s'affichent pas.
+        SharedPreferences settings = getSharedPreferences(BaseActivity.PREFS_NAME, 0);
+        String user = settings.getString(PREFS_USER, null);
 
-        menu.add(0, DELETE_COOK, Menu.NONE, getString(R.string.action_delete))
-                .setIcon(R.drawable.ic_delete_white_24dp)
-                .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        if(user.equals(etEmail.getText().toString()) )
+        {
+            menu.add(0, EDIT_COOK, Menu.NONE, getString(R.string.action_edit))
+                    .setIcon(R.drawable.ic_edit_white_24dp)
+                    .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+
+            menu.add(0, DELETE_COOK, Menu.NONE, getString(R.string.action_delete))
+                    .setIcon(R.drawable.ic_delete_white_24dp)
+                    .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        }
         return true;
     }
 
     // Quand on sélectionne les bouttons dans la TOOLBAR
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == EDIT_COOK) {
-            if (isEditable) {
+        if (item.getItemId() == EDIT_COOK)
+        {
+            if (isEditable)
+            {
                 item.setIcon(R.drawable.ic_edit_white_24dp);
                 switchEditableMode();
-            } else {
+            }
+            else    // Quand je passe de Classic à Edit
+            {
                 item.setIcon(R.drawable.ic_done_white_24dp);
                 switchEditableMode();
             }
@@ -163,7 +177,7 @@ public class CookActivity extends BaseActivity {
     }
 
     private void switchEditableMode() {
-        // Vue CLASSIQUE
+        // EDIT
         if (!isEditable)
         {
             LinearLayout linearLayout = findViewById(R.id.layout_passwordLayout);
@@ -186,7 +200,7 @@ public class CookActivity extends BaseActivity {
             etPhone.setFocusableInTouchMode(true);
 
         }
-        // Vue en mode EDIT
+        // Vue en mode CALSSIC
         else
         {
             saveChanges(
@@ -197,15 +211,23 @@ public class CookActivity extends BaseActivity {
                     etPwd1.getText().toString(),
                     etPwd2.getText().toString()
             );
+
             LinearLayout linearLayout_Password = findViewById(R.id.layout_passwordLayout);
             linearLayout_Password.setVisibility(View.GONE);
             etFirstName.setFocusable(false);
             etFirstName.setEnabled(false);
+
             etLastName.setFocusable(false);
             etLastName.setEnabled(false);
+
             etEmail.setFocusable(false);
             etEmail.setEnabled(false);
+
+            etPhone.setFocusable(false);
+            etPhone.setEnabled(false);
+
         }
+        // Toggle pour dire que on va changer de vue
         isEditable = !isEditable;
     }
 
@@ -223,12 +245,22 @@ public class CookActivity extends BaseActivity {
         if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {            // c'est un REGEX de si on a bien un mail ou non
             etEmail.setError(getString(R.string.error_invalid_email));
             etEmail.requestFocus();
+            Toast.makeText(this,R.string.error_invalid_email_format,Toast.LENGTH_LONG).show();
+            return;
+        }
+        // Verification que le phone number est bon
+        // Phone Regex Pattern : upto length 10 - 13 and including character "+" infront.
+        Pattern regex = Pattern.compile("^[+]?[0-9]{10,13}$");
+        Matcher phonePattern = regex.matcher(phone);
+        if (!phonePattern.find())
+        {
+            etPhone.setError(getString(R.string.error_invalid_phone));
+            etPhone.requestFocus();
+            Toast.makeText(this,R.string.error_invalid_phone_format,Toast.LENGTH_LONG).show();
             return;
         }
 
-        // TODO : Phone number, mettre de le EDIT TEXT en TYPE PHONE, puis vérifier ici avec regex
-
-        // On recupère les paramètres à SET à notre entité
+        // On recupère les paramètres pour mettre avec SET à notre entité
         cook.setEmail(email);
         cook.setFirstName(firstName);
         cook.setLastName(lastName);
@@ -247,6 +279,8 @@ public class CookActivity extends BaseActivity {
                 setResponse(false);
             }
         });
+
+        return;
     }
 
     private void setResponse(Boolean response) {

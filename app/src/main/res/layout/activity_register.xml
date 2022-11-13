@@ -13,6 +13,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:orientation="vertical"
+        android:gravity="center"
         tools:context="ch.hevs.cookingapp.ui">
 
         <com.google.android.material.textfield.TextInputLayout
@@ -63,6 +64,20 @@
                 android:hint="@string/cook_name"
                 android:gravity="center_horizontal"
                 android:inputType="textPersonName" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/phoneNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/tv_phone"
+                android:gravity="center_horizontal"
+                android:inputType="phone" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout

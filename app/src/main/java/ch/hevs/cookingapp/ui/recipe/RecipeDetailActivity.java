@@ -22,7 +22,7 @@ import ch.hevs.cookingapp.viewmodel.recipe.RecipeViewModel;
 public class RecipeDetailActivity extends BaseActivity
 {
     // Constantes pour l'ordre dans la toolbar
-    private static final int ADD_RECIPE = 1;       // C'est l'ID du menu. La toolbar sera modifié
+    private static final int ADD_RECIPE = 1;       // C'est l'ID du menu. La toolbar sera modifié // TODO supprimer btn
     private static final String TAG = "RecipeDetailActivity";
 
 
