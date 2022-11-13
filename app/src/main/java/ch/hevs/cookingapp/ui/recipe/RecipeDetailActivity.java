@@ -1,7 +1,6 @@
 package ch.hevs.cookingapp.ui.recipe;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -183,6 +182,10 @@ public class RecipeDetailActivity extends BaseActivity
             }
             etIngredients.setText(recipe.getIngredients());
             etPreparation.setText(recipe.getPreparation());
+
+            dietSelection = recipe.getDiet();
+            allergySelection = recipe.getAllergy();
+            mealTimeSelection = recipe.getMealTime();
             Log.i(TAG, "Activity populated.");
         }
     }
@@ -254,9 +257,6 @@ public class RecipeDetailActivity extends BaseActivity
     }
 
     private void switchEditableMode() {
-        dietSelection = "";
-        allergySelection = "";
-        mealTimeSelection = "";
         // Edite mode
         if (!isEditable)
         {
@@ -397,78 +397,7 @@ public class RecipeDetailActivity extends BaseActivity
         recipe.setAllergy(allergy);
         recipe.setMealTime(mealTime);
 
-        //etRecipeName.setText(recipe.getName());
         // TODO Ajouter photo
-        //etTime.setText(Integer.toString(recipe.getPrepTime()));
-
-       /* if (recipe.getMealTime().contains("Breakfast"))
-        {
-            cbBreakfast.setChecked(true);
-        } else {
-            cbBreakfast.setChecked(false);
-        }
-        if (recipe.getMealTime().contains("Lunch"))
-        {
-            cbLunch.setChecked(true);
-        } else {
-            cbLunch.setChecked(false);
-        }
-        if (recipe.getMealTime().contains("Dinner"))
-        {
-            cbDinner.setChecked(true);
-        } else {
-            cbDinner.setChecked(false);
-        }
-        if (recipe.getDiet().contains("Meat"))
-        {
-            cbMeat.setChecked(true);
-        } else {
-            cbMeat.setChecked(false);
-        }
-        if (recipe.getDiet().contains("Fish"))
-        {
-            cbFish.setChecked(true);
-        } else {
-            cbFish.setChecked(false);
-        }
-        if (recipe.getDiet().contains("Vegetarian"))
-        {
-            cbVegetarian.setChecked(true);
-        } else {
-            cbVegetarian.setChecked(false);
-        }
-        if (recipe.getDiet().contains("Vegan"))
-        {
-            cbVegan.setChecked(true);
-        } else {
-            cbVegan.setChecked(false);
-        }
-        if (recipe.getAllergy().contains("Nuts"))
-        {
-            cbNuts.setChecked(true);
-        } else {
-            cbNuts.setChecked(false);
-        }
-        if (recipe.getAllergy().contains("Lactose"))
-        {
-            cbLactose.setChecked(true);
-        } else {
-            cbLactose.setChecked(false);
-        }
-        if (recipe.getAllergy().contains("Peanut"))
-        {
-            cbPeanut.setChecked(true);
-        } else {
-            cbPeanut.setChecked(false);
-        }
-        if (recipe.getAllergy().contains("Gluten"))
-        {
-            cbGluten.setChecked(true);
-        } else {
-            cbGluten.setChecked(false);
-        }
-        etIngredients.setText(recipe.getIngredients());
-        etPreparation.setText(recipe.getPreparation());*/
 
         viewModel.updateRecipe(recipe, new OnAsyncEventListener()
         {
