@@ -34,6 +34,7 @@ public class CookActivity extends BaseActivity {
     private static final int EDIT_COOK = 1;       // C'est l'ID du menu. La toolbar sera modifié
     private static final int DELETE_COOK = 2;
 
+    private static String userConnected;
     private Toast toast;
 
     private boolean isEditable;
@@ -62,23 +63,23 @@ public class CookActivity extends BaseActivity {
         Intent intent = getIntent();
         // On aura la même KEY des 2 sources intent: Depuis liste ou Menu
         String intent_selectedUserSource = intent.getStringExtra(String.valueOf(R.string.selectedCook));
-        String user;
+        //String user;
 
         // Afficher mon profile connecté
         if(intent_selectedUserSource.equals("actionSourceClick_MyProfile"))
         {
             SharedPreferences settings = getSharedPreferences(BaseActivity.PREFS_NAME, 0);
-            user = settings.getString(PREFS_USER, null);
+            userConnected = settings.getString(PREFS_USER, null);
         }
         // Si un user est selectionné
         else
         {
-            user = intent_selectedUserSource;
+            userConnected = intent_selectedUserSource;
         }
 
 
 
-        CookViewModel.Factory factory = new CookViewModel.Factory(getApplication(), user);
+        CookViewModel.Factory factory = new CookViewModel.Factory(getApplication(), userConnected);
 
         // Créer un viewModel
         viewModel_Cook = new ViewModelProvider((ViewModelStoreOwner) this, (ViewModelProvider.Factory) factory).get(CookViewModel.class); // Donne nous un ViewModel, grâce à la Factory, pour me donner un CookViewModel
@@ -319,7 +320,21 @@ public class CookActivity extends BaseActivity {
             return;
         }
         super.onBackPressed();
-        startActivity(new Intent(this, MainActivity.class));
+
+        SharedPreferences settings = getSharedPreferences(BaseActivity.PREFS_NAME, 0);
+        String prefs_UserConnected = settings.getString(PREFS_USER, null);
+
+        // Mon user est connecté
+        if ( userConnected.equals(prefs_UserConnected) )
+        {
+            startActivity(new Intent(this, MainActivity.class));
+        }
+        else // La vue est d'un autre user
+        {
+            startActivity(new Intent(this, CooksActivity.class)
+                              .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+        }
+
     }
 
 
