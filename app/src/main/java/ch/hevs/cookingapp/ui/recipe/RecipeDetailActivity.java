@@ -606,6 +606,8 @@ public class RecipeDetailActivity extends BaseActivity
             return;
         }
         super.onBackPressed();
-        startActivity(new Intent(RecipeDetailActivity.this, RecipesActivity.class).putExtra(String.valueOf(R.string.meals), meals));
+        startActivity(new Intent(RecipeDetailActivity.this, RecipesActivity.class)
+                                .putExtra(String.valueOf(R.string.meals), meals)
+                                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
     }
 }
