@@ -13,6 +13,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import androidx.core.view.GravityCompat;
+
 import ch.hevs.cookingapp.R;
 import ch.hevs.cookingapp.database.async.recipe.CreateRecipe;
 import ch.hevs.cookingapp.database.entity.RecipeEntity;
@@ -39,8 +41,6 @@ public class RecipeCreateActivity extends BaseActivity {
     private String allergySelection;
     private String mealTimeSelection;
 
-
-    @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,17 +51,21 @@ public class RecipeCreateActivity extends BaseActivity {
         SharedPreferences settings = getSharedPreferences(BaseActivity.PREFS_NAME, 0);
         cook = settings.getString(BaseActivity.PREFS_USER, null);
 
+        initiateView();
+    }
+
+    private void initiateView()
+    {
         dietSelection = "";
         allergySelection = "";
         mealTimeSelection = "";
 
-        etRecipeName = findViewById(R.id.editText_RecipeName);
-        etTime = findViewById(R.id.editText_PrepTime);
-        etIngredients = findViewById(R.id.editText_ingredients);
-        etPreparation = findViewById(R.id.editText_preparation);
+        etRecipeName = findViewById(R.id.et_createRecipe_RecipeName);
+        etTime = findViewById(R.id.et_createRecipe_PrepTime);
+        etIngredients = findViewById(R.id.et_createRecipe_ingredients);
+        etPreparation = findViewById(R.id.et_createRecipe_preparation);
 
-
-        Button saveBtn = findViewById(R.id.button_save);
+        Button saveBtn = findViewById(R.id.btn_createRecipe_save);
         saveBtn.setOnClickListener(view -> saveRecipe(
                 cook,
                 etRecipeName.getText().toString(),
@@ -115,7 +119,7 @@ public class RecipeCreateActivity extends BaseActivity {
 
         // Check which radio button was clicked
         switch(view.getId()) {
-            case R.id.checkBoxBreakfast:
+            case R.id.cb_createRecipe_Breakfast:
                 if (checked)
                 {
                     mealTimeSelection = mealTimeSelection + Meal.BREAKFAST;
@@ -123,7 +127,7 @@ public class RecipeCreateActivity extends BaseActivity {
                 } else
                     mealTimeSelection = mealTimeSelection.replaceAll("Breakfast","");
                 break;
-            case R.id.checkBoxLunch:
+            case R.id.cb_createRecipe_Lunch:
                 if (checked)
                 {
                     mealTimeSelection = mealTimeSelection + Meal.LUNCH;
@@ -131,7 +135,7 @@ public class RecipeCreateActivity extends BaseActivity {
                 } else
                     mealTimeSelection = mealTimeSelection.replaceAll("Lunch","");
                 break;
-            case R.id.checkBoxDinner:
+            case R.id.cb_createRecipe_Dinner:
                 if (checked){
                     mealTimeSelection = mealTimeSelection + Meal.DINNER;
                     System.out.println("Meal time: " + mealTimeSelection);
@@ -147,7 +151,7 @@ public class RecipeCreateActivity extends BaseActivity {
 
         // Check which radio button was clicked
         switch(view.getId()) {
-            case R.id.checkBoxVegan:
+            case R.id.cb_createRecipe_Vegan:
                 if (checked)
                 {
                     dietSelection = dietSelection + Diet.VEGAN;
@@ -155,7 +159,7 @@ public class RecipeCreateActivity extends BaseActivity {
                 } else
                     dietSelection = dietSelection.replaceAll("Vegan","");
                 break;
-            case R.id.checkBoxMeat:
+            case R.id.cb_createRecipe_Meat:
                 if (checked)
                 {
                     dietSelection = dietSelection + Diet.MEAT;
@@ -163,14 +167,14 @@ public class RecipeCreateActivity extends BaseActivity {
                 } else
                     dietSelection = dietSelection.replaceAll("Meat","");
                 break;
-            case R.id.checkBoxFish:
+            case R.id.cb_createRecipe_Fish:
                 if (checked){
                     dietSelection = dietSelection + Diet.FISH;
                     System.out.println("Diet: " + dietSelection);
                 } else
                     dietSelection = dietSelection.replaceAll("Fish","");
                 break;
-            case R.id.checkBoxVegetarian:
+            case R.id.cb_createRecipe_Vegetarian:
                 if (checked){
                     dietSelection = dietSelection + Diet.VEGETARIAN;
                     System.out.println("Diet: " + dietSelection);
@@ -186,7 +190,7 @@ public class RecipeCreateActivity extends BaseActivity {
 
         // Check which radio button was clicked
         switch(view.getId()) {
-            case R.id.checkBoxLactose:
+            case R.id.cb_createRecipe_Lactose:
                 if (checked)
                 {
                     allergySelection = allergySelection + Allergy.LACTOSE;
@@ -194,7 +198,7 @@ public class RecipeCreateActivity extends BaseActivity {
                 } else
                     allergySelection = allergySelection.replaceAll("Lactose","");
                 break;
-            case R.id.checkBoxGluten:
+            case R.id.cb_createRecipe_Gluten:
                 if (checked)
                 {
                     allergySelection = allergySelection + Allergy.GLUTEN;
@@ -202,7 +206,7 @@ public class RecipeCreateActivity extends BaseActivity {
                 } else
                     allergySelection = allergySelection.replaceAll("Gluten","");
                 break;
-            case R.id.checkBoxNuts:
+            case R.id.cb_createRecipe_Nuts:
                 if (checked)
                 {
                     allergySelection = allergySelection + Allergy.NUT;
@@ -210,7 +214,7 @@ public class RecipeCreateActivity extends BaseActivity {
                 } else
                     allergySelection = allergySelection.replaceAll("Nuts","");
                 break;
-            case R.id.checkBoxPeanuts:
+            case R.id.cb_createRecipe_Peanuts:
                 if (checked)
                 {
                     allergySelection = allergySelection + Allergy.PEANUT;
@@ -219,5 +223,15 @@ public class RecipeCreateActivity extends BaseActivity {
                     allergySelection = allergySelection.replaceAll("Peanut","");
                 break;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+            return;
+        }
+        super.onBackPressed();
+        startActivity(new Intent(this, MainActivity.class));
     }
 }

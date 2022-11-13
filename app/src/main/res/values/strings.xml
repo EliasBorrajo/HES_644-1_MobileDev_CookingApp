@@ -79,9 +79,9 @@
     <string name="title_activity_about">About</string>
     <string name="switch_name">Theme</string>
     <!-- String related to activity_main_drawer -->
-    <string name="title_activity_mainmenu">Menu principal</string>
-    <string name="title_activity_myrecipes">Mes recettes</string>
-    <string name="title_activity_myinfos">Mes infos</string>
+    <string name="title_activity_mainmenu">Main menu</string>
+    <string name="title_activity_myinfos">My Infos</string>
+    <string name="title_activity_myrecipes">Recipes</string>
 
     <!-- String related to activity create recipe -->
     <string name="recipe_created">Recipe created</string>
@@ -117,8 +117,8 @@
     <string name="btn_cancel">Cancel</string>
 
     <string name="error_empty_recipe_name">Please, give a name to your recipe</string>
-    <string name="error_empty_ingredient">please provide ingredients</string>
-    <string name="error_empty_preparation">please, give indications of preparation</string>
+    <string name="error_empty_ingredient">Please provide ingredients</string>
+    <string name="error_empty_preparation">Please, give indications of preparation</string>
 
     <!-- String related to activity_recipe_detail -->
     <string name="tv_title_recipe">Recipe name</string>
@@ -130,4 +130,7 @@
     <string name="selectedCook">cookListSelected</string>
     <string name="action_MyProfile">action_MyProfile</string>
 
+    <string name="tv_time_preparation">No time</string>
+    <string name="delete_recipe_msg">Do you really want to delete this recipe?</string>
+    <string name="recipe_updated">Recipe updated</string>
 </resources>

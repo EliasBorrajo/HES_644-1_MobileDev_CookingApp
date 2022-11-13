@@ -19,14 +19,10 @@ import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.locks.ReentrantLock;
 
 import ch.hevs.cookingapp.R;
 import ch.hevs.cookingapp.adapter.RecyclerAdapter;
 import ch.hevs.cookingapp.database.entity.RecipeEntity;
-import ch.hevs.cookingapp.database.enumeration.Diet;
-import ch.hevs.cookingapp.database.enumeration.Meal;
-import ch.hevs.cookingapp.database.pojo.CookWithRecipes;
 import ch.hevs.cookingapp.ui.BaseActivity;
 import ch.hevs.cookingapp.util.RecyclerViewItemClickListener;
 import ch.hevs.cookingapp.viewmodel.recipe.RecipeListViewModel;
@@ -62,7 +58,7 @@ public class RecipesActivity extends BaseActivity {
         String user = settings.getString(BaseActivity.PREFS_USER, null);
 
         String meals = getIntent().getStringExtra(String.valueOf(R.string.meals));
-        //TODO demander comment revenir en arriver sur le bon intent (details -> recipes)
+
         recipes = new ArrayList<>();
         adapter = new RecyclerAdapter<>(new RecyclerViewItemClickListener() {
             @Override
@@ -76,6 +72,7 @@ public class RecipesActivity extends BaseActivity {
                         Intent.FLAG_ACTIVITY_NO_HISTORY
                 );
                 intent.putExtra("recipeId", recipes.get(position).getId());
+                intent.putExtra(String.valueOf(R.string.meals),meals);
                 startActivity(intent);
             }
 
@@ -112,5 +109,18 @@ public class RecipesActivity extends BaseActivity {
             }
         });
         recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == BaseActivity.position) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+            return false;
+        }
+        /*
+        The activity has to be finished manually in order to guarantee the navigation hierarchy working.
+        */
+        finish();
+        return super.onNavigationItemSelected(item);
     }
 }
