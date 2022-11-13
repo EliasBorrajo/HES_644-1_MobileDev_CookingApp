@@ -5,54 +5,61 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.recipe.RecipeDetailActivity">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tv_recipe_name"
+        <EditText
+            android:id="@+id/et_recipeDetail_recipe_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:text="@string/tv_title_recipe"
             android:textAlignment="center"
-            android:textSize="25sp"/>
+            android:textSize="25sp"
+            android:focusable="false"
+            android:enabled="false"/>
 
         <ImageButton
-            android:id="@+id/imageButton"
+            android:id="@+id/imageButton_recipeDetail"
             android:layout_width="match_parent"
             android:layout_height="156dp"
             android:layout_margin="20dp"
             app:srcCompat="@android:drawable/ic_menu_gallery"
-            android:contentDescription="@string/ib_descritpion"/>
+            android:contentDescription="@string/ib_descritpion"
+            android:focusable="false"/>
 
         <LinearLayout
-            android:id="@+id/ll_PrepTime"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-            android:gravity="center"
-            android:visibility="gone">
+            android:gravity="center">
 
             <TextView
-                android:id="@+id/tv_prep_time"
+                android:id="@+id/tv_recipeDetail_prep_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
                 android:text="@string/tv_prep_time"
                 android:textSize="16sp"
                 tools:layout_editor_absoluteX="29dp"
-                tools:layout_editor_absoluteY="13dp" />
+                tools:layout_editor_absoluteY="13dp"
+                android:visibility="gone"/>
 
-            <TextView
-                android:id="@+id/tv_time"
+            <EditText
+                android:id="@+id/et_recipeDetail_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/et_prep_time"
+                android:hint="@string/tv_time_preparation"
                 android:textSize="16sp"
+                android:inputType="number"
                 tools:layout_editor_absoluteX="185dp"
-                tools:layout_editor_absoluteY="10dp" />
+                tools:layout_editor_absoluteY="10dp"
+                android:enabled="false"
+                android:focusable="false"
+                android:visibility="gone"/>
         </LinearLayout>
 
         <TextView
@@ -72,7 +79,7 @@
             android:gravity="center">
 
             <CheckBox
-                android:id="@+id/checkBoxBreakfast"
+                android:id="@+id/cb_recipeDetail_Breakfast"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -80,10 +87,11 @@
                 android:layout_marginRight="20dp"
                 android:layout_marginLeft="20dp"
                 android:enabled="false"
-                android:focusable="false"/>
+                android:focusable="false"
+                android:onClick="onCheckedMealEdit"/>
 
             <CheckBox
-                android:id="@+id/checkBoxLunch"
+                android:id="@+id/cb_recipeDetail_Lunch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -91,10 +99,11 @@
                 android:layout_marginRight="20dp"
                 android:layout_marginLeft="20dp"
                 android:enabled="false"
-                android:focusable="false"/>
+                android:focusable="false"
+                android:onClick="onCheckedMealEdit"/>
 
             <CheckBox
-                android:id="@+id/checkBoxDinner"
+                android:id="@+id/cb_recipeDetail_Dinner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -102,11 +111,12 @@
                 android:layout_marginRight="20dp"
                 android:layout_marginLeft="20dp"
                 android:enabled="false"
-                android:focusable="false"/>
+                android:focusable="false"
+                android:onClick="onCheckedMealEdit"/>
         </LinearLayout>
 
         <TextView
-            android:id="@+id/tv_TitleDiet"
+            android:id="@+id/tv_recipeDetail_TitleDiet"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -128,23 +138,25 @@
                 android:orientation="vertical">
 
                 <CheckBox
-                    android:id="@+id/checkBoxMeat"
+                    android:id="@+id/cb_recipeDetail_Meat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/cb_meat"
                     android:layout_marginEnd="12dp"
                     android:enabled="false"
-                    android:focusable="false"/>
+                    android:focusable="false"
+                    android:onClick="onCheckedDietEdit"/>
 
                 <CheckBox
-                    android:id="@+id/checkBoxFish"
+                    android:id="@+id/cb_recipeDetail_Fish"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/cb_fish"
                     android:enabled="false"
-                    android:focusable="false"/>
+                    android:focusable="false"
+                    android:onClick="onCheckedDietEdit"/>
             </LinearLayout>
 
             <LinearLayout
@@ -153,22 +165,24 @@
                 android:orientation="vertical">
 
                 <CheckBox
-                    android:id="@+id/checkBoxVegetarian"
+                    android:id="@+id/cb_recipeDetail_Vegetarian"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/cb_vegetarian"
                     android:enabled="false"
-                    android:focusable="false"/>
+                    android:focusable="false"
+                    android:onClick="onCheckedDietEdit"/>
 
                 <CheckBox
-                    android:id="@+id/checkBoxVegan"
+                    android:id="@+id/cb_recipeDetail_Vegan"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/cb_vegan"
                     android:enabled="false"
-                    android:focusable="false"/>
+                    android:focusable="false"
+                    android:onClick="onCheckedDietEdit"/>
             </LinearLayout>
         </LinearLayout>
 
@@ -195,22 +209,24 @@
                 android:orientation="vertical">
 
                 <CheckBox
-                    android:id="@+id/checkBoxNuts"
+                    android:id="@+id/cb_recipeDetail_Nuts"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/cb_nuts"
                     android:enabled="false"
-                    android:focusable="false"/>
+                    android:focusable="false"
+                    android:onClick="onCheckedAllegryEdit"/>
 
                 <CheckBox
-                    android:id="@+id/checkBoxPeanuts"
+                    android:id="@+id/cb_recipeDetail_Peanuts"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/cb_peanuts"
                     android:enabled="false"
-                    android:focusable="false"/>
+                    android:focusable="false"
+                    android:onClick="onCheckedAllegryEdit"/>
             </LinearLayout>
 
             <LinearLayout
@@ -219,28 +235,30 @@
                 android:orientation="vertical">
 
                 <CheckBox
-                    android:id="@+id/checkBoxLactose"
+                    android:id="@+id/cb_recipeDetail_Lactose"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/cb_lactose"
                     android:layout_marginEnd="17dp"
                     android:enabled="false"
-                    android:focusable="false"/>
+                    android:focusable="false"
+                    android:onClick="onCheckedAllegryEdit"/>
 
                 <CheckBox
-                    android:id="@+id/checkBoxGluten"
+                    android:id="@+id/cb_recipeDetail_Gluten"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/cb_gluten"
                     android:enabled="false"
-                    android:focusable="false"/>
+                    android:focusable="false"
+                    android:onClick="onCheckedAllegryEdit"/>
             </LinearLayout>
         </LinearLayout>
 
         <TextView
-            android:id="@+id/tv_title_ingredients"
+            android:id="@+id/tv_title_recipeDetail_ingredients"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
@@ -248,16 +266,19 @@
             android:textSize="16sp"
             android:layout_marginTop="20dp"/>
 
-        <TextView
-            android:id="@+id/tv_ingredients"
+        <EditText
+            android:id="@+id/et_recipeDetail_ingredients"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/tv_ingredients"
             android:textSize="16sp"
-            android:minHeight="48dp" />
+            android:inputType="textMultiLine"
+            android:minHeight="48dp"
+            android:focusable="false"
+            android:enabled="false"/>
 
         <TextView
-            android:id="@+id/tv_tilte_preparation"
+            android:id="@+id/tv_tilte_recipeDetail_preparation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
@@ -265,29 +286,22 @@
             android:textSize="16sp"
             android:layout_marginTop="20dp"/>
 
-        <TextView
-            android:id="@+id/tv_preparation"
+        <EditText
+            android:id="@+id/et_recipeDetail_preparation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/tv_preparation"
+            android:text="@string/tv_preparation"
             android:textSize="16sp"
             android:inputType="textMultiLine"
-            android:minHeight="48dp" />
+            android:minHeight="48dp"
+            android:focusable="false"
+            android:enabled="false"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="30dp"
             android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/button_save"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:text="@string/btn_edit" />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

@@ -33,15 +33,6 @@
                 android:value="ch.hevs.cookingapp.ui.mgmt.LoginActivity" />
         </activity>
         <activity
-            android:name=".ui.recipe.RecipeEditActivity"
-            android:exported="false"
-            android:parentActivityName=".ui.recipe.RecipeDetailActivity"
-            android:theme="@style/Theme.CookingApp.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="ch.hevs.cookingapp.ui.recipe.RecipeDetailActivity" />
-        </activity>
-        <activity
             android:name=".ui.recipe.RecipeDetailActivity"
             android:exported="false"
             android:parentActivityName=".ui.recipe.RecipesActivity"
