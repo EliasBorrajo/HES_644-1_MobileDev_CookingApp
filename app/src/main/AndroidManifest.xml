@@ -14,10 +14,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CookingApp"
         tools:targetApi="31">
+
         <activity
             android:name=".ui.recipe.RecipeCreateActivity"
-            android:parentActivityName=".ui.MainActivity"
             android:exported="false"
+            android:parentActivityName=".ui.MainActivity"
             android:theme="@style/Theme.CookingApp.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -25,9 +26,9 @@
         </activity>
         <activity
             android:name=".ui.BaseActivity"
-            android:parentActivityName=".ui.mgmt.LoginActivity"
             android:exported="false"
-            android:theme="@style/Theme.CookingApp.NoActionBar" >
+            android:parentActivityName=".ui.mgmt.LoginActivity"
+            android:theme="@style/Theme.CookingApp.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ch.hevs.cookingapp.ui.mgmt.LoginActivity" />
@@ -93,6 +94,15 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ch.hevs.cookingapp.ui.MainActivity" />
+        </activity>
+        <activity
+            android:name=".ui.cook.CooksActivity"
+            android:exported="false"
+            android:parentActivityName=".ui.MainActivity"
+            android:theme="@style/Theme.CookingApp.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ch.hevs.cookingapp.ui.MainActivity"/>
         </activity>
         <activity
             android:name=".ui.cook.CookActivity"

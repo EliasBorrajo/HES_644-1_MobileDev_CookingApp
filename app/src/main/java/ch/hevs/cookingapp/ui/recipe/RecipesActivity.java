@@ -40,7 +40,8 @@ public class RecipesActivity extends BaseActivity {
     private RecipeListViewModel viewModel;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         getLayoutInflater().inflate(R.layout.activity_recipes, frameLayout);
 

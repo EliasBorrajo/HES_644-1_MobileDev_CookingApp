@@ -58,8 +58,25 @@ public class CookActivity extends BaseActivity {
 
         initiateView();
 
-        SharedPreferences settings = getSharedPreferences(BaseActivity.PREFS_NAME, 0);
-        String user = settings.getString(PREFS_USER, null);
+        // Vérifier quel user il faut afficher
+        Intent intent = getIntent();
+        // On aura la même KEY des 2 sources intent: Depuis liste ou Menu
+        String intent_selectedUserSource = intent.getStringExtra(String.valueOf(R.string.selectedCook));
+        String user;
+
+        // Afficher mon profile connecté
+        if(intent_selectedUserSource.equals("actionSourceClick_MyProfile"))
+        {
+            SharedPreferences settings = getSharedPreferences(BaseActivity.PREFS_NAME, 0);
+            user = settings.getString(PREFS_USER, null);
+        }
+        // Si un user est selectionné
+        else
+        {
+            user = intent_selectedUserSource;
+        }
+
+
 
         CookViewModel.Factory factory = new CookViewModel.Factory(getApplication(), user);
 
@@ -203,6 +220,7 @@ public class CookActivity extends BaseActivity {
         // Vue en mode CALSSIC
         else
         {
+            // Recupere les entrées du EDIT, et les sauvegarde si possible.
             saveChanges(
                     etFirstName.getText().toString(),
                     etLastName.getText().toString(),

@@ -61,6 +61,7 @@
 
     <!-- String related to Recipes -->
     <string name="title_activity_recipes">Recettes</string>
+    <string name="title_activity_cooks">Cuisiniers</string>
     <string name="tv_firstName">First Name</string>
     <string name="tv_lastName">Last Name</string>
     <string name="tv_mail">\@mail</string>
@@ -125,5 +126,8 @@
     <string name="error_invalid_phone">The phone number is not valid</string>
     <string name="error_invalid_email_format">Email format is incorrect, please try again. Otherwise the changes will not be saved.</string>
     <string name="error_invalid_phone_format">Phone number format is incorrect, phone number should contain between 10-13 numbers, please try again. Otherwise the changes will not be saved.</string>
+    <string name="action_allCooks">All cooks</string>
+    <string name="selectedCook">cookListSelected</string>
+    <string name="action_MyProfile">action_MyProfile</string>
 
 </resources>

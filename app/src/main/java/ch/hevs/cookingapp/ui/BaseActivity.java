@@ -19,6 +19,7 @@ import com.google.android.material.navigation.NavigationView;
 
 import ch.hevs.cookingapp.R;
 import ch.hevs.cookingapp.ui.cook.CookActivity;
+import ch.hevs.cookingapp.ui.cook.CooksActivity;
 import ch.hevs.cookingapp.ui.mgmt.AboutActivity;
 import ch.hevs.cookingapp.ui.mgmt.LoginActivity;
 import ch.hevs.cookingapp.ui.mgmt.SettingsActivity;
@@ -155,6 +156,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         if (id == R.id.nav_myProfile)
         {
             intent = new Intent(this, CookActivity.class);
+            intent.putExtra(String.valueOf(R.string.selectedCook), "actionSourceClick_MyProfile");
         }
         else if (id == R.id.nav_myRecipe)
         {
@@ -164,6 +166,10 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         else if (id == R.id.nav_home)
         {
             intent = new Intent(this, MainActivity.class);
+        }
+        else if (id == R.id.nav_cooksList)
+        {
+            intent = new Intent(this, CooksActivity.class);
         }
         else if (id == R.id.nav_logout)
         {

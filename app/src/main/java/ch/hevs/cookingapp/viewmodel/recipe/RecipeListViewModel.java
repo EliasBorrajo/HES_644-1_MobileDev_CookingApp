@@ -84,7 +84,7 @@ public class RecipeListViewModel extends AndroidViewModel {
     }
 
     /**
-     * Expose the LiveData AccountEntities query so the UI can observe it.
+     * Expose the LiveData RecipeEntities query so the UI can observe it.
      */
     public LiveData<List<RecipeEntity>> getOwnRecipes() {
         return observableOwnRecipes;
