@@ -29,7 +29,9 @@
             android:layout_margin="20dp"
             app:srcCompat="@android:drawable/ic_menu_gallery"
             android:contentDescription="@string/ib_descritpion"
-            android:focusable="false"/>
+            android:focusable="false"
+            android:clickable="false"
+            android:onClick="onImageEdit" />
 
         <LinearLayout
             android:layout_width="match_parent"

@@ -22,12 +22,13 @@
             android:textSize="25sp"/>
 
         <ImageButton
-            android:id="@+id/imageButton"
+            android:id="@+id/btn_image_recipe"
             android:layout_width="match_parent"
             android:layout_height="156dp"
             android:layout_margin="20dp"
             app:srcCompat="@android:drawable/ic_menu_gallery"
-            android:contentDescription="@string/ib_descritpion" />
+            android:contentDescription="@string/ib_descritpion"
+            android:onClick="onClickedImage"/>
 
         <LinearLayout
             android:layout_width="match_parent"

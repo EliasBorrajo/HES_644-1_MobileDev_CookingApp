@@ -1,22 +1,36 @@
 package ch.hevs.cookingapp.ui.recipe;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 import ch.hevs.cookingapp.R;
 import ch.hevs.cookingapp.database.entity.RecipeEntity;
@@ -46,7 +60,10 @@ public class RecipeDetailActivity extends BaseActivity
     private RecipeViewModel viewModel;
 
     private EditText etRecipeName;
-    // TODO Ajouter photo
+
+    private ImageButton imageRecipe;
+    private byte[] bytes;
+
     private TextView tvPrepTime;
     private EditText etTime;
 
@@ -100,7 +117,7 @@ public class RecipeDetailActivity extends BaseActivity
     {
         isEditable = false;
         etRecipeName = findViewById(R.id.et_recipeDetail_recipe_name);
-        // TODO Ajouter photo
+        imageRecipe = findViewById(R.id.imageButton_recipeDetail);
         tvPrepTime = findViewById(R.id.tv_recipeDetail_prep_time);
         etTime = findViewById(R.id.et_recipeDetail_time);
 
@@ -127,7 +144,10 @@ public class RecipeDetailActivity extends BaseActivity
         if (recipe != null)
         {
             etRecipeName.setText(recipe.getName());
-            // TODO Ajouter photo
+            if(recipe.getImage() != null) {
+                Bitmap bitmap = BitmapFactory.decodeByteArray(recipe.getImage(), 0, recipe.getImage().length);
+                imageRecipe.setImageBitmap(bitmap);
+            }
             if (recipe.getPrepTime() != 0)
             {
                 tvPrepTime.setVisibility(View.VISIBLE);
@@ -261,15 +281,19 @@ public class RecipeDetailActivity extends BaseActivity
         // Edite mode
         if (!isEditable)
         {
+            //TODO régler bouton
             etRecipeName.setFocusable(true);
             etRecipeName.setEnabled(true);
-            etRecipeName.setFocusableInTouchMode(true);
+            //etRecipeName.setFocusableInTouchMode(true);
+
+            imageRecipe.setClickable(true);
+            imageRecipe.setFocusable(false);
 
             tvPrepTime.setVisibility(View.VISIBLE);
             etTime.setVisibility(View.VISIBLE);
             etTime.setFocusable(true);
             etTime.setEnabled(true);
-            etTime.setFocusableInTouchMode(true);
+            //etTime.setFocusableInTouchMode(true);
 
             cbBreakfast.setFocusable(true);
             cbBreakfast.setEnabled(true);
@@ -298,11 +322,11 @@ public class RecipeDetailActivity extends BaseActivity
 
             etIngredients.setFocusable(true);
             etIngredients.setEnabled(true);
-            etIngredients.setFocusableInTouchMode(true);
+            //etIngredients.setFocusableInTouchMode(true);
 
             etPreparation.setFocusable(true);
             etPreparation.setEnabled(true);
-            etPreparation.setFocusableInTouchMode(true);
+            //etPreparation.setFocusableInTouchMode(true);
         }
         // Classic mode
         else
@@ -314,7 +338,8 @@ public class RecipeDetailActivity extends BaseActivity
                     etPreparation.getText().toString(),
                     dietSelection,
                     allergySelection,
-                    mealTimeSelection
+                    mealTimeSelection,
+                    bytes
             );
             etRecipeName.setFocusable(false);
             etRecipeName.setEnabled(false);
@@ -331,7 +356,10 @@ public class RecipeDetailActivity extends BaseActivity
 
             etTime.setFocusable(false);
             etTime.setEnabled(false);
-            etTime.setFocusableInTouchMode(false);
+            //etTime.setFocusableInTouchMode(false);
+
+            imageRecipe.setClickable(false);
+            imageRecipe.setFocusable(false);
 
             cbBreakfast.setFocusable(false);
             cbBreakfast.setEnabled(false);
@@ -360,16 +388,16 @@ public class RecipeDetailActivity extends BaseActivity
 
             etIngredients.setFocusable(false);
             etIngredients.setEnabled(false);
-            etIngredients.setFocusableInTouchMode(false);
+            //etIngredients.setFocusableInTouchMode(false);
 
             etPreparation.setFocusable(false);
             etPreparation.setEnabled(false);
-            etPreparation.setFocusableInTouchMode(false);
+            //etPreparation.setFocusableInTouchMode(false);
         }
         isEditable = !isEditable;
     }
 
-    private void saveChanges(String name, int time, String ingredients, String preparation, String diet, String allergy, String mealTime) {
+    private void saveChanges(String name, int time, String ingredients, String preparation, String diet, String allergy, String mealTime, byte[] bytes) {
         // Vérification des inputs
         if(name.equals("")) {
             etRecipeName.setError(getString(R.string.error_empty_recipe_name));
@@ -397,6 +425,9 @@ public class RecipeDetailActivity extends BaseActivity
         recipe.setDiet(diet);
         recipe.setAllergy(allergy);
         recipe.setMealTime(mealTime);
+        if(bytes != null) {
+            recipe.setImage(bytes);
+        }
 
         // TODO Ajouter photo
 
@@ -415,6 +446,64 @@ public class RecipeDetailActivity extends BaseActivity
                 Log.d(TAG, "editRecipe: failure", e);
             }
         });
+    }
+
+    public void onImageEdit(View view) {
+        //TODO empecher de cliquer sur le bouton et trouver d'ou vient le pb des sauts de pages.
+        // check condition
+        if (ContextCompat.checkSelfPermission(RecipeDetailActivity.this,
+                Manifest.permission.READ_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED)
+        {
+            // when permission is nor granted
+            // request permission
+            ActivityCompat.requestPermissions(RecipeDetailActivity.this
+                    , new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},100);
+
+        }
+        else
+        {
+            // clear previous data
+            imageRecipe.setImageBitmap(null);
+            // Initialize intent
+            Intent intent = new Intent(Intent.ACTION_PICK);
+            // set type
+            intent.setType("image/*");
+            // start activity result
+            startActivityForResult(Intent.createChooser(intent,"Select Image"),100);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // check condition
+        if (requestCode==100 && resultCode==RESULT_OK && data!=null)
+        {
+            // when result is ok
+            // initialize uri
+            Uri uri=data.getData();
+            // Initialize bitmap
+            try {
+                //TODO relire voir github
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),uri);
+                // initialize byte stream
+                ByteArrayOutputStream stream=new ByteArrayOutputStream();
+                // compress Bitmap
+                bitmap.compress(Bitmap.CompressFormat.JPEG,100,stream);
+                // Initialize byte array
+                bytes = stream.toByteArray();
+                // get base64 encoded string
+                String sImage= Base64.encodeToString(bytes,Base64.DEFAULT);
+                // decode base64 string
+                bytes = Base64.decode(sImage,Base64.DEFAULT);
+                // Initialize bitmap
+                bitmap = BitmapFactory.decodeByteArray(bytes,0,bytes.length);
+                // set bitmap on imageView
+                imageRecipe.setImageBitmap(bitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void onCheckedMealEdit(View view) {

@@ -34,9 +34,9 @@ public class DatabaseInitializer
     }
 
     private static void addRecipe(final AppDatabase db, final String creator, final String name,
-                                  final int prepTime,   final String ingredients, final String preparation, final String diet, final String allergy, final String mealTime)
+                                  final int prepTime,   final String ingredients, final String preparation, final String diet, final String allergy, final String mealTime, final byte[] image)
     {
-        RecipeEntity recipe = new RecipeEntity(creator, name, prepTime, ingredients, preparation, diet, allergy, mealTime);
+        RecipeEntity recipe = new RecipeEntity(creator, name, prepTime, ingredients, preparation, diet, allergy, mealTime, image);
         db.recipeDao().insert(recipe);
     }
 
@@ -62,9 +62,9 @@ public class DatabaseInitializer
         }
 
         // Remplir Recipe
-        addRecipe(db, "xolo@gmail.com", "Crêpes", 15, "Oeufs, Lait, Beurre", "Melanger fortement le tout", Diet.VEGETARIAN.toString(), Allergy.GLUTEN.toString(), Meal.BREAKFAST.toString());
-        addRecipe(db, "xolo@gmail.com", "Sandiwch", 10, "Pain, Beurre, Jambon, tomate", "Empiler par tranches shouaités",Diet.FISH.toString(), Allergy.GLUTEN.toString(), Meal.BREAKFAST.toString());
-        addRecipe(db, "milena@gmail.com", "Cookies", 45, "Oeufs, Lait, Beurre, Chocolat, Un tas de bonnes choses, Agent chimique X", "Melanger fortement le tout, puis lancer dans le four.",Diet.MEAT.toString(), Allergy.GLUTEN.toString(), Meal.BREAKFAST.toString());
+        addRecipe(db, "xolo@gmail.com", "Crêpes", 15, "Oeufs, Lait, Beurre", "Melanger fortement le tout", Diet.VEGETARIAN.toString(), Allergy.GLUTEN.toString(), Meal.BREAKFAST.toString(), null);
+        addRecipe(db, "xolo@gmail.com", "Sandiwch", 10, "Pain, Beurre, Jambon, tomate", "Empiler par tranches shouaités",Diet.FISH.toString(), Allergy.GLUTEN.toString(), Meal.BREAKFAST.toString(), null);
+        addRecipe(db, "milena@gmail.com", "Cookies", 45, "Oeufs, Lait, Beurre, Chocolat, Un tas de bonnes choses, Agent chimique X", "Melanger fortement le tout, puis lancer dans le four.",Diet.MEAT.toString(), Allergy.GLUTEN.toString(), Meal.BREAKFAST.toString(), null);
     }
 
 

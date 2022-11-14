@@ -1,19 +1,30 @@
 package ch.hevs.cookingapp.ui.recipe;
 
-import android.annotation.SuppressLint;
+import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 import ch.hevs.cookingapp.R;
 import ch.hevs.cookingapp.database.async.recipe.CreateRecipe;
@@ -24,7 +35,7 @@ import ch.hevs.cookingapp.database.enumeration.Meal;
 import ch.hevs.cookingapp.ui.BaseActivity;
 import ch.hevs.cookingapp.ui.MainActivity;
 import ch.hevs.cookingapp.util.OnAsyncEventListener;
-//TODO factory dans chaque view model et on la rappel dans chaque activité la ou on veut afficher la recette
+
 public class RecipeCreateActivity extends BaseActivity {
 
     private static final String TAG = "RecipeCreateActivity";
@@ -40,6 +51,9 @@ public class RecipeCreateActivity extends BaseActivity {
     private String dietSelection;
     private String allergySelection;
     private String mealTimeSelection;
+
+    private ImageButton btnimage;
+    private byte[] bytes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,11 +73,12 @@ public class RecipeCreateActivity extends BaseActivity {
         dietSelection = "";
         allergySelection = "";
         mealTimeSelection = "";
-
+        //todo instance image
         etRecipeName = findViewById(R.id.et_createRecipe_RecipeName);
         etTime = findViewById(R.id.et_createRecipe_PrepTime);
         etIngredients = findViewById(R.id.et_createRecipe_ingredients);
         etPreparation = findViewById(R.id.et_createRecipe_preparation);
+        btnimage = findViewById(R.id.btn_image_recipe);
 
         Button saveBtn = findViewById(R.id.btn_createRecipe_save);
         saveBtn.setOnClickListener(view -> saveRecipe(
@@ -74,11 +89,12 @@ public class RecipeCreateActivity extends BaseActivity {
                 etPreparation.getText().toString(),
                 dietSelection,
                 allergySelection,
-                mealTimeSelection
+                mealTimeSelection,
+                bytes
         ));
     }
 
-    private void saveRecipe(String creator, String name, int time, String ingredients, String preparation, String diet, String allergy, String mealTime) {
+    private void saveRecipe(String creator, String name, int time, String ingredients, String preparation, String diet, String allergy, String mealTime, byte[] image) {
         if(name.equals("")) {
             etRecipeName.setError(getString(R.string.error_empty_recipe_name));
             etRecipeName.requestFocus();
@@ -95,7 +111,7 @@ public class RecipeCreateActivity extends BaseActivity {
             return;
         }
 
-        RecipeEntity newRecipe = new RecipeEntity(creator, name, time, ingredients, preparation, diet, allergy, mealTime);
+        RecipeEntity newRecipe = new RecipeEntity(creator, name, time, ingredients, preparation, diet, allergy, mealTime, image);
 
         new CreateRecipe(getApplication(), new OnAsyncEventListener() {
             @Override
@@ -112,6 +128,64 @@ public class RecipeCreateActivity extends BaseActivity {
             }
         }).execute(newRecipe);
     }
+
+    public void onClickedImage(View view) {
+        // check condition
+        if (ContextCompat.checkSelfPermission(RecipeCreateActivity.this,
+                Manifest.permission.READ_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED)
+        {
+            // when permission is nor granted
+            // request permission
+            ActivityCompat.requestPermissions(RecipeCreateActivity.this
+                    , new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},100);
+
+        }
+        else
+        {
+            // clear previous data
+            btnimage.setImageBitmap(null);
+            // Initialize intent
+            Intent intent=new Intent(Intent.ACTION_PICK);
+            // set type
+            intent.setType("image/*");
+            // start activity result
+            startActivityForResult(Intent.createChooser(intent,"Select Image"),100);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // check condition
+        if (requestCode==100 && resultCode==RESULT_OK && data!=null)
+        {
+            // when result is ok
+            // initialize uri
+            Uri uri=data.getData();
+            // Initialize bitmap
+            try {
+                //TODO relire voir github
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),uri);
+                // initialize byte stream
+                ByteArrayOutputStream stream=new ByteArrayOutputStream();
+                // compress Bitmap
+                bitmap.compress(Bitmap.CompressFormat.JPEG,100,stream);
+                // Initialize byte array
+                bytes = stream.toByteArray();
+                // get base64 encoded string
+                String sImage= Base64.encodeToString(bytes,Base64.DEFAULT);
+                // decode base64 string
+                bytes = Base64.decode(sImage,Base64.DEFAULT);
+                // Initialize bitmap
+                bitmap = BitmapFactory.decodeByteArray(bytes,0,bytes.length);
+                // set bitmap on imageView
+                btnimage.setImageBitmap(bitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
     public void onCheckedMeal(View view) {
         // Is the view now checked?
