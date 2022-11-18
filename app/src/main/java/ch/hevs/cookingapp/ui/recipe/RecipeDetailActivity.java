@@ -1,6 +1,7 @@
 package ch.hevs.cookingapp.ui.recipe;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -35,6 +36,7 @@ public class RecipeDetailActivity extends BaseActivity
     //private static final int ADD_RECIPE = 1;       // C'est l'ID du menu. La toolbar sera modifié
     private static final int EDIT_RECIPE = 1;
     private static final int DELETE_RECIPE = 2;
+    private static String recipeCreator;
 
     private Toast toast;
 
@@ -82,7 +84,6 @@ public class RecipeDetailActivity extends BaseActivity
         Long recipeId = getIntent().getLongExtra("recipeId", 0L);
         meals = getIntent().getStringExtra(String.valueOf(R.string.meals));
 
-
         initiateView();
 
         RecipeViewModel.Factory factory = new RecipeViewModel.Factory(getApplication(), recipeId);
@@ -95,6 +96,12 @@ public class RecipeDetailActivity extends BaseActivity
                 updateContent();
             }
         });
+
+        // Savoir à qui est la recette
+        //recipeCreator = recipe.getCreator();
+        recipeCreator = viewModel.getRecipe().getValue().getCreator();
+
+
     }
 
     private void initiateView()
@@ -213,13 +220,22 @@ public class RecipeDetailActivity extends BaseActivity
     {
         super.onCreateOptionsMenu(menu);
 
-        menu.add(0, EDIT_RECIPE, Menu.NONE, getString(R.string.action_edit))
-                .setIcon(R.drawable.ic_edit_white_24dp)
-                .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        //  Si c'est bien moi-même qui visite ma recette, la toolbar va avoir le bouton EDIT & DELETE en plus
+        // Si c'est un autre user qui vient voir ma recette, ces bouttons ne s'affichent pas.
+        SharedPreferences settings = getSharedPreferences(BaseActivity.PREFS_NAME, 0);
+        String user = settings.getString(PREFS_USER, null);
 
-        menu.add(0, DELETE_RECIPE, Menu.NONE, getString(R.string.action_delete))
-                .setIcon(R.drawable.ic_delete_white_24dp)
-                .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        if(user.equals(recipeCreator))
+        {
+            menu.add(0, EDIT_RECIPE, Menu.NONE, getString(R.string.action_edit))
+                    .setIcon(R.drawable.ic_edit_white_24dp)
+                    .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+
+            menu.add(0, DELETE_RECIPE, Menu.NONE, getString(R.string.action_delete))
+                    .setIcon(R.drawable.ic_delete_white_24dp)
+                    .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        }
+
         return true;
     }
 

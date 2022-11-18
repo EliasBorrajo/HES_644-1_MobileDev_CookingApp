@@ -74,7 +74,7 @@ public class CookActivity extends BaseActivity {
         // Si un user est selectionné
         else
         {
-            userConnected = intent_selectedUserSource;
+            userConnected = intent_selectedUserSource; // get email of cook
         }
 
 
@@ -139,7 +139,7 @@ public class CookActivity extends BaseActivity {
         super.onCreateOptionsMenu(menu);
 
         //  Si c'est bien moi-même qui visite mon profil, la toolbar va avoir le bouton EDIT & DELETE en plus
-        // Si c'est un autre user qui vient voir mon profil, ces bouttons e s'affichent pas.
+        // Si c'est un autre user qui vient voir mon profil, ces bouttons ne s'affichent pas.
         SharedPreferences settings = getSharedPreferences(BaseActivity.PREFS_NAME, 0);
         String user = settings.getString(PREFS_USER, null);
 
