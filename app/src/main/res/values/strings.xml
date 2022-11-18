@@ -133,4 +133,5 @@
     <string name="tv_time_preparation">No time</string>
     <string name="delete_recipe_msg">Do you really want to delete this recipe?</string>
     <string name="recipe_updated">Recipe updated</string>
+    <string name="clickSourceMyProfile">actionSourceClick_MyProfile</string>
 </resources>

@@ -156,7 +156,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         if (id == R.id.nav_myProfile)
         {
             intent = new Intent(this, CookActivity.class);
-            intent.putExtra(String.valueOf(R.string.selectedCook), "actionSourceClick_MyProfile");
+            intent.putExtra(String.valueOf(R.string.selectedCook), String.valueOf(R.string.clickSourceMyProfile));
         }
         else if (id == R.id.nav_myRecipe)
         {

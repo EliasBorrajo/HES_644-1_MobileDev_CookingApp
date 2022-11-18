@@ -64,10 +64,9 @@ public class CookActivity extends BaseActivity {
         Intent intent = getIntent();
         // On aura la même KEY des 2 sources intent: Depuis liste ou Menu
         String intent_selectedUserSource = intent.getStringExtra(String.valueOf(R.string.selectedCook));
-        //String user;
 
         // Afficher mon profile connecté
-        if(intent_selectedUserSource.equals("actionSourceClick_MyProfile"))
+        if(intent_selectedUserSource.equals(String.valueOf(R.string.clickSourceMyProfile)))
         {
             SharedPreferences settings = getSharedPreferences(BaseActivity.PREFS_NAME, 0);
             userConnected = settings.getString(PREFS_USER, null);

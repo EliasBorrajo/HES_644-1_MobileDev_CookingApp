@@ -82,6 +82,7 @@ public class RecipeDetailActivity extends BaseActivity
         Long recipeId = getIntent().getLongExtra("recipeId", 0L);
         meals = getIntent().getStringExtra(String.valueOf(R.string.meals));
 
+
         initiateView();
 
         RecipeViewModel.Factory factory = new RecipeViewModel.Factory(getApplication(), recipeId);
