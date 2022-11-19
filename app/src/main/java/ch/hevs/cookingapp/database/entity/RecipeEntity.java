@@ -33,7 +33,7 @@ public class RecipeEntity
     @NonNull
     private String preparation; //instructions de la recette
 
-    private String diet; // TODO : On selectionne de la liste des enums quelle string on veut stocker. Enum sera apellé Lorsque on rentre les champs dans l'activité & quand on sauvegarde dans la DB
+    private String diet;
     private String allergy;
     private String mealTime;
 

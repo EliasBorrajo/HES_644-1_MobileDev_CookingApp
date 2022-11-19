@@ -101,10 +101,6 @@ public class RecipeDetailActivity extends BaseActivity
         });
 
 
-        //recipeCreator = recipe.getCreator();
-        //recipeCreator = viewModel.getRecipe().getValue().getCreator();
-
-
 
     }
 
@@ -395,19 +391,19 @@ public class RecipeDetailActivity extends BaseActivity
         if(name.equals("")) {
             etRecipeName.setError(getString(R.string.error_empty_recipe_name));
             etRecipeName.requestFocus();
-            Toast.makeText(this, "Manger", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, String.valueOf(R.string.error_empty_recipe_name), Toast.LENGTH_LONG).show();
             return;
         }
         if(ingredients.equals("")) {
             etIngredients.setError(getString(R.string.error_empty_ingredient));
             etIngredients.requestFocus();
-            Toast.makeText(this, "Manger", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, String.valueOf(R.string.error_empty_ingredient) , Toast.LENGTH_LONG).show();
             return;
         }
         if(preparation.equals("")) {
             etPreparation.setError(getString(R.string.error_empty_preparation));
             etPreparation.requestFocus();
-            Toast.makeText(this, "Manger", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, String.valueOf(R.string.error_empty_preparation), Toast.LENGTH_LONG).show();
             return;
         }
         // On recupère les paramètres à SET à notre entité

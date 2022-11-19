@@ -18,6 +18,10 @@ import ch.hevs.cookingapp.database.repository.CookRepository;
 import ch.hevs.cookingapp.database.repository.RecipeRepository;
 import ch.hevs.cookingapp.viewmodel.recipe.RecipeListViewModel;
 
+/**
+ * Object that we use in the activities, to link our graphic objects to our DB objects.
+ * We have an Observer that will observe the changes in the DB to update the UI.
+ */
 public class CookListViewModel extends AndroidViewModel
 {
     private Application application;
@@ -46,9 +50,7 @@ public class CookListViewModel extends AndroidViewModel
         observableCooks.addSource(allCooks, observableCooks::setValue);
     }
 
-    /**
-     * A user is used to inject the account email into the ViewModel
-     */
+
     public static class Factory extends ViewModelProvider.NewInstanceFactory
     {
         @NonNull

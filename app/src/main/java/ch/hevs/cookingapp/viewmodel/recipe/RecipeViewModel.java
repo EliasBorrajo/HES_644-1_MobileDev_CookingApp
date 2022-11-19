@@ -14,7 +14,12 @@ import ch.hevs.cookingapp.database.entity.RecipeEntity;
 import ch.hevs.cookingapp.database.repository.RecipeRepository;
 import ch.hevs.cookingapp.util.OnAsyncEventListener;
 
-public class RecipeViewModel extends AndroidViewModel {
+/**
+ * Object that we use in the activities, to link our graphic objects to our DB objects.
+ * We have an Observer that will observe the changes in the DB to update the UI.
+ */
+public class RecipeViewModel extends AndroidViewModel
+{
     private Application application;
 
     private RecipeRepository repository;
@@ -23,7 +28,8 @@ public class RecipeViewModel extends AndroidViewModel {
     private final MediatorLiveData<RecipeEntity> observableRecipe;
 
     public RecipeViewModel(@NonNull Application application,
-                         final Long id, RecipeRepository recipeRepository) {
+                           final Long id, RecipeRepository recipeRepository)
+    {
         super(application);
 
         this.application = application;
@@ -43,7 +49,8 @@ public class RecipeViewModel extends AndroidViewModel {
     /**
      * A creator is used to inject the account id into the ViewModel
      */
-    public static class Factory extends ViewModelProvider.NewInstanceFactory {
+    public static class Factory extends ViewModelProvider.NewInstanceFactory
+    {
 
         @NonNull
         private final Application application;
@@ -52,14 +59,16 @@ public class RecipeViewModel extends AndroidViewModel {
 
         private final RecipeRepository repository;
 
-        public Factory(@NonNull Application application, Long id) {
+        public Factory(@NonNull Application application, Long id)
+        {
             this.application = application;
             this.id = id;
             repository = ((BaseApp) application).getRecipeRepository();
         }
 
         @Override
-        public <T extends ViewModel> T create(Class<T> modelClass) {
+        public <T extends ViewModel> T create(Class<T> modelClass)
+        {
             //noinspection unchecked
             return (T) new RecipeViewModel(application, id, repository);
         }
@@ -68,19 +77,23 @@ public class RecipeViewModel extends AndroidViewModel {
     /**
      * Expose the LiveData ClientEntity query so the UI can observe it.
      */
-    public LiveData<RecipeEntity> getRecipe() {
+    public LiveData<RecipeEntity> getRecipe()
+    {
         return observableRecipe;
     }
 
-    public void createRecipe(RecipeEntity recipe, OnAsyncEventListener callback) {
+    public void createRecipe(RecipeEntity recipe, OnAsyncEventListener callback)
+    {
         repository.insert(recipe, callback, application);
     }
 
-    public void updateRecipe(RecipeEntity recipe, OnAsyncEventListener callback) {
+    public void updateRecipe(RecipeEntity recipe, OnAsyncEventListener callback)
+    {
         repository.update(recipe, callback, application);
     }
 
-    public void deleteRecipe(RecipeEntity recipe, OnAsyncEventListener callback) {
+    public void deleteRecipe(RecipeEntity recipe, OnAsyncEventListener callback)
+    {
         repository.delete(recipe, callback, application);
 
     }

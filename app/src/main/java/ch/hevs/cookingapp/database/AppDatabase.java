@@ -16,8 +16,8 @@ import ch.hevs.cookingapp.database.dao.RecipeDao;
 import ch.hevs.cookingapp.database.entity.CookEntity;
 import ch.hevs.cookingapp.database.entity.RecipeEntity;
 
-// CREATION DE LA DB TODO export schema
-@Database(entities = {CookEntity.class, RecipeEntity.class}, version = 1/*, exportSchema = false*/)
+// CREATION DE LA DB
+@Database(entities = {CookEntity.class, RecipeEntity.class}, version = 1/*, exportSchema = false*/) // TODO: Uncomment export schema to avoid warning when building app
 public abstract class AppDatabase extends RoomDatabase
 {
     // A T T R I B U T S
@@ -30,7 +30,7 @@ public abstract class AppDatabase extends RoomDatabase
     public abstract CookDao     cookDao();
     public abstract RecipeDao   recipeDao();
 
-    private final MutableLiveData<Boolean> mIsDatabaseCreated = new MutableLiveData<>();    //TODO : a quoi ça sert ?
+    private final MutableLiveData<Boolean> mIsDatabaseCreated = new MutableLiveData<>();
 
     // SINGLETON PATTERN
     public static AppDatabase getInstance(final Context context)

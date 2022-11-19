@@ -6,10 +6,15 @@ import ch.hevs.cookingapp.database.AppDatabase;
 import ch.hevs.cookingapp.database.repository.CookRepository;
 import ch.hevs.cookingapp.database.repository.RecipeRepository;
 
-// Classe qui AURA LES METHODES POUR ALLER CHERCHER LES INFORMATIONS DANS LA ROOM & DB.
-// On l'epellera quand on vet getDatabase avec la DAO vers la partie UI
-// ATTENTION : Ajouter "  android:name".BaseApp"  " dans le MANIFEST
-// ça définit quelle classe de type Application (ou dans ce cas, une classe qui étends Application) va faire tout tourner
+
+/**
+ * Class that will have the methods to get the information in the ROOM DB.
+ *
+ * We will call it when we getDatabase with the DAO to the UI part.
+ *
+ * WARNING : Add " android:name".BaseApp" " in the MANIFEST
+ * It defines which class of type Application (or in this case, a class that extends Application) is going to run everything
+ */
 public class BaseApp extends Application {
     @Override
     public void onCreate() {

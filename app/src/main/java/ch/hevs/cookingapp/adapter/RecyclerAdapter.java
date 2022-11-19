@@ -51,7 +51,7 @@ public class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerAdapter.Vie
         return viewHolder;
     }
 
-    // TODO: contrôler si ok ou pas
+
     @Override
     public void onBindViewHolder(RecyclerAdapter.ViewHolder holder, int position) {
         T item = mData.get(position);
@@ -70,7 +70,7 @@ public class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerAdapter.Vie
         }
     }
 
-    //TODO contrôler si ok ou pas
+
     public void setData(final List<T> data) {
         if (mData == null) {
             mData = data;

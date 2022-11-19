@@ -14,6 +14,10 @@ import ch.hevs.cookingapp.database.entity.CookEntity;
 import ch.hevs.cookingapp.database.repository.CookRepository;
 import ch.hevs.cookingapp.util.OnAsyncEventListener;
 
+/**
+ * Object that we use in the activities, to link our graphic objects to our DB objects.
+ * We have an Observer that will observe the changes in the DB to update the UI.
+ */
 public class CookViewModel extends AndroidViewModel
 {
 
@@ -24,8 +28,6 @@ public class CookViewModel extends AndroidViewModel
     // MediatorLiveData can observe other LiveData objects and react on their emissions.
     // Possède les informtions sources de la DB
     private final MediatorLiveData<CookEntity> observableCook;
-
-    // todo : Creer mediator de chaque liste BREAKFASTE etc
 
     public CookViewModel(@NonNull Application application,
                          final String email, CookRepository cookRepository)
@@ -40,17 +42,15 @@ public class CookViewModel extends AndroidViewModel
         // set by default null, until we get data from the database.
         observableCook.setValue(null);
 
-        LiveData<CookEntity> cook = repository.getCook(email, application); //TODO RENOMER
-        // todo : Live Data de chaqque liste. qui apelle la bonne methode
+        LiveData<CookEntity> cook = repository.getCook(email, application);
 
         // observe the changes of the account entity from the database and forward them
         observableCook.addSource(cook, observableCook::setValue);
 
-        // todo : Add source, mapper Mediator avec liveData
     }
 
     /**
-     * A creator is used to inject the cook id into the ViewModel
+     * A email is used to inject the cook id into the ViewModel
      */
     public static class Factory extends ViewModelProvider.NewInstanceFactory
     {
@@ -85,10 +85,6 @@ public class CookViewModel extends AndroidViewModel
         return observableCook;
     }
 
-    public void createCook(CookEntity cook, OnAsyncEventListener callback)
-    {
-        repository.insert(cook, callback, application);
-    }
 
     public void updateCook(CookEntity cook, OnAsyncEventListener callback)
     {

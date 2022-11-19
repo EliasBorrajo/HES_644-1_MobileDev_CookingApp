@@ -1,6 +1,5 @@
 package ch.hevs.cookingapp.ui.recipe;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -9,12 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Toast;
-
 import androidx.core.view.GravityCompat;
-
 import ch.hevs.cookingapp.R;
 import ch.hevs.cookingapp.database.async.recipe.CreateRecipe;
 import ch.hevs.cookingapp.database.entity.RecipeEntity;
@@ -24,7 +19,6 @@ import ch.hevs.cookingapp.database.enumeration.Meal;
 import ch.hevs.cookingapp.ui.BaseActivity;
 import ch.hevs.cookingapp.ui.MainActivity;
 import ch.hevs.cookingapp.util.OnAsyncEventListener;
-//TODO factory dans chaque view model et on la rappel dans chaque activité la ou on veut afficher la recette
 public class RecipeCreateActivity extends BaseActivity {
 
     private static final String TAG = "RecipeCreateActivity";
@@ -101,7 +95,9 @@ public class RecipeCreateActivity extends BaseActivity {
             @Override
             public void onSuccess() {
                 Log.d(TAG, "createNewRecipe: success");
-                toast = Toast.makeText(RecipeCreateActivity.this, getString(R.string.recipe_created), Toast.LENGTH_LONG);
+                // TODO : ICI
+                //toast = Toast.makeText(RecipeCreateActivity.this, getString(R.string.recipe_created), Toast.LENGTH_LONG);
+                Toast.makeText(RecipeCreateActivity.this, getString(R.string.recipe_created), Toast.LENGTH_LONG);
                 Intent intent = new Intent(RecipeCreateActivity.this, MainActivity.class);
                 startActivity(intent);
             }

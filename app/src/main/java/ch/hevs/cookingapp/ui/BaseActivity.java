@@ -25,18 +25,20 @@ import ch.hevs.cookingapp.ui.mgmt.LoginActivity;
 import ch.hevs.cookingapp.ui.mgmt.SettingsActivity;
 import ch.hevs.cookingapp.ui.recipe.RecipesActivity;
 
-// CE QUI EST EN COMMUN POUR TOUTES LES ACTIVITES : MENU / LAYOUT / BOUTONS / INTERRACTIONS
-// C'est la fênetre FRAGMENT qui s'ouvre sur le coté gacuhe
+/**
+ * WHAT IS IN COMMON FOR ALL ACTIVITIES : MENU / LAYOUT / BUTTONS / INTERRACTIONS
+ * It is the FRAGMENT window that opens on the left side
+ */
 public class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener
 {
     /**
-     * On aura accès à ces 2 variables, partout dans le code,
+     * On aura accès à ces 3 variables, partout dans le code,
      * c'est comme un singleton en hashmap disponible pour accèder à ces informations
      * sans avir besoin de le mettre dans un intent à chaque fois
      */
     public static final String PREFS_NAME = "SharedPrefs";      // Nom de la HashMap
-    public static final String PREFS_USER = "LoggedIn";         // Nom de la clé de la hashmap, on ajoutera une valeur au LogIn
-    public static final String PREFS_THEME= "Theme";
+    public static final String PREFS_USER = "LoggedIn";         // Nom de la clé de la hashmap, on ajoutera une valeur au LogIn. Permet de savoir quel user est connecté à la session
+    public static final String PREFS_THEME= "Theme";            // Enregistrement du thème selectionné par le user.
 
     /**
      * Frame layout: Which is going to be used as parent layout for child activity layout.
@@ -78,14 +80,16 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
+    /**
+     * Quand on se log-in, cette classe se charge,
+     * et on va utiliser le thème que l'utilisateur enregistre dans ses préferences.
+     */
     private void setPreferenceTheme()
     {
         // On dit quelle thème on veut utiliser
         SharedPreferences settings = getSharedPreferences(BaseActivity.PREFS_THEME, 0);
-        String theme = settings.getString(PREFS_THEME, "1");
+        String theme = settings.getString(PREFS_THEME, "1"); // Par défaut on utilise le thème 1, le LIGHT theme
         int modeNight = Integer.parseInt(theme);
-
-        System.out.println("REMEMBERED THEME : "+theme);
 
         // On l'applique.
         AppCompatDelegate.setDefaultNightMode(modeNight);
@@ -186,6 +190,9 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
+    /**
+     * Logout allows to quit the application. We delete the user's preferences.
+     */
     public void logout()
     {
         SharedPreferences.Editor editor = getSharedPreferences(BaseActivity.PREFS_NAME, 0).edit();
