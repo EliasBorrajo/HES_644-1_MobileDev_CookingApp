@@ -43,6 +43,11 @@ import ch.hevs.cookingapp.ui.MainActivity;
 import ch.hevs.cookingapp.util.OnAsyncEventListener;
 import ch.hevs.cookingapp.viewmodel.recipe.RecipeViewModel;
 
+
+/**
+ * Display of the recipe.
+ * If the recipe is mine, I can edit it, otherwise the delete & edit options are not displayed in the toolbar
+ */
 public class RecipeDetailActivity extends BaseActivity
 {
     private static final String TAG = "RecipeDetailActivity";
@@ -119,6 +124,9 @@ public class RecipeDetailActivity extends BaseActivity
         });
     }
 
+    /**
+     * Initialisation des élements de l'UI
+     */
     private void initiateView()
     {
         isEditable = false;
@@ -145,6 +153,7 @@ public class RecipeDetailActivity extends BaseActivity
         etPreparation = findViewById(R.id.et_recipeDetail_preparation);
         tvCreator = findViewById(R.id.tv_message_recipeby);
     }
+
 
     private void updateContent()
     {
@@ -242,7 +251,7 @@ public class RecipeDetailActivity extends BaseActivity
     {
         super.onCreateOptionsMenu(menu);
 
-        //  Si c'est bien moi-même qui visite ma recette, la toolbar va avoir le bouton EDIT & DELETE en plus
+        // Si c'est bien moi-même qui visite ma recette, la toolbar va avoir le bouton EDIT & DELETE en plus
         // Si c'est un autre user qui vient voir ma recette, ces bouttons ne s'affichent pas.
         SharedPreferences settings = getSharedPreferences(BaseActivity.PREFS_NAME, 0);
         String user = settings.getString(PREFS_USER, null);
@@ -298,6 +307,11 @@ public class RecipeDetailActivity extends BaseActivity
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Permet de switch entre le mode edit & show.
+     * si durant le "edit", les informations ne sont pas entrées correctement, et on change de mode,
+     * Les données ne seront pas enregistrés et au reload de la page les data initiales seront affichés
+     */
     private void switchEditableMode() {
         // Edite mode
         if (!isEditable)
@@ -413,7 +427,14 @@ public class RecipeDetailActivity extends BaseActivity
         isEditable = !isEditable;
     }
 
-    //TODO mettre des message
+    /**
+     *  Methode apellé lorsque on change du mode edit à show.
+     *  Lorsque on switch de mode, on veut sauvegarder les data dans la DB.
+     *  On commence par vérifier les paramètres entrées,
+     *  puis si ils sont bons on les SET
+     *
+     *  @param : Seront les paramètres du UI que on get leur valeurs
+     */
     private void saveChanges(String name, int time, String ingredients, String preparation, String diet, String allergy, String mealTime, byte[] bytes) {
         // Vérification des inputs
         if(name.equals("")) {
@@ -463,6 +484,13 @@ public class RecipeDetailActivity extends BaseActivity
         });
     }
 
+    /**
+     * Est apellé par le ImageButton de la View.
+     * On vérifie si on a les permissions d'acceder au storage externe,
+     * puis on ouvre un nouvel interface pour choisir une image de la gallery du téléphone à SET.
+     *
+     * @param view : Image Button de l'UI
+     */
     public void onImageEdit(View view) {
         if (ContextCompat.checkSelfPermission(RecipeDetailActivity.this,
                 Manifest.permission.READ_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED)
@@ -485,6 +513,14 @@ public class RecipeDetailActivity extends BaseActivity
         }
     }
 
+    /**
+     * Une fois qu'une photo a été sélectionné par le User, cette methode est apellée.
+     * On va set l'image à la DB.
+     *
+     * @param requestCode : La requête de la photo à selectionner
+     * @param resultCode  : resultat de la séléction de l'image choisie du telephone
+     * @param data : La photo sélectionnée
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -517,6 +553,10 @@ public class RecipeDetailActivity extends BaseActivity
         }
     }
 
+    /**
+     * Methode apellé par les checkbox
+     * @param view : Chechbox
+     */
     public void onCheckedMealEdit(View view) {
         // Is the view now checked?
         boolean checked = ((CheckBox) view).isChecked();
@@ -549,6 +589,10 @@ public class RecipeDetailActivity extends BaseActivity
         }
     }
 
+    /**
+     * Methode apellé par les checkbox
+     * @param view : Chechbox
+     */
     public void onCheckedDietEdit(View view) {
         // Is the view now checked?
         boolean checked = ((CheckBox) view).isChecked();
@@ -588,6 +632,10 @@ public class RecipeDetailActivity extends BaseActivity
         }
     }
 
+    /**
+     * Methode apellé par les checkbox
+     * @param view : Chechbox
+     */
     public void onCheckedAllegryEdit(View view) {
         // Is the view now checked?
         boolean checked = ((CheckBox) view).isChecked();

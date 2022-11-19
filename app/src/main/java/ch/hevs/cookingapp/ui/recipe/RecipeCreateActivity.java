@@ -36,6 +36,9 @@ import ch.hevs.cookingapp.ui.BaseActivity;
 import ch.hevs.cookingapp.ui.MainActivity;
 import ch.hevs.cookingapp.util.OnAsyncEventListener;
 
+/**
+ * Creation of a recipe
+ */
 public class RecipeCreateActivity extends BaseActivity {
 
     private static final String TAG = "RecipeCreateActivity";
@@ -65,6 +68,7 @@ public class RecipeCreateActivity extends BaseActivity {
 
         initiateView();
     }
+
 
     private void initiateView()
     {

@@ -27,8 +27,12 @@ import ch.hevs.cookingapp.ui.BaseActivity;
 import ch.hevs.cookingapp.util.RecyclerViewItemClickListener;
 import ch.hevs.cookingapp.viewmodel.recipe.RecipeListViewModel;
 
-public class RecipesActivity extends BaseActivity {
-
+/**
+ * List of all recipes.
+ * The same view is used for different data from the database depending of Breakfast / Lunch / Dinner
+ */
+public class RecipesActivity extends BaseActivity
+{
     private static final String TAG = "RecipesActivity";
 
     private List<RecipeEntity> recipes;
@@ -60,9 +64,11 @@ public class RecipesActivity extends BaseActivity {
         String meals = getIntent().getStringExtra(String.valueOf(R.string.meals));
 
         recipes = new ArrayList<>();
-        adapter = new RecyclerAdapter<>(new RecyclerViewItemClickListener() {
+        adapter = new RecyclerAdapter<>(new RecyclerViewItemClickListener()
+        {
             @Override
-            public void onItemClick(View view, int position) {
+            public void onItemClick(View view, int position)
+            {
                 Log.d(TAG, "clicked position:" + position);
                 Log.d(TAG, "clicked on: " + recipes.get(position).getName());
 
@@ -71,23 +77,28 @@ public class RecipesActivity extends BaseActivity {
                         Intent.FLAG_ACTIVITY_NO_ANIMATION | Intent.FLAG_ACTIVITY_CLEAR_TOP
                 );
                 intent.putExtra("recipeId", recipes.get(position).getId());
-                intent.putExtra(String.valueOf(R.string.meals),meals);
+                intent.putExtra(String.valueOf(R.string.meals), meals);
                 startActivity(intent);
             }
 
             @Override
-            public void onItemLongClick(View view, int position) {
+            public void onItemLongClick(View view, int position)
+            {
 
             }
         });
 
-        RecipeListViewModel.Factory factory = new RecipeListViewModel.Factory(
-                getApplication(), user);
+        RecipeListViewModel.Factory factory = new RecipeListViewModel.Factory(getApplication(), user);
         viewModel = ViewModelProviders.of((FragmentActivity) this, (ViewModelProvider.Factory) factory).get(RecipeListViewModel.class);
 
         LiveData<List<RecipeEntity>> recipesMeals = null;
 
-        switch (meals) {
+        /**
+         * En fonction de la valeur retourné par le intent, on sait quel bouton a été cliqué dans le MainActivity.
+         * En fonction de cette valeur, on sait quelle type de viewModel on a besoin d'afficher à l'interface.
+         */
+        switch (meals)
+        {
             case "Breakfast":
                 recipesMeals = viewModel.getBreakfastRecipes();
                 break;
@@ -102,7 +113,8 @@ public class RecipesActivity extends BaseActivity {
                 break;
         }
         recipesMeals.observe(this, recipeEntities -> {
-            if (recipeEntities != null) {
+            if (recipeEntities != null)
+            {
                 recipes = recipeEntities;
                 adapter.setData(recipes);
             }
@@ -111,8 +123,10 @@ public class RecipesActivity extends BaseActivity {
     }
 
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == BaseActivity.position) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item)
+    {
+        if (item.getItemId() == BaseActivity.position)
+        {
             drawerLayout.closeDrawer(GravityCompat.START);
             return false;
         }

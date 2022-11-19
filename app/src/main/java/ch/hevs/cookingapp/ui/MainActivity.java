@@ -52,6 +52,9 @@ public class MainActivity extends BaseActivity
         alertDialog.show();
     }
 
+    /**
+     * Initialisation de la vue et des buttons listeners
+     */
     private void initiateView() {
         Button breakfastBtn = findViewById(R.id.buttonBreakfast);
         breakfastBtn.setOnClickListener(new View.OnClickListener() {
