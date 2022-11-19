@@ -92,7 +92,7 @@ public class RegisterActivity extends AppCompatActivity
             return;
         }
 
-        CookEntity newCook = new CookEntity(email,firstName,lastName, pwd, phone);
+        CookEntity newCook = new CookEntity(email,firstName,lastName, pwd, phone, null);
 
         // On apelle Async --> CookDao --> Insert (cook)
         new CreateCook(getApplication(), new OnAsyncEventListener()

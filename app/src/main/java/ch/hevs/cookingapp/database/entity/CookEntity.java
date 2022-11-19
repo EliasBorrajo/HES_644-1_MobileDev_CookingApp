@@ -16,6 +16,7 @@ public class CookEntity implements Comparable
     private String lastName;
     private String password;
     private String phoneNumber;
+    private byte[] image;
 
     // C O N S T R U C T E U R
     @Ignore                 //On ne le veut pas dans la DB & on veut utiliser l'autre constructeur qui contient les data
@@ -24,16 +25,27 @@ public class CookEntity implements Comparable
     }
 
 
-    public CookEntity(@NonNull String email, String firstName, String lastName, String password, String phoneNumber)
+    public CookEntity(@NonNull String email, String firstName, String lastName, String password, String phoneNumber, byte[] image)
     {
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
         this.phoneNumber = phoneNumber;
+        this.image = image;
     }
 
     // G E T T E R S   S E T T E R S
+
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+
     @NonNull
     public String getEmail()
     {

@@ -26,10 +26,10 @@ public class DatabaseInitializer
     }
 
     private static void addCook(final AppDatabase db,  final String email,    final String firstName,
-                                final String lastName, final String password, final String phoneNumber )
+                                final String lastName, final String password, final String phoneNumber,  final byte[] imageCook)
     {
         // Créer l'objet Cook, puis l'ajouter à la DB
-        CookEntity cook = new CookEntity(email, firstName, lastName, password, phoneNumber);
+        CookEntity cook = new CookEntity(email, firstName, lastName, password, phoneNumber, imageCook);
         db.cookDao().insert(cook);
     }
 
@@ -47,12 +47,12 @@ public class DatabaseInitializer
         db.cookDao().deleteAll();
 
         // Remplir Cook
-        addCook(db, "xolo@gmail.com",     "Xolo",     "Survivor",  "12345",     "0788206430");
-        addCook(db, "elias@gmail.com",    "Elias",    "Borrajo",   "coding",    "0788206431");
-        addCook(db, "milena@gmail.com",   "Milena",   "Lonfat",    "killing",   "0788206432");
-        addCook(db, "jonathan@gmail.com", "Jonathan", "Bourquin",  "myPassword","0788206433");
-        addCook(db, "zach@gmail.com",     "Zacharie", "Rennaz",    "brain",     "0788206434");
-        addCook(db, "arthur@gmail.com",   "Arthur",   "Avez",      "slowly",    "0788206435");
+        addCook(db, "xolo@gmail.com",     "Xolo",     "Survivor",  "12345",     "0788206430", null);
+        addCook(db, "elias@gmail.com",    "Elias",    "Borrajo",   "coding",    "0788206431", null);
+        addCook(db, "milena@gmail.com",   "Milena",   "Lonfat",    "killing",   "0788206432", null);
+        addCook(db, "jonathan@gmail.com", "Jonathan", "Bourquin",  "myPassword","0788206433", null);
+        addCook(db, "zach@gmail.com",     "Zacharie", "Rennaz",    "brain",     "0788206434", null);
+        addCook(db, "arthur@gmail.com",   "Arthur",   "Avez",      "slowly",    "0788206435", null);
 
         try {
             // Let's ensure that the cooks are already stored in the database before we continue.

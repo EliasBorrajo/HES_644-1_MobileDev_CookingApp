@@ -25,13 +25,14 @@
         android:orientation="horizontal"
         android:weightSum="2">
 
-        <ImageView
+        <ImageButton
             android:id="@+id/image_profilePicture"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:backgroundTintMode="add"
             android:background="@drawable/ic_launcher_foreground"
-            android:backgroundTint="@color/colorPrimary"/>
+            android:backgroundTint="@color/colorPrimary"
+            android:onClick="onProfileEdit"/>
 
 
     </LinearLayout>
