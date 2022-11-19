@@ -16,6 +16,8 @@ import ch.hevs.cookingapp.ui.BaseActivity;
 
 public class SettingsActivity extends BaseActivity
 {
+    Switch themeSwitch;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState)
     {
@@ -23,11 +25,13 @@ public class SettingsActivity extends BaseActivity
         setContentView(R.layout.activity_settings);
 
         // Récuperer les élements à l'écran
-        Switch theme = findViewById(R.id.switch_Theme);
+        themeSwitch = findViewById(R.id.switch_Theme);
 
-        //setSwitchOnPreferenceTheme(theme);
+        setSwitchOnPreferenceTheme();
+
 
     }
+
 
     // Action du switch
     public void changeTheme(View view)
@@ -66,7 +70,7 @@ public class SettingsActivity extends BaseActivity
 
     }
 
-    private void setSwitchOnPreferenceTheme(Switch themeSwitch)
+    private void setSwitchOnPreferenceTheme()
     {
         // On dit quelle thème on veut utiliser
         SharedPreferences settings = getSharedPreferences(BaseActivity.PREFS_THEME, 0);
@@ -75,6 +79,19 @@ public class SettingsActivity extends BaseActivity
 
         System.out.println("Set SWITCH CHECKED: "+ themeSwitch.isChecked());
         System.out.println("Set SWITCH THEME: "+themeMode);
+
+        switch (modeNight)
+        {
+            case 1: // Light THeme == 1
+                themeSwitch.setChecked(false);
+                break;
+
+            case 2: // Dark Theme == 2
+                themeSwitch.setChecked(true);
+                break;
+        }
+
+        /*
 
         switch (modeNight)
         {
@@ -95,6 +112,6 @@ public class SettingsActivity extends BaseActivity
                 break;
         }
 
-
+*/
     }
 }
