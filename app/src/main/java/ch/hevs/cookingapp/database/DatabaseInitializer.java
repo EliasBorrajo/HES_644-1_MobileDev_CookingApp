@@ -47,10 +47,10 @@ public class DatabaseInitializer
         db.cookDao().deleteAll();
 
         // Remplir Cook
-        addCook(db, "xolo@gmail.com",     "Xolo",     "Survivor",  "RIA",       "078 820 64 30");
+        addCook(db, "xolo@gmail.com",     "Xolo",     "Survivor",  "12345",     "078 820 64 30");
         addCook(db, "elias@gmail.com",    "Elias",    "Borrajo",   "coding",    "078 820 64 31");
         addCook(db, "milena@gmail.com",   "Milena",   "Lonfat",    "killing",   "078 820 64 32");
-        addCook(db, "jonathan@gmail.com", "Jonathan", "Bourquin",  "my",        "078 820 64 33");
+        addCook(db, "jonathan@gmail.com", "Jonathan", "Bourquin",  "myPassword","078 820 64 33");
         addCook(db, "zach@gmail.com",     "Zacharie", "Rennaz",    "brain",     "078 820 64 34");
         addCook(db, "arthur@gmail.com",   "Arthur",   "Avez",      "slowly",    "078 820 64 35");
 
@@ -62,9 +62,23 @@ public class DatabaseInitializer
         }
 
         // Remplir Recipe
+        // Matin
         addRecipe(db, "xolo@gmail.com", "Crêpes", 15, "Oeufs, Lait, Beurre", "Melanger fortement le tout", Diet.VEGETARIAN.toString(), Allergy.GLUTEN.toString(), Meal.BREAKFAST.toString());
         addRecipe(db, "xolo@gmail.com", "Sandiwch", 10, "Pain, Beurre, Jambon, tomate", "Empiler par tranches shouaités",Diet.FISH.toString(), Allergy.GLUTEN.toString(), Meal.BREAKFAST.toString());
         addRecipe(db, "milena@gmail.com", "Cookies", 45, "Oeufs, Lait, Beurre, Chocolat, Un tas de bonnes choses, Agent chimique X", "Melanger fortement le tout, puis lancer dans le four.",Diet.MEAT.toString(), Allergy.GLUTEN.toString(), Meal.BREAKFAST.toString());
+
+        // Midi
+        addRecipe(db, "arthur@gmail.com", "Burger Roi", 20, "Pain, Mayonaise, Salade, STEAK, tranche de tomate, pain", "N'oublie pas de mettre cette tranche de tomate frère", Diet.VEGETARIAN.toString(), Allergy.GLUTEN.toString(), Meal.BREAKFAST.toString() +  Meal.LUNCH.toString() +Meal.DINNER.toString());
+        addRecipe(db, "arthur@gmail.com", "Sandiwch", 10, "Pain, Beurre, Jambon, tomate", "Empiler par tranches shouaités",Diet.FISH.toString(), Allergy.GLUTEN.toString(), Meal.LUNCH.toString());
+        addRecipe(db, "elias@gmail.com", "Raclette", 45, "Fromage toi même tu sais lequel", "Fais moi griller cte chose la",Diet.MEAT.toString(), Allergy.GLUTEN.toString(), Meal.LUNCH.toString());
+
+
+        // Soi
+        addRecipe(db, "elias@gmail.com", "Darcula", 15, "Oeufs, Lait, Beurre", "Melanger fortement le tout", Diet.VEGETARIAN.toString(), Allergy.GLUTEN.toString(), Meal.DINNER.toString());
+        addRecipe(db, "zach@gmail.com", "Sirop aux fruits", 10, "Pain, Beurre, Jambon, tomate", "Empiler par tranches shouaités",Diet.FISH.toString(), Allergy.GLUTEN.toString(), Meal.DINNER.toString());
+        addRecipe(db, "zach@gmail.com", "Paleo", 45, "Oeufs, Lait, Beurre, Chocolat, Un tas de bonnes choses, Agent chimique X", "Melanger fortement le tout, puis lancer dans le four.",Diet.MEAT.toString(), Allergy.GLUTEN.toString(), Meal.DINNER.toString());
+
+
     }
 
 

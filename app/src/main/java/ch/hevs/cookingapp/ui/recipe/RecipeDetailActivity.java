@@ -93,13 +93,17 @@ public class RecipeDetailActivity extends BaseActivity
             if (recipeEntity != null)
             {
                 recipe = recipeEntity;
+                // Savoir à qui est la recette
+                recipeCreator = recipe.getCreator();
+                System.out.println("XOLO : "+recipeCreator);
                 updateContent();
             }
         });
 
-        // Savoir à qui est la recette
+
         //recipeCreator = recipe.getCreator();
-        recipeCreator = viewModel.getRecipe().getValue().getCreator();
+        //recipeCreator = viewModel.getRecipe().getValue().getCreator();
+
 
 
     }
