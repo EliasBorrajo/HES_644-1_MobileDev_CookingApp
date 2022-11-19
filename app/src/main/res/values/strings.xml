@@ -114,7 +114,6 @@
     <string name="tv_preparation">Preparation</string>
 
     <string name="btn_save">Save</string>
-    <string name="btn_cancel">Cancel</string>
 
     <string name="error_empty_recipe_name">Please, give a name to your recipe</string>
     <string name="error_empty_ingredient">Please provide ingredients</string>
@@ -133,4 +132,6 @@
     <string name="tv_time_preparation">No time</string>
     <string name="delete_recipe_msg">Do you really want to delete this recipe?</string>
     <string name="recipe_updated">Recipe updated</string>
+    <string name="recipe_deleted">Recipe deleted</string>
+    <string name="tv_message_noSpecCook">No creator specified</string>
 </resources>

@@ -88,6 +88,8 @@ public class RecipeDetailActivity extends BaseActivity
     private String allergySelection;
     private String mealTimeSelection;
 
+    private TextView tvCreator;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -137,6 +139,7 @@ public class RecipeDetailActivity extends BaseActivity
 
         etIngredients = findViewById(R.id.et_recipeDetail_ingredients);
         etPreparation = findViewById(R.id.et_recipeDetail_preparation);
+        tvCreator = findViewById(R.id.tv_message_recipeby);
     }
 
     private void updateContent()
@@ -144,6 +147,8 @@ public class RecipeDetailActivity extends BaseActivity
         if (recipe != null)
         {
             etRecipeName.setText(recipe.getName());
+            imageRecipe.setClickable(false);
+            imageRecipe.setFocusable(false);
             if(recipe.getImage() != null) {
                 Bitmap bitmap = BitmapFactory.decodeByteArray(recipe.getImage(), 0, recipe.getImage().length);
                 imageRecipe.setImageBitmap(bitmap);
@@ -203,6 +208,7 @@ public class RecipeDetailActivity extends BaseActivity
             }
             etIngredients.setText(recipe.getIngredients());
             etPreparation.setText(recipe.getPreparation());
+            tvCreator.setText("Created by " + recipe.getCreator());
 
             dietSelection = recipe.getDiet();
             allergySelection = recipe.getAllergy();
@@ -264,6 +270,8 @@ public class RecipeDetailActivity extends BaseActivity
                     @Override
                     public void onSuccess() {
                         Intent intent = new Intent(RecipeDetailActivity.this, MainActivity.class);
+                        toast = Toast.makeText(RecipeDetailActivity.this, getString(R.string.recipe_deleted), Toast.LENGTH_LONG);
+                        toast.show();
                         startActivity(intent);
                     }
 
@@ -281,19 +289,19 @@ public class RecipeDetailActivity extends BaseActivity
         // Edite mode
         if (!isEditable)
         {
-            //TODO régler bouton
             etRecipeName.setFocusable(true);
             etRecipeName.setEnabled(true);
-            //etRecipeName.setFocusableInTouchMode(true);
+            etRecipeName.setFocusableInTouchMode(true);
 
+            //TODO régler bouton
             imageRecipe.setClickable(true);
-            imageRecipe.setFocusable(false);
+            imageRecipe.setFocusable(true);
 
             tvPrepTime.setVisibility(View.VISIBLE);
             etTime.setVisibility(View.VISIBLE);
             etTime.setFocusable(true);
             etTime.setEnabled(true);
-            //etTime.setFocusableInTouchMode(true);
+            etTime.setFocusableInTouchMode(true);
 
             cbBreakfast.setFocusable(true);
             cbBreakfast.setEnabled(true);
@@ -322,11 +330,11 @@ public class RecipeDetailActivity extends BaseActivity
 
             etIngredients.setFocusable(true);
             etIngredients.setEnabled(true);
-            //etIngredients.setFocusableInTouchMode(true);
+            etIngredients.setFocusableInTouchMode(true);
 
             etPreparation.setFocusable(true);
             etPreparation.setEnabled(true);
-            //etPreparation.setFocusableInTouchMode(true);
+            etPreparation.setFocusableInTouchMode(true);
         }
         // Classic mode
         else
@@ -343,7 +351,6 @@ public class RecipeDetailActivity extends BaseActivity
             );
             etRecipeName.setFocusable(false);
             etRecipeName.setEnabled(false);
-            etRecipeName.setFocusableInTouchMode(false);
 
             if (recipe.getPrepTime() != 0)
             {
@@ -353,10 +360,8 @@ public class RecipeDetailActivity extends BaseActivity
                 tvPrepTime.setVisibility(View.GONE);
                 etTime.setVisibility(View.GONE);
             }
-
             etTime.setFocusable(false);
             etTime.setEnabled(false);
-            //etTime.setFocusableInTouchMode(false);
 
             imageRecipe.setClickable(false);
             imageRecipe.setFocusable(false);
@@ -388,15 +393,14 @@ public class RecipeDetailActivity extends BaseActivity
 
             etIngredients.setFocusable(false);
             etIngredients.setEnabled(false);
-            //etIngredients.setFocusableInTouchMode(false);
 
             etPreparation.setFocusable(false);
             etPreparation.setEnabled(false);
-            //etPreparation.setFocusableInTouchMode(false);
         }
         isEditable = !isEditable;
     }
 
+    //TODO mettre des message
     private void saveChanges(String name, int time, String ingredients, String preparation, String diet, String allergy, String mealTime, byte[] bytes) {
         // Vérification des inputs
         if(name.equals("")) {
@@ -464,6 +468,7 @@ public class RecipeDetailActivity extends BaseActivity
         {
             // clear previous data
             imageRecipe.setImageBitmap(null);
+            // TODO dégager infos recipes image
             // Initialize intent
             Intent intent = new Intent(Intent.ACTION_PICK);
             // set type
