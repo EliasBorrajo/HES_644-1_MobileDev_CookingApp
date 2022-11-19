@@ -80,7 +80,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
 
     private void setPreferenceTheme()
     {
-        // On dit quelle thème on veut utiliser
+        // On dit quel thème on veut utiliser
         SharedPreferences settings = getSharedPreferences(BaseActivity.PREFS_THEME, 0);
         String theme = settings.getString(PREFS_THEME, "1");
         int modeNight = Integer.parseInt(theme);

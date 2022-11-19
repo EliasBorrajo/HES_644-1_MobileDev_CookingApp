@@ -68,8 +68,7 @@ public class RecipesActivity extends BaseActivity {
 
                 Intent intent = new Intent(RecipesActivity.this, RecipeDetailActivity.class);
                 intent.setFlags(
-                        Intent.FLAG_ACTIVITY_NO_ANIMATION |
-                        Intent.FLAG_ACTIVITY_NO_HISTORY
+                        Intent.FLAG_ACTIVITY_NO_ANIMATION | Intent.FLAG_ACTIVITY_CLEAR_TOP
                 );
                 intent.putExtra("recipeId", recipes.get(position).getId());
                 intent.putExtra(String.valueOf(R.string.meals),meals);

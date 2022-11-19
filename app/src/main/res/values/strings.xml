@@ -134,4 +134,5 @@
     <string name="recipe_updated">Recipe updated</string>
     <string name="recipe_deleted">Recipe deleted</string>
     <string name="tv_message_noSpecCook">No creator specified</string>
+    <string name="MessageSaveChanges">Your changes wont be apply, some fields are wrong</string>
 </resources>

@@ -406,19 +406,19 @@ public class RecipeDetailActivity extends BaseActivity
         if(name.equals("")) {
             etRecipeName.setError(getString(R.string.error_empty_recipe_name));
             etRecipeName.requestFocus();
-            Toast.makeText(this, "Manger", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.MessageSaveChanges, Toast.LENGTH_LONG).show();
             return;
         }
         if(ingredients.equals("")) {
             etIngredients.setError(getString(R.string.error_empty_ingredient));
             etIngredients.requestFocus();
-            Toast.makeText(this, "Manger", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.MessageSaveChanges, Toast.LENGTH_LONG).show();
             return;
         }
         if(preparation.equals("")) {
             etPreparation.setError(getString(R.string.error_empty_preparation));
             etPreparation.requestFocus();
-            Toast.makeText(this, "Manger", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.MessageSaveChanges, Toast.LENGTH_LONG).show();
             return;
         }
         // On recupère les paramètres à SET à notre entité
@@ -432,8 +432,6 @@ public class RecipeDetailActivity extends BaseActivity
         if(bytes != null) {
             recipe.setImage(bytes);
         }
-
-        // TODO Ajouter photo
 
         viewModel.updateRecipe(recipe, new OnAsyncEventListener()
         {
@@ -453,8 +451,6 @@ public class RecipeDetailActivity extends BaseActivity
     }
 
     public void onImageEdit(View view) {
-        //TODO empecher de cliquer sur le bouton et trouver d'ou vient le pb des sauts de pages.
-        // check condition
         if (ContextCompat.checkSelfPermission(RecipeDetailActivity.this,
                 Manifest.permission.READ_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED)
         {
@@ -462,13 +458,11 @@ public class RecipeDetailActivity extends BaseActivity
             // request permission
             ActivityCompat.requestPermissions(RecipeDetailActivity.this
                     , new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},100);
-
         }
         else
         {
             // clear previous data
             imageRecipe.setImageBitmap(null);
-            // TODO dégager infos recipes image
             // Initialize intent
             Intent intent = new Intent(Intent.ACTION_PICK);
             // set type
@@ -489,7 +483,6 @@ public class RecipeDetailActivity extends BaseActivity
             Uri uri=data.getData();
             // Initialize bitmap
             try {
-                //TODO relire voir github
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),uri);
                 // initialize byte stream
                 ByteArrayOutputStream stream=new ByteArrayOutputStream();

@@ -47,7 +47,6 @@ public class CooksActivity extends BaseActivity
         navigationView.setCheckedItem(position);
 
         // On va créer nos différents élements graphiques, et les lier entre eux pour créer une interface
-
         RecyclerView recyclerView = findViewById(R.id.cooksRecyclerView);
 
         // use a linear layout manager
