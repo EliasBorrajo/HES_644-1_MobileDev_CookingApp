@@ -29,7 +29,8 @@ import ch.hevs.cookingapp.util.OnAsyncEventListener;
 import ch.hevs.cookingapp.viewmodel.cook.CookViewModel;
 
 // Fenêtre qui aura 2 modes : Vue simple et editable
-public class CookActivity extends BaseActivity {
+public class CookActivity extends BaseActivity
+{
 
     // Constantes pour l'ordre dans la toolbar
     private static final int EDIT_COOK = 1;       // C'est l'ID du menu. La toolbar sera modifié
@@ -44,6 +45,7 @@ public class CookActivity extends BaseActivity {
     private EditText etLastName;
     private EditText etEmail;
     private EditText etPhone;
+    private EditText etNewPwd;
     private EditText etPwd1;
     private EditText etPwd2;
 
@@ -52,7 +54,8 @@ public class CookActivity extends BaseActivity {
     private CookEntity cook;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setTitle(getString(R.string.title_activity_myCook));
         navigationView.setCheckedItem(position);
@@ -66,7 +69,7 @@ public class CookActivity extends BaseActivity {
         String intent_selectedUserSource = intent.getStringExtra(String.valueOf(R.string.selectedCook));
 
         // Afficher mon profile connecté
-        if(intent_selectedUserSource.equals(String.valueOf(R.string.clickSourceMyProfile)))
+        if (intent_selectedUserSource.equals(String.valueOf(R.string.clickSourceMyProfile)))
         {
             SharedPreferences settings = getSharedPreferences(BaseActivity.PREFS_NAME, 0);
             userConnected = settings.getString(PREFS_USER, null);
@@ -78,19 +81,19 @@ public class CookActivity extends BaseActivity {
         }
 
 
-
         CookViewModel.Factory factory = new CookViewModel.Factory(getApplication(), userConnected);
 
         // Créer un viewModel
         viewModel_Cook = new ViewModelProvider((ViewModelStoreOwner) this, (ViewModelProvider.Factory) factory).get(CookViewModel.class); // Donne nous un ViewModel, grâce à la Factory, pour me donner un CookViewModel
         // Recuperer les données de la DB
         viewModel_Cook.getCook().observe(this, cookEntity ->
+        {
+            if (cookEntity != null)
             {
-                if (cookEntity != null) {
-                    cook = cookEntity;
-                    updateContent(); //Si il y a un changement en DB, on UPDATE
-                }
-            });
+                cook = cookEntity;
+                updateContent(); //Si il y a un changement en DB, on UPDATE
+            }
+        });
     }
 
 
@@ -101,25 +104,32 @@ public class CookActivity extends BaseActivity {
         etLastName = findViewById(R.id.et_lastName);
         etEmail = findViewById(R.id.et_mail);
         etPhone = findViewById(R.id.et_phone);
+        etNewPwd = findViewById(R.id.et_newPassword);
         etPwd1 = findViewById(R.id.password);
         etPwd2 = findViewById(R.id.passwordRep);
     }
 
+    /**
+     * Update selon le contenu de l'entity
+     */
     private void updateContent()
     {
-        if (cook != null) {
+        if (cook != null)
+        {
             etFirstName.setText(cook.getFirstName());
             etLastName.setText(cook.getLastName());
             etPhone.setText(cook.getPhoneNumber());
             etEmail.setText(cook.getEmail());
             etPhone.setText(cook.getPhoneNumber());
+            etNewPwd.setText(cook.getPassword());
         }
     }
 
 
     // Quand on clique dans la toolbar
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item)
+    {
         if (item.getItemId() == BaseActivity.position)
         {
             drawerLayout.closeDrawer(GravityCompat.START);
@@ -143,7 +153,7 @@ public class CookActivity extends BaseActivity {
         SharedPreferences settings = getSharedPreferences(BaseActivity.PREFS_NAME, 0);
         String user = settings.getString(PREFS_USER, null);
 
-        if(user.equals(etEmail.getText().toString()) )
+        if (user.equals(etEmail.getText().toString()))
         {
             menu.add(0, EDIT_COOK, Menu.NONE, getString(R.string.action_edit))
                     .setIcon(R.drawable.ic_edit_white_24dp)
@@ -158,7 +168,8 @@ public class CookActivity extends BaseActivity {
 
     // Quand on sélectionne les bouttons dans la TOOLBAR
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
         if (item.getItemId() == EDIT_COOK)
         {
             if (isEditable)
@@ -172,20 +183,25 @@ public class CookActivity extends BaseActivity {
                 switchEditableMode();
             }
         }
-        if (item.getItemId() == DELETE_COOK) {
+        if (item.getItemId() == DELETE_COOK)
+        {
             final AlertDialog alertDialog = new AlertDialog.Builder(this).create();
             alertDialog.setTitle(getString(R.string.action_delete));
             alertDialog.setCancelable(false);
             alertDialog.setMessage(getString(R.string.delete_msg));
             alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getString(R.string.action_delete), (dialog, which) -> {
-                viewModel_Cook.deleteCook(cook, new OnAsyncEventListener() {
+                viewModel_Cook.deleteCook(cook, new OnAsyncEventListener()
+                {
                     @Override
-                    public void onSuccess() {
+                    public void onSuccess()
+                    {
                         logout();
                     }
 
                     @Override
-                    public void onFailure(Exception e) {}
+                    public void onFailure(Exception e)
+                    {
+                    }
                 });
             });
             alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, getString(R.string.action_cancel), (dialog, which) -> alertDialog.dismiss());
@@ -194,10 +210,14 @@ public class CookActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void switchEditableMode() {
+    private void switchEditableMode()
+    {
         // EDIT
         if (!isEditable)
         {
+            LinearLayout linearLayout_newPassword = findViewById(R.id.layout_newPassword);
+            linearLayout_newPassword.setVisibility(View.VISIBLE);
+
             LinearLayout linearLayout = findViewById(R.id.layout_passwordLayout);
             linearLayout.setVisibility(View.VISIBLE);
             etFirstName.setFocusable(true);
@@ -217,6 +237,7 @@ public class CookActivity extends BaseActivity {
             etPhone.setEnabled(true);
             etPhone.setFocusableInTouchMode(true);
 
+
         }
         // Vue en mode CALSSIC
         else
@@ -227,12 +248,17 @@ public class CookActivity extends BaseActivity {
                     etLastName.getText().toString(),
                     etEmail.getText().toString(),
                     etPhone.getText().toString(),
+                    etNewPwd.getText().toString(),
                     etPwd1.getText().toString(),
                     etPwd2.getText().toString()
             );
 
+            LinearLayout linearLayout_newPassword = findViewById(R.id.layout_newPassword);
+            linearLayout_newPassword.setVisibility(View.GONE);
+
             LinearLayout linearLayout_Password = findViewById(R.id.layout_passwordLayout);
             linearLayout_Password.setVisibility(View.GONE);
+
             etFirstName.setFocusable(false);
             etFirstName.setEnabled(false);
 
@@ -245,6 +271,7 @@ public class CookActivity extends BaseActivity {
             etPhone.setFocusable(false);
             etPhone.setEnabled(false);
 
+
         }
         // Toggle pour dire que on va changer de vue
         isEditable = !isEditable;
@@ -252,19 +279,22 @@ public class CookActivity extends BaseActivity {
 
 
     // En mode EDIT, recupere les données entrées
-    private void saveChanges(String firstName, String lastName, String email, String phone  , String pwd, String pwd2) {
+    private void saveChanges(String firstName, String lastName, String email, String phone,String newPasswd ,String pwd, String pwd2)
+    {
         // Vérification des inputs
-        if (!pwd.equals(pwd2) || pwd.length() < 5) {
+        if (!pwd.equals(pwd2) || pwd.length() < 5 || !pwd.equals(cook.getPassword()))
+        {
             toast = Toast.makeText(this, getString(R.string.error_edit_invalid_password), Toast.LENGTH_LONG);
             toast.show();
             etPwd1.setText("");
             etPwd2.setText("");
             return;
         }
-        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {            // c'est un REGEX de si on a bien un mail ou non
+        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches())
+        {            // c'est un REGEX de si on a bien un mail ou non
             etEmail.setError(getString(R.string.error_invalid_email));
             etEmail.requestFocus();
-            Toast.makeText(this,R.string.error_invalid_email_format,Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.error_invalid_email_format, Toast.LENGTH_LONG).show();
             return;
         }
         // Verification que le phone number est bon
@@ -275,26 +305,43 @@ public class CookActivity extends BaseActivity {
         {
             etPhone.setError(getString(R.string.error_invalid_phone));
             etPhone.requestFocus();
-            Toast.makeText(this,R.string.error_invalid_phone_format,Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.error_invalid_phone_format, Toast.LENGTH_LONG).show();
+            return;
+        }
+        // Le nouveau mot de passe
+        if (newPasswd.length() < 5)
+        {
+            etNewPwd.setError(getString(R.string.toast_newPass));
+            etNewPwd.requestFocus();
+            Toast.makeText(this, getString(R.string.toast_newPass), Toast.LENGTH_LONG);
+            toast.show();
+            etNewPwd.setText("");
+
             return;
         }
 
-        // On recupère les paramètres pour mettre avec SET à notre entité
+
+        // On SET nos paramètres de l'entity, pour ensuite les update quand l'entity est prête à passer à la DB
         cook.setEmail(email);
         cook.setFirstName(firstName);
         cook.setLastName(lastName);
         cook.setPhoneNumber(phone);
-        cook.setPassword(pwd);
+        cook.setPassword(newPasswd);
+
+        etPwd1.setText("");
+        etPwd2.setText("");
 
         viewModel_Cook.updateCook(cook, new OnAsyncEventListener()
         {
             @Override
-            public void onSuccess() {
+            public void onSuccess()
+            {
                 setResponse(true);
             }
 
             @Override
-            public void onFailure(Exception e) {
+            public void onFailure(Exception e)
+            {
                 setResponse(false);
             }
         });
@@ -302,20 +349,26 @@ public class CookActivity extends BaseActivity {
         return;
     }
 
-    private void setResponse(Boolean response) {
-        if (response) {
+    private void setResponse(Boolean response)
+    {
+        if (response)
+        {
             updateContent();
             toast = Toast.makeText(this, getString(R.string.cook_updated), Toast.LENGTH_LONG);
             toast.show();
-        } else {
+        }
+        else
+        {
             etEmail.setError(getString(R.string.error_used_email));
             etEmail.requestFocus();
         }
     }
 
     @Override
-    public void onBackPressed() {
-        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+    public void onBackPressed()
+    {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START))
+        {
             drawerLayout.closeDrawer(GravityCompat.START);
             return;
         }
@@ -325,14 +378,14 @@ public class CookActivity extends BaseActivity {
         String prefs_UserConnected = settings.getString(PREFS_USER, null);
 
         // Mon user est connecté
-        if ( userConnected.equals(prefs_UserConnected) )
+        if (userConnected.equals(prefs_UserConnected))
         {
             startActivity(new Intent(this, MainActivity.class));
         }
         else // La vue est d'un autre user
         {
             startActivity(new Intent(this, CooksActivity.class)
-                              .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                    .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
         }
 
     }
