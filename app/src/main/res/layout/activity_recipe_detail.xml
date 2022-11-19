@@ -20,7 +20,7 @@
             android:textAlignment="center"
             android:textSize="25sp"
             android:focusable="false"
-            android:enabled="false"/>
+            android:enabled="false" />
 
         <ImageButton
             android:id="@+id/imageButton_recipeDetail"
@@ -29,7 +29,7 @@
             android:layout_margin="20dp"
             app:srcCompat="@android:drawable/ic_menu_gallery"
             android:contentDescription="@string/ib_descritpion"
-            android:focusable="false"/>
+            android:onClick="onImageEdit"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -259,7 +259,7 @@
 
         <TextView
             android:id="@+id/tv_title_recipeDetail_ingredients"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:text="@string/tv_ingredients"
@@ -275,11 +275,13 @@
             android:inputType="textMultiLine"
             android:minHeight="48dp"
             android:focusable="false"
-            android:enabled="false"/>
+            android:enabled="false"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"/>
 
         <TextView
             android:id="@+id/tv_tilte_recipeDetail_preparation"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:text="@string/tv_preparation"
@@ -295,13 +297,20 @@
             android:inputType="textMultiLine"
             android:minHeight="48dp"
             android:focusable="false"
-            android:enabled="false"/>
+            android:enabled="false"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"/>
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/tv_message_recipeby"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="30dp"
-            android:orientation="horizontal">
-        </LinearLayout>
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:text="@string/tv_message_noSpecCook"
+            android:textSize="16sp"
+            android:textAlignment="center"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="@dimen/fab_margin"/>
+
     </LinearLayout>
 </ScrollView>

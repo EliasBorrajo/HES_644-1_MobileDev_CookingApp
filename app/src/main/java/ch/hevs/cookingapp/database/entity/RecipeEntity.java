@@ -1,6 +1,7 @@
 package ch.hevs.cookingapp.database.entity;
 
 import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.Ignore;
@@ -36,6 +37,8 @@ public class RecipeEntity
     private String diet;
     private String allergy;
     private String mealTime;
+    @ColumnInfo(name = "image", typeAffinity = ColumnInfo.BLOB)
+    private byte[] image;
 
     // C O N S T R U C T E U R
     @Ignore
@@ -44,7 +47,7 @@ public class RecipeEntity
     }
 
 
-    public RecipeEntity(String creator, @NonNull String name, int prepTime, @NonNull String ingredients, @NonNull String preparation, String diet, String allergy, String mealTime)
+    public RecipeEntity(String creator, @NonNull String name, int prepTime, @NonNull String ingredients, @NonNull String preparation, String diet, String allergy, String mealTime, byte[] image)
     {
         this.creator = creator;
         this.name = name;
@@ -54,9 +57,18 @@ public class RecipeEntity
         this.diet = diet;
         this.allergy = allergy;
         this.mealTime = mealTime;
+        this.image = image;
     }
 
     // G E T T E R S   S E T T E R S
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+
     public String getDiet()
     {
         return diet;

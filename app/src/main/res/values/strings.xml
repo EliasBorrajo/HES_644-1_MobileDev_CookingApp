@@ -134,4 +134,7 @@
     <string name="delete_recipe_msg">Do you really want to delete this recipe?</string>
     <string name="recipe_updated">Recipe updated</string>
     <string name="clickSourceMyProfile">actionSourceClick_MyProfile</string>
+    <string name="recipe_deleted">Recipe deleted</string>
+    <string name="tv_message_noSpecCook">No creator specified</string>
+    <string name="MessageSaveChanges">Your changes wont be apply, some fields are wrong</string>
 </resources>
