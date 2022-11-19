@@ -23,8 +23,6 @@ public class RecipeCreateActivity extends BaseActivity {
 
     private static final String TAG = "RecipeCreateActivity";
 
-    private Toast toast;
-
     private String cook;
     private EditText etRecipeName;
     private EditText etTime;
@@ -95,9 +93,7 @@ public class RecipeCreateActivity extends BaseActivity {
             @Override
             public void onSuccess() {
                 Log.d(TAG, "createNewRecipe: success");
-                // TODO : ICI
-                //toast = Toast.makeText(RecipeCreateActivity.this, getString(R.string.recipe_created), Toast.LENGTH_LONG);
-                Toast.makeText(RecipeCreateActivity.this, getString(R.string.recipe_created), Toast.LENGTH_LONG);
+                Toast.makeText(RecipeCreateActivity.this, getString(R.string.recipe_created), Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(RecipeCreateActivity.this, MainActivity.class);
                 startActivity(intent);
             }
