@@ -47,12 +47,12 @@ public class DatabaseInitializer
         db.cookDao().deleteAll();
 
         // Remplir Cook
-        addCook(db, "xolo@gmail.com",     "Xolo",     "Survivor",  "12345",     "078 820 64 30");
-        addCook(db, "elias@gmail.com",    "Elias",    "Borrajo",   "coding",    "078 820 64 31");
-        addCook(db, "milena@gmail.com",   "Milena",   "Lonfat",    "killing",   "078 820 64 32");
-        addCook(db, "jonathan@gmail.com", "Jonathan", "Bourquin",  "myPassword","078 820 64 33");
-        addCook(db, "zach@gmail.com",     "Zacharie", "Rennaz",    "brain",     "078 820 64 34");
-        addCook(db, "arthur@gmail.com",   "Arthur",   "Avez",      "slowly",    "078 820 64 35");
+        addCook(db, "xolo@gmail.com",     "Xolo",     "Survivor",  "12345",     "0788206430");
+        addCook(db, "elias@gmail.com",    "Elias",    "Borrajo",   "coding",    "0788206431");
+        addCook(db, "milena@gmail.com",   "Milena",   "Lonfat",    "killing",   "0788206432");
+        addCook(db, "jonathan@gmail.com", "Jonathan", "Bourquin",  "myPassword","0788206433");
+        addCook(db, "zach@gmail.com",     "Zacharie", "Rennaz",    "brain",     "0788206434");
+        addCook(db, "arthur@gmail.com",   "Arthur",   "Avez",      "slowly",    "0788206435");
 
         try {
             // Let's ensure that the cooks are already stored in the database before we continue.
