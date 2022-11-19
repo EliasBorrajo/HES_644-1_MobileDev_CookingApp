@@ -1,5 +1,8 @@
 package ch.hevs.cookingapp.database.enumeration;
 
+/**
+ * Enumeration of all the Meals options we want as a checkbox
+ */
 public enum Meal
 {
     BREAKFAST() {

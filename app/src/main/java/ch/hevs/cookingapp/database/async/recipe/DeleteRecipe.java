@@ -7,6 +7,11 @@ import ch.hevs.cookingapp.BaseApp;
 import ch.hevs.cookingapp.database.entity.RecipeEntity;
 import ch.hevs.cookingapp.util.OnAsyncEventListener;
 
+/**
+ * it is used to delete a recipe in the database
+ * It is called in the viewmodel class RecipeViewModel with the method deleteRecipe
+ * it uses the method delete from the RecipeDao interface to delete the recipe in the database
+ */
 public class DeleteRecipe extends AsyncTask<RecipeEntity, Void, Void> {
 
     private Application application;

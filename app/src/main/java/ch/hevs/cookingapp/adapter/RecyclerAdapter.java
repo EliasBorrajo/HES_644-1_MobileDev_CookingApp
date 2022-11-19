@@ -15,7 +15,11 @@ import ch.hevs.cookingapp.database.entity.CookEntity;
 import ch.hevs.cookingapp.database.entity.RecipeEntity;
 import ch.hevs.cookingapp.util.RecyclerViewItemClickListener;
 
-public class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
+/**
+ * Allows to display elements in a list format on the screen and to scroll this list.
+ */
+public class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder>
+{
 
     private List<T> mData;
     private RecyclerViewItemClickListener mListener;
@@ -23,16 +27,20 @@ public class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerAdapter.Vie
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
-    static class ViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder
+    {
         // each data item is just a string in this case
         TextView mTextView;
-        ViewHolder(TextView textView) {
+
+        ViewHolder(TextView textView)
+        {
             super(textView);
             mTextView = textView;
         }
     }
 
-    public RecyclerAdapter(RecyclerViewItemClickListener listener) {
+    public RecyclerAdapter(RecyclerViewItemClickListener listener)
+    {
         mListener = listener;
     }
 
@@ -41,7 +49,7 @@ public class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerAdapter.Vie
     {
         // create a new view
         TextView v = (TextView) LayoutInflater.from(parent.getContext())
-                                              .inflate(R.layout.recycler_view, parent, false);
+                .inflate(R.layout.recycler_view, parent, false);
         final ViewHolder viewHolder = new ViewHolder(v);
         v.setOnClickListener(view -> mListener.onItemClick(view, viewHolder.getAdapterPosition()));
         v.setOnLongClickListener(view -> {
@@ -53,46 +61,65 @@ public class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerAdapter.Vie
 
 
     @Override
-    public void onBindViewHolder(RecyclerAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerAdapter.ViewHolder holder, int position)
+    {
         T item = mData.get(position);
         if (item.getClass().equals(RecipeEntity.class))
+        {
             holder.mTextView.setText(((RecipeEntity) item).getName());
+        }
         if (item.getClass().equals(CookEntity.class))
+        {
             holder.mTextView.setText(((CookEntity) item).getFirstName() + " " + ((CookEntity) item).getLastName());
+        }
     }
 
     @Override
-    public int getItemCount() {
-        if (mData != null) {
+    public int getItemCount()
+    {
+        if (mData != null)
+        {
             return mData.size();
-        } else {
+        }
+        else
+        {
             return 0;
         }
     }
 
 
-    public void setData(final List<T> data) {
-        if (mData == null) {
+    public void setData(final List<T> data)
+    {
+        if (mData == null)
+        {
             mData = data;
             notifyItemRangeInserted(0, data.size());
-        } else {
-            DiffUtil.DiffResult result = DiffUtil.calculateDiff(new DiffUtil.Callback() {
+        }
+        else
+        {
+            DiffUtil.DiffResult result = DiffUtil.calculateDiff(new DiffUtil.Callback()
+            {
                 @Override
-                public int getOldListSize() {
+                public int getOldListSize()
+                {
                     return mData.size();
                 }
 
                 @Override
-                public int getNewListSize() {
+                public int getNewListSize()
+                {
                     return data.size();
                 }
 
                 @Override
-                public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
-                    if (mData instanceof RecipeEntity) {
+                public boolean areItemsTheSame(int oldItemPosition, int newItemPosition)
+                {
+                    if (mData instanceof RecipeEntity)
+                    {
                         return ((RecipeEntity) mData.get(oldItemPosition)).getId().equals(((RecipeEntity) data.get(newItemPosition)).getId());
                     }
-                    if (mData instanceof CookEntity) {
+                    if (mData instanceof CookEntity)
+                    {
                         return ((CookEntity) mData.get(oldItemPosition)).getEmail().equals(
                                 ((CookEntity) data.get(newItemPosition)).getEmail());
                     }
@@ -100,15 +127,18 @@ public class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerAdapter.Vie
                 }
 
                 @Override
-                public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
-                    if (mData instanceof RecipeEntity) {
+                public boolean areContentsTheSame(int oldItemPosition, int newItemPosition)
+                {
+                    if (mData instanceof RecipeEntity)
+                    {
                         RecipeEntity newRecipe = (RecipeEntity) data.get(newItemPosition);
                         RecipeEntity oldRecipe = (RecipeEntity) mData.get(newItemPosition);
                         return newRecipe.getId().equals(oldRecipe.getId())
                                 && Objects.equals(newRecipe.getName(), oldRecipe.getName())
                                 && newRecipe.getCreator().equals(oldRecipe.getCreator());
                     }
-                    if (mData instanceof CookEntity) {
+                    if (mData instanceof CookEntity)
+                    {
                         CookEntity newCook = (CookEntity) data.get(newItemPosition);
                         CookEntity oldCook = (CookEntity) mData.get(newItemPosition);
                         return Objects.equals(newCook.getEmail(), oldCook.getEmail())

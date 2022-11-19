@@ -5,6 +5,12 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 
+
+/**
+ * Entity class for the Cook table
+ * Relation with the Recipe table : One to Many (One Cook can have many Recipes).
+ * Cook <-1----*-> Recipe
+ */
 @Entity(tableName = "cook", primaryKeys = {"email"})
 public class CookEntity implements Comparable
 {
@@ -86,7 +92,7 @@ public class CookEntity implements Comparable
     }
 
     // O V E R R I D E
-    // Ces 3 methodes sont apellés dans les RECYCLER list
+    // Ces 3 methodes sont apellés dans les RECYCLER list   // TODO: ListRecycler non utilisé alors on peut les supprimer :)
     @Override
     public boolean equals (Object obj)
     {

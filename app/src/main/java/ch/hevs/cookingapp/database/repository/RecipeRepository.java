@@ -11,9 +11,13 @@ import ch.hevs.cookingapp.database.async.recipe.CreateRecipe;
 import ch.hevs.cookingapp.database.async.recipe.DeleteRecipe;
 import ch.hevs.cookingapp.database.async.recipe.UpdateRecipe;
 import ch.hevs.cookingapp.database.entity.RecipeEntity;
-import ch.hevs.cookingapp.database.pojo.CookWithRecipes;
 import ch.hevs.cookingapp.util.OnAsyncEventListener;
 
+/**
+ * Repository class that works with local data source.
+ * This class is used to access the database.
+ * It is used by the ViewModel classes.
+ */
 public class RecipeRepository
 {
     private static RecipeRepository instance;

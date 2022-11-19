@@ -3,14 +3,10 @@ package ch.hevs.cookingapp.ui.mgmt;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceActivity;
 import android.view.View;
 import android.widget.Switch;
-
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-
 import ch.hevs.cookingapp.R;
 import ch.hevs.cookingapp.ui.BaseActivity;
 

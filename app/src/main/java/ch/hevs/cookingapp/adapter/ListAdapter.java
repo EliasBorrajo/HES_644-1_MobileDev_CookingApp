@@ -15,6 +15,7 @@ import java.util.List;
 
 import ch.hevs.cookingapp.R;
 
+
 public class ListAdapter<T> extends ArrayAdapter<T> {
 
     private int mResource;

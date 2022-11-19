@@ -8,7 +8,11 @@ import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-// Cook <-1------*-> Recipe
+/**
+ * Entity class for the Recipe table
+ * Relation with the Cook table : Many to One (One Cook can have many Recipes).
+ * Cook <-1----*-> Recipe
+ */
 @Entity(tableName = "recipe",
         foreignKeys = {
             @ForeignKey(
@@ -37,6 +41,7 @@ public class RecipeEntity
     private String diet;
     private String allergy;
     private String mealTime;
+    // On veut que l'image soit stockée en BLOB dans la DB (byte[]) et non en String (text).
     @ColumnInfo(name = "image", typeAffinity = ColumnInfo.BLOB)
     private byte[] image;
 
@@ -161,7 +166,7 @@ public class RecipeEntity
         this.preparation = preparation;
     }
 
-    // O V E R R I D E
+    // O V E R R I D E          // TODO : N'est pas dans ListRecycler, on peut supprimer :)
     @Override
     public boolean equals (Object obj)
     {

@@ -33,5 +33,4 @@ public class BaseApp extends Application {
         return RecipeRepository.getInstance();
     }
 
-
 }

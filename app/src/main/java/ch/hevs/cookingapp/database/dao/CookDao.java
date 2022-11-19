@@ -13,7 +13,17 @@ import androidx.room.Update;
 import java.util.List;
 
 import ch.hevs.cookingapp.database.entity.CookEntity;
-//DAOs abstract access to the database in a clean way
+
+
+/**
+ * DAOs abstract access to the database in a clean way
+ *
+ * This class is used to access the CookEntity table.
+ * It contains all the methods to access the database.
+ * The methods are annotated with the SQL queries.
+ * The methods are used in the CookRepository class.
+ * The methods are called in the CookViewModel class.
+ */
 @Dao
 public interface CookDao
 {
@@ -27,7 +37,7 @@ public interface CookDao
     long insert(CookEntity cooks) throws SQLiteConstraintException;
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(List<CookEntity> cooks);
+    void insertAll(List<CookEntity> cooks); // TODO SUPPRIMER
 
     @Update
     void update(CookEntity cook);

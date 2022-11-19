@@ -1,5 +1,8 @@
 package ch.hevs.cookingapp.database.enumeration;
 
+/**
+ * Enumeration of all the allergies options we want as a checkbox
+ */
 public enum Allergy
 {
    LACTOSE() {

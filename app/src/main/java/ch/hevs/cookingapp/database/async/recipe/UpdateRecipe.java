@@ -7,6 +7,11 @@ import ch.hevs.cookingapp.BaseApp;
 import ch.hevs.cookingapp.database.entity.RecipeEntity;
 import ch.hevs.cookingapp.util.OnAsyncEventListener;
 
+/**
+ * it is used to update a recipe in the database
+ * It is called in the viewmodel class RecipeViewModel with the method updateRecipe
+ * it uses the method update from the RecipeDao interface to update the recipe in the database
+ */
 public class UpdateRecipe extends AsyncTask<RecipeEntity, Void, Void> {
 
     private Application application;

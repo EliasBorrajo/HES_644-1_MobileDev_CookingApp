@@ -21,6 +21,9 @@ import java.util.List;
 
 import ch.hevs.cookingapp.R;
 
+/**
+ * Shows some informations about the application.
+ */
 public class AboutActivity extends PreferenceActivity
 {
     /**

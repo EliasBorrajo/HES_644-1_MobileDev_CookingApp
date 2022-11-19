@@ -1,5 +1,8 @@
 package ch.hevs.cookingapp.database.enumeration;
 
+/**
+ * Enumeration of all the Diets options we want as a checkbox
+ */
 public enum Diet
 {
     VEGAN() {

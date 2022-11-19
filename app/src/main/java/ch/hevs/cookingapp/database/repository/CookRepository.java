@@ -13,6 +13,11 @@ import ch.hevs.cookingapp.database.async.cook.UpdateCook;
 import ch.hevs.cookingapp.database.entity.CookEntity;
 import ch.hevs.cookingapp.util.OnAsyncEventListener;
 
+/**
+ * Repository class that works with local data source.
+ * This class is used to access the database.
+ * It is used by the ViewModel classes.
+ */
 public class CookRepository
 {
     private static CookRepository instance;

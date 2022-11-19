@@ -1,34 +1,28 @@
 package ch.hevs.cookingapp.ui.cook;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import ch.hevs.cookingapp.R;
 import ch.hevs.cookingapp.adapter.RecyclerAdapter;
 import ch.hevs.cookingapp.database.entity.CookEntity;
-import ch.hevs.cookingapp.database.entity.RecipeEntity;
 import ch.hevs.cookingapp.ui.BaseActivity;
-import ch.hevs.cookingapp.ui.recipe.RecipeDetailActivity;
-import ch.hevs.cookingapp.ui.recipe.RecipesActivity;
 import ch.hevs.cookingapp.util.RecyclerViewItemClickListener;
 import ch.hevs.cookingapp.viewmodel.cook.CookListViewModel;
-import ch.hevs.cookingapp.viewmodel.recipe.RecipeListViewModel;
 
+/**
+ * List of the different cooks using the app, including myself in the list.
+ */
 public class CooksActivity extends BaseActivity
 {
     private static final String TAG = "CooksActivity";

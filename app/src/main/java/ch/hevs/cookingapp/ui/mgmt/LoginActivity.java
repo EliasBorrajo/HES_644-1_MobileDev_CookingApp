@@ -22,6 +22,10 @@ import ch.hevs.cookingapp.database.repository.CookRepository;
 import ch.hevs.cookingapp.ui.BaseActivity;
 import ch.hevs.cookingapp.ui.MainActivity;
 
+/**
+ * Login activity.
+ * You can either log in, Register, or reset data of the DB (only for demo purpose)
+ */
 public class LoginActivity extends AppCompatActivity {
 
     private AutoCompleteTextView emailView;
@@ -66,6 +70,9 @@ public class LoginActivity extends AppCompatActivity {
         super.onPostResume();
     }
 
+    /**
+     * Click listenet method for the LOGIN
+     */
     private void attemptLogin()
     {
         // Reset errors.
@@ -130,14 +137,27 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Verificaton with an API that the EMAIl is in a valid format
+     * @param email : email to verify
+     * @return : true if it is valis
+     */
     private boolean isEmailValid(String email) {
         return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
+    /**
+     * Check the password lenght
+     * @param password
+     * @return
+     */
     private boolean isPasswordValid(String password) {
         return password.length() > 4;
     }
 
+    /**
+     * Reinitialise DB for DEMO PURPOSE
+     */
     private void reinitializeDatabase() {
         final AlertDialog alertDialog = new AlertDialog.Builder(this).create();
         alertDialog.setTitle(getString(R.string.action_demo_data));

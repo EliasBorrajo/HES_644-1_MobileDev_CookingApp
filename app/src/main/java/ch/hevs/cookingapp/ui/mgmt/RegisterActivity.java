@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.telephony.PhoneNumberUtils;
 import android.util.Log;
 import android.util.Patterns;
 import android.widget.Button;
@@ -71,6 +70,14 @@ public class RegisterActivity extends AppCompatActivity
         ));
     }
 
+    /**
+     *  Methode apellé lorsque on change du mode edit à show.
+     *  Lorsque on switch de mode, on veut sauvegarder les data dans la DB.
+     *  On commence par vérifier les paramètres entrées,
+     *  puis si ils sont bons on les SET
+     *
+     *  @param : Seront les paramètres du UI que on get leur valeurs
+     */
     private void saveChanges(String firstName, String lastName, String email, String phone, String pwd, String pwd2) {
         if (!pwd.equals(pwd2) || pwd.length() < 5) {
             etPwd1.setError(getString(R.string.error_invalid_password));

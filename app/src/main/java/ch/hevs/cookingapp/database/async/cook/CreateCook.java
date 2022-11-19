@@ -7,6 +7,12 @@ import ch.hevs.cookingapp.BaseApp;
 import ch.hevs.cookingapp.database.entity.CookEntity;
 import ch.hevs.cookingapp.util.OnAsyncEventListener;
 
+/**
+ * Async task to create a cook in the database.
+ * it is used in the CookViewModel
+ * it uses the CookDao to create the cook in the database
+ * it uses the OnAsyncEventListener to return the result of the operation
+ */
 public class CreateCook extends AsyncTask<CookEntity, Void, Void> {
 
     private Application application;

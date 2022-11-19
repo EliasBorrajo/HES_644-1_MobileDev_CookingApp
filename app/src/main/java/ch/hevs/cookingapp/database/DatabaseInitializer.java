@@ -10,7 +10,7 @@ import ch.hevs.cookingapp.database.enumeration.Diet;
 import ch.hevs.cookingapp.database.enumeration.Meal;
 
 /**
- * Generates dummy data
+ * Generates dummy data for the database, demo purposes only.
  */
 public class DatabaseInitializer
 {

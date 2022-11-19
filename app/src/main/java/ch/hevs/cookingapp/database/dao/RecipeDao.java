@@ -15,7 +15,17 @@ import java.util.List;
 import ch.hevs.cookingapp.database.entity.RecipeEntity;
 import ch.hevs.cookingapp.database.pojo.CookWithRecipes;
 
-//DAOs abstract access to the database in a clean way
+
+
+/**
+ *  DAOs abstract access to the database in a clean way.
+ *
+ *  This class is used to access the RecipeEntity table.
+ *  It contains all the methods to access the database.
+ *  The methods are annotated with the SQL queries.
+ *  The methods are used in the RecipeRepository class.
+ *  The methods are called in the RecipeViewModel class.
+ */
 @Dao
 public interface RecipeDao
 {
@@ -35,7 +45,7 @@ public interface RecipeDao
     long insert(RecipeEntity recipe) throws SQLiteConstraintException;
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(List<RecipeEntity> recipes);
+    void insertAll(List<RecipeEntity> recipes); // TODO :Supprimer
 
     @Update
     void update(RecipeEntity recipe);
