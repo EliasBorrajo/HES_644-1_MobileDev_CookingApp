@@ -14,6 +14,9 @@ import androidx.appcompat.app.AppCompatDelegate;
 import ch.hevs.cookingapp.R;
 import ch.hevs.cookingapp.ui.BaseActivity;
 
+/**
+ * Settings are here to change the default Theme of the app
+ */
 public class SettingsActivity extends BaseActivity
 {
     Switch themeSwitch;
@@ -33,7 +36,10 @@ public class SettingsActivity extends BaseActivity
     }
 
 
-    // Action du switch
+    /**
+     * Action liée au switch
+     * @param view : Switch de l'UI
+     */
     public void changeTheme(View view)
     {
         boolean checked = ((Switch) view).isChecked();
@@ -70,6 +76,10 @@ public class SettingsActivity extends BaseActivity
 
     }
 
+    /**
+     * Permet de savoir si on doit enclencher le switch ou non
+     * lorsque on arrive sur l'activité, selon les préferences du user.
+     */
     private void setSwitchOnPreferenceTheme()
     {
         // On dit quelle thème on veut utiliser
@@ -90,28 +100,5 @@ public class SettingsActivity extends BaseActivity
                 themeSwitch.setChecked(true);
                 break;
         }
-
-        /*
-
-        switch (modeNight)
-        {
-            case 1:     // Light THeme == 1
-                if (!themeSwitch.isChecked())
-                    themeSwitch.setChecked(false);
-                else
-                    themeSwitch.setChecked(true);
-                break;
-            case 2:     // Dark Theme == 2
-                if (!themeSwitch.isChecked())
-                    themeSwitch.setChecked(false);
-                else
-                    themeSwitch.setChecked(true);
-                break;
-            default:
-                System.out.println("DEFAULT ELIAS ERROR");
-                break;
-        }
-
-*/
     }
 }

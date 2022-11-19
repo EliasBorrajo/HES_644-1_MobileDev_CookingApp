@@ -22,6 +22,9 @@ import ch.hevs.cookingapp.ui.BaseActivity;
 import ch.hevs.cookingapp.ui.MainActivity;
 import ch.hevs.cookingapp.util.OnAsyncEventListener;
 
+/**
+ *  Register is the page to create a cook / user
+ */
 public class RegisterActivity extends AppCompatActivity
 {
     private static final String TAG = "RegisterActivity";

@@ -4,7 +4,6 @@ package ch.hevs.cookingapp.ui.cook;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,7 +27,12 @@ import ch.hevs.cookingapp.ui.MainActivity;
 import ch.hevs.cookingapp.util.OnAsyncEventListener;
 import ch.hevs.cookingapp.viewmodel.cook.CookViewModel;
 
-// Fenêtre qui aura 2 modes : Vue simple et editable
+
+/**
+ * Activity to show & edit the cook.
+ * It shows all cooks the same, but if it is my own account, it will display 2 more actions in the toolbar.
+ * Edit & Delete will be awailable in the toolbare then.
+ */
 public class CookActivity extends BaseActivity
 {
 
@@ -110,7 +114,7 @@ public class CookActivity extends BaseActivity
     }
 
     /**
-     * Update selon le contenu de l'entity
+     * Update le GUI selon le contenu de l'entity
      */
     private void updateContent()
     {
@@ -142,7 +146,13 @@ public class CookActivity extends BaseActivity
         return super.onNavigationItemSelected(item);
     }
 
-    // On modifie la TOOLBAR en ajoutant 2 bouttons icones
+
+    /**
+     * On modifie la TOOLBAR en ajoutant 2 bouttons icones
+     * On ajoute ces bouttons seulement si c'est notre propre page
+     * @param menu
+     * @return
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
@@ -210,6 +220,11 @@ public class CookActivity extends BaseActivity
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Permet de switch entre le mode edit & show.
+     * si durant le "edit", les informations ne sont pas entrées correctement, et on change de mode,
+     * Les données ne seront pas enregistrés et au reload de la page les data initiales seront affichés
+     */
     private void switchEditableMode()
     {
         // EDIT
@@ -278,7 +293,14 @@ public class CookActivity extends BaseActivity
     }
 
 
-    // En mode EDIT, recupere les données entrées
+    /**
+     *  Methode apellé lorsque on change du mode edit à show.
+     *  Lorsque on switch de mode, on veut sauvegarder les data dans la DB.
+     *  On commence par vérifier les paramètres entrées,
+     *  puis si ils sont bons on les SET
+     *
+     *  @param : Seront les paramètres du UI que on get leur valeurs
+     */
     private void saveChanges(String firstName, String lastName, String email, String phone,String newPasswd ,String pwd, String pwd2)
     {
         // Vérification des inputs
@@ -349,6 +371,10 @@ public class CookActivity extends BaseActivity
         return;
     }
 
+    /**
+     * Réaction selon la réponse optenue du AsyncEventListener
+     * @param response : Du AsyncEventlistener
+     */
     private void setResponse(Boolean response)
     {
         if (response)
