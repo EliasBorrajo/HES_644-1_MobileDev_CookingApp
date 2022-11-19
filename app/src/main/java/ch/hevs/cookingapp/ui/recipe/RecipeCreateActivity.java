@@ -22,6 +22,9 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
+import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -35,6 +38,7 @@ import ch.hevs.cookingapp.database.enumeration.Meal;
 import ch.hevs.cookingapp.ui.BaseActivity;
 import ch.hevs.cookingapp.ui.MainActivity;
 import ch.hevs.cookingapp.util.OnAsyncEventListener;
+import ch.hevs.cookingapp.viewmodel.recipe.RecipeViewModel;
 
 /**
  * Creation of a recipe
@@ -42,6 +46,9 @@ import ch.hevs.cookingapp.util.OnAsyncEventListener;
 public class RecipeCreateActivity extends BaseActivity {
 
     private static final String TAG = "RecipeCreateActivity";
+
+    private Toast toast;
+    private RecipeViewModel recipeViewModel;
 
     private String cook;
     private EditText etRecipeName;
@@ -67,6 +74,10 @@ public class RecipeCreateActivity extends BaseActivity {
         cook = settings.getString(BaseActivity.PREFS_USER, null);
 
         initiateView();
+
+        RecipeViewModel.Factory factory = new RecipeViewModel.Factory(
+                getApplication(), 0L);
+        recipeViewModel = ViewModelProviders.of((FragmentActivity) this, (ViewModelProvider.Factory) factory).get(RecipeViewModel.class);
     }
 
     /**
@@ -77,7 +88,6 @@ public class RecipeCreateActivity extends BaseActivity {
         dietSelection = "";
         allergySelection = "";
         mealTimeSelection = "";
-
         etRecipeName = findViewById(R.id.et_createRecipe_RecipeName);
         etTime = findViewById(R.id.et_createRecipe_PrepTime);
         etIngredients = findViewById(R.id.et_createRecipe_ingredients);
@@ -121,12 +131,11 @@ public class RecipeCreateActivity extends BaseActivity {
         }
 
         RecipeEntity newRecipe = new RecipeEntity(creator, name, time, ingredients, preparation, diet, allergy, mealTime, image);
-
-        new CreateRecipe(getApplication(), new OnAsyncEventListener() {
+        recipeViewModel.createRecipe(newRecipe, new OnAsyncEventListener() {
             @Override
             public void onSuccess() {
                 Log.d(TAG, "createNewRecipe: success");
-                Toast.makeText(RecipeCreateActivity.this, getString(R.string.recipe_created), Toast.LENGTH_LONG).show();
+                toast = Toast.makeText(RecipeCreateActivity.this, getString(R.string.recipe_created), Toast.LENGTH_LONG);
                 Intent intent = new Intent(RecipeCreateActivity.this, MainActivity.class);
                 startActivity(intent);
             }
@@ -135,7 +144,7 @@ public class RecipeCreateActivity extends BaseActivity {
             public void onFailure(Exception e) {
                 Log.d(TAG, "createNewRecipe: failure", e);
             }
-        }).execute(newRecipe);
+        });
     }
 
     /**
