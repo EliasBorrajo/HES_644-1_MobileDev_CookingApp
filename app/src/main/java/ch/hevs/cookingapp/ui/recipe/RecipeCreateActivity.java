@@ -69,7 +69,9 @@ public class RecipeCreateActivity extends BaseActivity {
         initiateView();
     }
 
-
+    /**
+     * initialisation des éléments de l'UI & BTN listenet
+     */
     private void initiateView()
     {
         dietSelection = "";
@@ -96,6 +98,11 @@ public class RecipeCreateActivity extends BaseActivity {
         ));
     }
 
+    /**
+     *  Vérifier les données entrées, et ensuite si elles sont OK les envoyer à la DB
+     *
+     *  @param : Seront les paramètres du UI que on get leur valeurs
+     */
     private void saveRecipe(String creator, String name, int time, String ingredients, String preparation, String diet, String allergy, String mealTime, byte[] image) {
         if(name.equals("")) {
             etRecipeName.setError(getString(R.string.error_empty_recipe_name));
@@ -131,6 +138,13 @@ public class RecipeCreateActivity extends BaseActivity {
         }).execute(newRecipe);
     }
 
+    /**
+     * Est apellé par le ImageButton de la View.
+     * On vérifie si on a les permissions d'acceder au storage externe,
+     * puis on ouvre un nouvel interface pour choisir une image de la gallery du téléphone à SET.
+     *
+     * @param view : Image Button de l'UI
+     */
     public void onClickedImage(View view) {
         // check condition
         if (ContextCompat.checkSelfPermission(RecipeCreateActivity.this,
@@ -155,6 +169,14 @@ public class RecipeCreateActivity extends BaseActivity {
         }
     }
 
+    /**
+     * Une fois qu'une photo a été sélectionné par le User, cette methode est apellée.
+     * On va set l'image à la DB.
+     *
+     * @param requestCode : La requête de la photo à selectionner
+     * @param resultCode  : resultat de la séléction de l'image choisie du telephone
+     * @param data : La photo sélectionnée
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -188,7 +210,10 @@ public class RecipeCreateActivity extends BaseActivity {
         }
     }
 
-
+    /**
+     * Methode apellé par les checkbox
+     * @param view : Chechbox
+     */
     public void onCheckedMeal(View view) {
         // Is the view now checked?
         boolean checked = ((CheckBox) view).isChecked();
@@ -221,6 +246,10 @@ public class RecipeCreateActivity extends BaseActivity {
         }
     }
 
+    /**
+     * Methode apellé par les checkbox
+     * @param view : Chechbox
+     */
     public void onCheckedDiet(View view) {
         // Is the view now checked?
         boolean checked = ((CheckBox) view).isChecked();
@@ -260,6 +289,10 @@ public class RecipeCreateActivity extends BaseActivity {
         }
     }
 
+    /**
+     * Methode apellé par les checkbox
+     * @param view : Chechbox
+     */
     public void onCheckedAllegry(View view) {
         // Is the view now checked?
         boolean checked = ((CheckBox) view).isChecked();
