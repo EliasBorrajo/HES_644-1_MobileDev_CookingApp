@@ -54,7 +54,7 @@ public class LoginActivity extends AppCompatActivity {
                 new Intent(LoginActivity.this, RegisterActivity.class))
         );
 
-        Button demoDataButton = findViewById(R.id.demo_data_button);
+        Button demoDataButton = findViewById(R.id.demo_data_button);        // Todo : Delete on public release. Only for demo purpose
         demoDataButton.setOnClickListener(view -> reinitializeDatabase());
 
 
