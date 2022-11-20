@@ -11,7 +11,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -38,7 +37,6 @@ import ch.hevs.cookingapp.R;
 import ch.hevs.cookingapp.database.entity.CookEntity;
 import ch.hevs.cookingapp.ui.BaseActivity;
 import ch.hevs.cookingapp.ui.MainActivity;
-import ch.hevs.cookingapp.ui.recipe.RecipeDetailActivity;
 import ch.hevs.cookingapp.util.OnAsyncEventListener;
 import ch.hevs.cookingapp.viewmodel.cook.CookViewModel;
 

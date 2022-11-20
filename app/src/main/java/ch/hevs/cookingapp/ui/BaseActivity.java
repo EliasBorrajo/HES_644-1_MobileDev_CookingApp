@@ -38,7 +38,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
      */
     public static final String PREFS_NAME = "SharedPrefs";      // Nom de la HashMap
     public static final String PREFS_USER = "LoggedIn";         // Nom de la clé de la hashmap, on ajoutera une valeur au LogIn. Permet de savoir quel user est connecté à la session
-    public static final String PREFS_THEME= "Theme";            // Enregistrement du thème selectionné par le user.
+    public static final String PREFS_THEME= "Theme";            // Enregistrement du thème selectionné pour le système. tous les users ont le même thème.
 
     /**
      * Frame layout: Which is going to be used as parent layout for child activity layout.
@@ -182,7 +182,8 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         if (intent != null)
         {
             intent.setFlags(
-                    Intent.FLAG_ACTIVITY_NO_ANIMATION
+                    Intent.FLAG_ACTIVITY_NO_ANIMATION |
+                    Intent.FLAG_ACTIVITY_CLEAR_TOP
             );
             startActivity(intent);
         }

@@ -33,7 +33,7 @@ public class SettingsActivity extends BaseActivity
 
 
     /**
-     * Action liée au switch
+     * Action liée au switch, permet de changer le thème de l'application
      * @param view : Switch de l'UI
      */
     public void changeTheme(View view)
@@ -83,8 +83,6 @@ public class SettingsActivity extends BaseActivity
         String themeMode = settings.getString(PREFS_THEME, "1");
         int modeNight = Integer.parseInt(themeMode);
 
-        System.out.println("Set SWITCH CHECKED: "+ themeSwitch.isChecked());
-        System.out.println("Set SWITCH THEME: "+themeMode);
 
         switch (modeNight)
         {
