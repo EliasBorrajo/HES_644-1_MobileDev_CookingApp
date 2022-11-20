@@ -2,6 +2,11 @@
 Authors : Borrajo Elias & Lonfat Milena
 Rendu 1 : ROOM Database - 20.11.2022
 
+Ce projet a été réalisé dans le cadre de notre troisième année de formation en informatique de gestion au sein de la HES-SO Valais-Wallis. Durant le cours "Développement Mobile". Il nous a été demandé de réaliser une application sur un thème choisi.
+
+Nous avons choisis de développer une application qui partage des recettes créées par les utilisateurs.
+un utilisateur crée un compte avec lequels il va pouvoir partager ses recettes. Il peut voir les comptes des autres utilisateurs ainsi que leur recette. Il ne peut modifier que ces propres recettes et son profil.
+
 ## Spécifications pour run : 
 	• Android Studio : Device Manager --> Pixel 3a API 30 - Android 11 x86 R en mode portrait.
 	• Il est nécessaire de prendre des photos avec l'app Photos du téléphone pour les avoir dans la gallerie avant de pouvoir les utiliser en tant qu'images de recettes ou de profil.
@@ -17,13 +22,4 @@ Rendu 1 : ROOM Database - 20.11.2022
 	• Input Type dans les Edit text. Password / Phone / Numbers. --> Meilleure UX
 	• Afficher la liste des recettes utilise la même activité, mais on filtre les recettes selon : Allergies / Diet / MealTime 
 	• Quand on update le profil, vérification de l'identité du user en demandant de taper son mot de passe.
-    • UI attractif et beau, avec une belle image sur l'écran d'accueil qui met tout de suite en appétit.
-    • Setting supplémentaire au about us, qui est le switch de Theme pour passer en dark mode toute l'application.
-
-  
-
-## Améliorations futures : 
-  	• Lors de la release de l'application sur un app store, supprimer le bouton de "reset database" qui se trouve sur le login. 
-  
-
-
+    	• UI attractif et beau, avec une belle image sur l'écran d'accueil qui met tout de suite en appétit.
