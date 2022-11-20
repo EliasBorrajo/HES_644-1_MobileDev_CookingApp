@@ -1,4 +1,6 @@
 # HES_644-1_MobileDev_CookingApp
+Authors : Borrajo Elias & Lonfat Milena
+Rendu 1 : ROOM Database - 20.11.2022
 
 ## Spécifications pour run : 
 	• Android Studio : Device Manager --> Pixel 3a API 30 - Android 11 x86 R en mode portrait.
