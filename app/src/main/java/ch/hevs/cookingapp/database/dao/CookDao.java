@@ -36,9 +36,6 @@ public interface CookDao
     @Insert
     long insert(CookEntity cooks) throws SQLiteConstraintException;
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(List<CookEntity> cooks); // TODO SUPPRIMER
-
     @Update
     void update(CookEntity cook);
 

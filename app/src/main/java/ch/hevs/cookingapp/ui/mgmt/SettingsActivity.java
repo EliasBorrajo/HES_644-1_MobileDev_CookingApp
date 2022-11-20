@@ -27,8 +27,6 @@ public class SettingsActivity extends BaseActivity
         themeSwitch = findViewById(R.id.switch_Theme);
 
         setSwitchOnPreferenceTheme();
-
-
     }
 
 
@@ -52,7 +50,6 @@ public class SettingsActivity extends BaseActivity
             editor.apply();
 
             AppCompatDelegate.setDefaultNightMode(modeNightYes);       // On l'applique.
-
         }
         else
         {

@@ -320,7 +320,6 @@ public class RecipeDetailActivity extends BaseActivity
             etRecipeName.setEnabled(true);
             etRecipeName.setFocusableInTouchMode(true);
 
-            //TODO régler bouton
             imageRecipe.setClickable(true);
             imageRecipe.setFocusable(true);
 
@@ -451,6 +450,13 @@ public class RecipeDetailActivity extends BaseActivity
         }
         if(preparation.equals("")) {
             etPreparation.setError(getString(R.string.error_empty_preparation));
+            etPreparation.requestFocus();
+            Toast.makeText(this, R.string.MessageSaveChanges, Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        if(mealTime.equals("")) {
+            etPreparation.setError(getString(R.string.error_empty_meal_time));
             etPreparation.requestFocus();
             Toast.makeText(this, R.string.MessageSaveChanges, Toast.LENGTH_LONG).show();
             return;

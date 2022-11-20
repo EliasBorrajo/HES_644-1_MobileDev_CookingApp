@@ -103,7 +103,6 @@ public class MainActivity extends BaseActivity
             @Override
             public void onClick(View view) {
                 Intent recipeActivity = new Intent(MainActivity.this, RecipeCreateActivity.class);
-                //TODO tester
                 recipeActivity.setFlags(
                         Intent.FLAG_ACTIVITY_NO_ANIMATION |
                                 Intent.FLAG_ACTIVITY_CLEAR_TOP

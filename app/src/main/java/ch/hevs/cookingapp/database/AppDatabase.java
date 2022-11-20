@@ -19,7 +19,7 @@ import ch.hevs.cookingapp.database.entity.RecipeEntity;
 /**
  * The Room database that contains the Recipe table and the Cook table
  */
-@Database(entities = {CookEntity.class, RecipeEntity.class}, version = 1/*, exportSchema = false*/) // TODO: Uncomment export schema to avoid warning when building app
+@Database(entities = {CookEntity.class, RecipeEntity.class}, version = 1/*, exportSchema = false*/) // Uncomment export schema to avoid warning when building app
 public abstract class AppDatabase extends RoomDatabase
 {
     // A T T R I B U T S

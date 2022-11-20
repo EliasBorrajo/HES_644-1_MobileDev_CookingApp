@@ -129,6 +129,11 @@ public class RecipeCreateActivity extends BaseActivity {
             etPreparation.requestFocus();
             return;
         }
+        if(mealTime.equals("")) {
+            etPreparation.setError(getString(R.string.error_empty_meal_time));
+            etPreparation.requestFocus();
+            return;
+        }
 
         RecipeEntity newRecipe = new RecipeEntity(creator, name, time, ingredients, preparation, diet, allergy, mealTime, image);
         recipeViewModel.createRecipe(newRecipe, new OnAsyncEventListener() {
@@ -197,7 +202,6 @@ public class RecipeCreateActivity extends BaseActivity {
             Uri uri=data.getData();
             // Initialize bitmap
             try {
-                //TODO relire voir github
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),uri);
                 // initialize byte stream
                 ByteArrayOutputStream stream=new ByteArrayOutputStream();

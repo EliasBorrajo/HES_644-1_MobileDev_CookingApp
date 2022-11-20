@@ -44,9 +44,6 @@ public interface RecipeDao
     @Insert
     long insert(RecipeEntity recipe) throws SQLiteConstraintException;
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(List<RecipeEntity> recipes); // TODO :Supprimer
-
     @Update
     void update(RecipeEntity recipe);
 
