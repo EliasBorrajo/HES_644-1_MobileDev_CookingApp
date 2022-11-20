@@ -54,10 +54,8 @@ public class LoginActivity extends AppCompatActivity {
                 new Intent(LoginActivity.this, RegisterActivity.class))
         );
 
-        Button demoDataButton = findViewById(R.id.demo_data_button);        // Todo : Delete on public release. Only for demo purpose
+        Button demoDataButton = findViewById(R.id.demo_data_button);        // Only for demo purpose. Here the button is hide because we want to keep it for future improvement
         demoDataButton.setOnClickListener(view -> reinitializeDatabase());
-
-
     }
 
     @Override
@@ -71,7 +69,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     /**
-     * Click listenet method for the LOGIN
+     * Click listener method for the LOGIN
      */
     private void attemptLogin()
     {

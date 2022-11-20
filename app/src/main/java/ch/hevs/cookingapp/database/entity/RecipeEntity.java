@@ -167,19 +167,7 @@ public class RecipeEntity
         this.preparation = preparation;
     }
 
-    // O V E R R I D E          // TODO : N'est pas dans ListRecycler, on peut supprimer :)
-    @Override
-    public boolean equals (Object obj)
-    {
-        if (obj == null) return false;
-        if (obj == this) return true;
-        if (!(obj instanceof RecipeEntity)) return false;
-
-        // Dans les autres cas, on compare l'email qui est la Primary Key
-        RecipeEntity o = (RecipeEntity) obj;
-        return o.id.equals(this.id);
-    }
-
+    // O V E R R I D E
     @Override
     public String toString()
     {

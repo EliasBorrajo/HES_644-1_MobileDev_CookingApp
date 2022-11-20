@@ -73,12 +73,15 @@
             android:textStyle="bold"
             android:textColor="@color/white"/>
 
+        <!-- Only for developpers -->
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="16dp"
-            android:background="@android:color/darker_gray" />
+            android:background="@android:color/darker_gray"
+            android:visibility="gone"/>
 
+        <!-- Only for developpers -->
         <Button
             android:id="@+id/demo_data_button"
             style="@android:style/TextAppearance.Small"
@@ -87,6 +90,7 @@
             android:layout_marginTop="16dp"
             android:text="@string/action_demo_data"
             android:textStyle="bold"
+            android:visibility="gone"
             android:textColor="@color/white"/>
     </LinearLayout>
 </LinearLayout>

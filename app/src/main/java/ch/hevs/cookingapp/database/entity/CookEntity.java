@@ -12,7 +12,7 @@ import androidx.room.Ignore;
  * Cook <-1----*-> Recipe
  */
 @Entity(tableName = "cook", primaryKeys = {"email"})
-public class CookEntity implements Comparable
+public class CookEntity
 {
     @NonNull
     private String email;   // On va l'utiliser comme foreing KEY
@@ -104,19 +104,6 @@ public class CookEntity implements Comparable
     }
 
     // O V E R R I D E
-    // Ces 3 methodes sont apellés dans les RECYCLER list   // TODO: ListRecycler non utilisé alors on peut les supprimer :)
-    @Override
-    public boolean equals (Object obj)
-    {
-        if (obj == null) return false;
-        if (obj == this) return true;
-        if (!(obj instanceof CookEntity)) return false;
-
-        // Dans les autres cas, on compare l'email qui est la Primary Key
-        CookEntity o = (CookEntity) obj;
-        return o.getEmail().equals(this.getEmail());
-    }
-
     @Override
     public String toString()
     {
@@ -126,11 +113,5 @@ public class CookEntity implements Comparable
                 ", lastName='" + lastName + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 '}';
-    }
-
-    @Override
-    public int compareTo(@NonNull Object o)
-    {
-        return toString().compareTo(o.toString());
     }
 }

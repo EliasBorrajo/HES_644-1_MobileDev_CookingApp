@@ -202,6 +202,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         Intent intent = new Intent(this, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+
         startActivity(intent);
     }
 }
