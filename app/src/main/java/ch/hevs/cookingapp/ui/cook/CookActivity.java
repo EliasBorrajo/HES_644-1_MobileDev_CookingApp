@@ -258,6 +258,10 @@ public class CookActivity extends BaseActivity
 
             LinearLayout linearLayout = findViewById(R.id.layout_passwordLayout);
             linearLayout.setVisibility(View.VISIBLE);
+
+            LinearLayout linearLayout_mail = findViewById(R.id.layout_mail);
+            linearLayout_mail.setVisibility(View.GONE);
+
             etFirstName.setFocusable(true);
             etFirstName.setEnabled(true);
             etFirstName.setFocusableInTouchMode(true);
@@ -269,6 +273,7 @@ public class CookActivity extends BaseActivity
             etPhone.setFocusable(true);
             etPhone.setEnabled(true);
             etPhone.setFocusableInTouchMode(true);
+
 
 
             imageCook.setClickable(true);
@@ -294,6 +299,9 @@ public class CookActivity extends BaseActivity
 
             LinearLayout linearLayout_Password = findViewById(R.id.layout_passwordLayout);
             linearLayout_Password.setVisibility(View.GONE);
+
+            LinearLayout linearLayout_mail = findViewById(R.id.layout_mail);
+            linearLayout_mail.setVisibility(View.VISIBLE);
 
             etFirstName.setFocusable(false);
             etFirstName.setEnabled(false);
