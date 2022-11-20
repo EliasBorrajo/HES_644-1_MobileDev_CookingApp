@@ -266,11 +266,6 @@ public class CookActivity extends BaseActivity
             etLastName.setEnabled(true);
             etLastName.setFocusableInTouchMode(true);
 
-            etEmail.setFocusable(true);
-            etEmail.setEnabled(true);
-            etEmail.setFocusableInTouchMode(true);
-            etEmail.requestFocus();             // Affiche le clavier
-
             etPhone.setFocusable(true);
             etPhone.setEnabled(true);
             etPhone.setFocusableInTouchMode(true);
