@@ -18,7 +18,8 @@ import androidx.room.PrimaryKey;
             @ForeignKey(
                     entity = CookEntity.class,
                     parentColumns = "email",    // Sera la clé primaire de la table COOK
-                    childColumns  = "creator"   // Sera le nom de la clé étrangère dans la table Recipe
+                    childColumns  = "creator",   // Sera le nom de la clé étrangère dans la table Recipe
+                    onDelete = ForeignKey.CASCADE   // On suprime le COOK et tous ses Recettes en cascade
                         )},
         indices = {
                 @Index(

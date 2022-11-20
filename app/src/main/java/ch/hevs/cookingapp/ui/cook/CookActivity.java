@@ -235,6 +235,7 @@ public class CookActivity extends BaseActivity
                     @Override
                     public void onFailure(Exception e)
                     {
+
                     }
                 });
             });
@@ -423,6 +424,13 @@ public class CookActivity extends BaseActivity
         }
     }
 
+    /**
+     * Est apellé par le ImageButton de la View.
+     * On vérifie si on a les permissions d'acceder au storage externe,
+     * puis on ouvre un nouvel interface pour choisir une image de la gallery du téléphone à SET.
+     *
+     * @param view : Image Button de l'UI
+     */
     public void onProfileEdit(View view) {
         if (ContextCompat.checkSelfPermission(CookActivity.this,
                 Manifest.permission.READ_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED)
@@ -445,6 +453,14 @@ public class CookActivity extends BaseActivity
         }
     }
 
+    /**
+     * Une fois qu'une photo a été sélectionné par le User, cette methode est apellée.
+     * On va set l'image à la DB.
+     *
+     * @param requestCode : La requête de la photo à selectionner
+     * @param resultCode  : resultat de la séléction de l'image choisie du telephone
+     * @param data : La photo sélectionnée
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
