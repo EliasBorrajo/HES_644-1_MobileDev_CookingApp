@@ -8,27 +8,28 @@
         <item
             android:id="@+id/nav_home"
             android:title="@string/title_activity_home"
-            android:icon="@android:color/darker_gray"
+            android:icon="@drawable/home"
             />
         <item
             android:id="@+id/nav_myProfile"
             android:title="@string/title_activity_myCook"
-            android:icon="@android:color/darker_gray"
+            android:icon="@drawable/user"
+
             />
         <item
             android:id="@+id/nav_myRecipe"
             android:title="@string/title_activity_myRecipe"
-            android:icon="@android:color/darker_gray"
+            android:icon="@drawable/recipe"
             />
         <item
             android:id="@+id/nav_cooksList"
             android:title="@string/action_allCooks"
-            android:icon="@android:color/darker_gray"
+            android:icon="@drawable/cooks"
             />
         <item
             android:id="@+id/nav_logout"
             android:title="@string/action_logout"
-            android:icon="@android:color/darker_gray"
+            android:icon="@drawable/logout"
             />
         <item
             android:id="@+id/nav_none"
