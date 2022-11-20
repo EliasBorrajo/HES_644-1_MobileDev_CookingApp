@@ -15,6 +15,9 @@
 	• Input Type dans les Edit text. Password / Phone / Numbers. --> Meilleure UX
 	• Afficher la liste des recettes utilise la même activité, mais on filtre les recettes selon : Allergies / Diet / MealTime 
 	• Quand on update le profil, vérification de l'identité du user en demandant de taper son mot de passe.
+    • UI attractif et beau, avec une belle image sur l'écran d'accueil qui met tout de suite en appétit.
+    • Setting supplémentaire au about us, qui est le switch de Theme pour passer en dark mode toute l'application.
+
   
 
 ## Améliorations futures : 
