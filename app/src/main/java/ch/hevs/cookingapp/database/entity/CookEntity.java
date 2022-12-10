@@ -4,6 +4,9 @@ import androidx.annotation.NonNull;
 
 import com.google.firebase.database.Exclude;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 /**
  * Entity class for the Cook table
@@ -12,27 +15,24 @@ import com.google.firebase.database.Exclude;
  */
 public class CookEntity
 {
-    private String email;   // On va l'utiliser comme foreing KEY
+    private String email;   // Est utilisé pour AuthentificationFirebase, mais aussi présent car variable que on afficherait dans l'application
     private String firstName;
     private String lastName;
     private String phoneNumber;
     // Password ira dans AuthentificationFirebase
-    @Exclude
-    private byte[] image; // Ira dans le StorageFirebase
+    private byte[] image; // TODO : Ira dans le StorageFirebase, mais en attendant en B64 dans la DB
 
     // C O N S T R U C T E U R
-    @Ignore                 //On ne le veut pas dans la DB & on veut utiliser l'autre constructeur qui contient les data
     public CookEntity()
     {
     }
 
 
-    public CookEntity(@NonNull String email, String firstName, String lastName, String password, String phoneNumber, byte[] image)
+    public CookEntity(String email, String firstName, String lastName, String phoneNumber, byte[] image)
     {
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.password = password;
         this.phoneNumber = phoneNumber;
         this.image = image;
     }
@@ -79,16 +79,6 @@ public class CookEntity
         this.lastName = lastName;
     }
 
-    public String getPassword()
-    {
-        return password;
-    }
-
-    public void setPassword(String password)
-    {
-        this.password = password;
-    }
-
     public String getPhoneNumber()
     {
         return phoneNumber;
@@ -109,5 +99,23 @@ public class CookEntity
                 ", lastName='" + lastName + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 '}';
+    }
+
+    // F I R E B A S E
+    /**
+     * Used to convert the object to a Map for Firebase Database purposes (pushing to the database)
+     * and vice versa (retrieving from the database).
+     * @return : a Map with the object's attributes as keys and their values as values.
+     */
+    @Exclude
+    public Map<String, Object> toMap()
+    {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("email", email);
+        result.put("firstName", firstName);
+        result.put("lastName", lastName);
+        result.put("phoneNumber", phoneNumber);
+        result.put("image", image);
+        return result;
     }
 }
