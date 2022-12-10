@@ -2,24 +2,23 @@ package ch.hevs.cookingapp.database.entity;
 
 import androidx.annotation.NonNull;
 
+import com.google.firebase.database.Exclude;
+
 
 /**
  * Entity class for the Cook table
  * Relation with the Recipe table : One to Many (One Cook can have many Recipes).
  * Cook <-1----*-> Recipe
  */
-@Entity(tableName = "cook", primaryKeys = {"email"})
 public class CookEntity
 {
-    @NonNull
     private String email;   // On va l'utiliser comme foreing KEY
-    @ColumnInfo(name = "first_name") // Nom dans la database
     private String firstName;
-    @ColumnInfo(name = "last_name")
     private String lastName;
-    private String password;
     private String phoneNumber;
-    private byte[] image;
+    // Password ira dans AuthentificationFirebase
+    @Exclude
+    private byte[] image; // Ira dans le StorageFirebase
 
     // C O N S T R U C T E U R
     @Ignore                 //On ne le veut pas dans la DB & on veut utiliser l'autre constructeur qui contient les data
