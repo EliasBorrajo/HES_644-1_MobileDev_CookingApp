@@ -2,7 +2,6 @@ package ch.hevs.cookingapp;
 
 import android.app.Application;
 
-import ch.hevs.cookingapp.database.AppDatabase;
 import ch.hevs.cookingapp.database.repository.CookRepository;
 import ch.hevs.cookingapp.database.repository.RecipeRepository;
 

@@ -19,6 +19,7 @@ public class CookEntity
     private String firstName;
     private String lastName;
     private String phoneNumber;
+    private String password;
     // Password ira dans AuthentificationFirebase
     private byte[] image; // TODO : Ira dans le StorageFirebase, mais en attendant en B64 dans la DB
 
@@ -38,7 +39,16 @@ public class CookEntity
     }
 
     // G E T T E R S   S E T T E R S
+    @Exclude
+    public String getPassword()
+    {
+        return password;
+    }
 
+    public void setPassword(String password)
+    {
+        this.password = password;
+    }
 
     public byte[] getImage() {
         return image;
@@ -48,7 +58,7 @@ public class CookEntity
         this.image = image;
     }
 
-    @NonNull
+    @Exclude
     public String getEmail()
     {
         return email;

@@ -17,7 +17,6 @@ import android.widget.Toast;
 
 import ch.hevs.cookingapp.BaseApp;
 import ch.hevs.cookingapp.R;
-import ch.hevs.cookingapp.database.AppDatabase;
 import ch.hevs.cookingapp.database.repository.CookRepository;
 import ch.hevs.cookingapp.ui.BaseActivity;
 import ch.hevs.cookingapp.ui.MainActivity;

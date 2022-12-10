@@ -1,59 +1,39 @@
 package ch.hevs.cookingapp.database.entity;
 
 import androidx.annotation.NonNull;
-import androidx.room.ColumnInfo;
-import androidx.room.Entity;
-import androidx.room.ForeignKey;
-import androidx.room.Ignore;
-import androidx.room.Index;
-import androidx.room.PrimaryKey;
+
+import com.google.firebase.database.Exclude;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Entity class for the Recipe table
  * Relation with the Cook table : Many to One (One Cook can have many Recipes).
  * Cook <-1----*-> Recipe
  */
-@Entity(tableName = "recipe",
-        foreignKeys = {
-            @ForeignKey(
-                    entity = CookEntity.class,
-                    parentColumns = "email",    // Sera la clé primaire de la table COOK
-                    childColumns  = "creator",   // Sera le nom de la clé étrangère dans la table Recipe
-                    onDelete = ForeignKey.CASCADE   // On suprime le COOK et tous ses Recettes en cascade
-                        )},
-        indices = {
-                @Index(
-                        value = {"creator"}
-                )}
-        )
 public class RecipeEntity
 {
-    @PrimaryKey(autoGenerate = true)
-    private Long id;
+    private String id;
     private String creator;
-    @NonNull
     private String name;
-    private int prepTime;   //temps de préparation de la recette en minutes
-    @NonNull
+    private int prepTime;       //temps de préparation de la recette en minutes
     private String ingredients;
-    @NonNull
     private String preparation; //instructions de la recette
 
     private String diet;
     private String allergy;
     private String mealTime;
     // On veut que l'image soit stockée en BLOB dans la DB (byte[]) et non en String (text).
-    @ColumnInfo(name = "image", typeAffinity = ColumnInfo.BLOB)
-    private byte[] image;
+    private byte[] image;       // TODO : Ira dans le StorageFirebase, mais en attendant en B64 dans la DB
 
     // C O N S T R U C T E U R
-    @Ignore
     public RecipeEntity()
     {
     }
 
 
-    public RecipeEntity(String creator, @NonNull String name, int prepTime, @NonNull String ingredients, @NonNull String preparation, String diet, String allergy, String mealTime, byte[] image)
+    public RecipeEntity(String creator, String name, int prepTime, String ingredients, String preparation, String diet, String allergy, String mealTime, byte[] image)
     {
         this.creator = creator;
         this.name = name;
@@ -67,6 +47,17 @@ public class RecipeEntity
     }
 
     // G E T T E R S   S E T T E R S
+    @Exclude
+    public String getId()
+    {
+        return id;
+    }
+
+    public void setId(String id)
+    {
+        this.id = id;
+    }
+
     public byte[] getImage() {
         return image;
     }
@@ -104,16 +95,7 @@ public class RecipeEntity
     {
         this.mealTime = mealTime;
     }
-
-    public Long getId()
-    {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
+    @Exclude
     public String getCreator()
     {
         return creator;
@@ -124,7 +106,6 @@ public class RecipeEntity
         this.creator = creator;
     }
 
-    @NonNull
     public String getName()
     {
         return name;
@@ -145,7 +126,6 @@ public class RecipeEntity
         this.prepTime = prepTime;
     }
 
-    @NonNull
     public String getIngredients()
     {
         return ingredients;
@@ -156,7 +136,6 @@ public class RecipeEntity
         this.ingredients = ingredients;
     }
 
-    @NonNull
     public String getPreparation()
     {
         return preparation;
@@ -181,5 +160,21 @@ public class RecipeEntity
                 ", allergy='" + allergy + '\'' +
                 ", mealTime='" + mealTime + '\'' +
                 '}';
+    }
+
+    @Exclude
+    public Map<String, Object> toMap()
+    {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("creator", creator);
+        result.put("name", name);
+        result.put("prepTime", prepTime);
+        result.put("ingredients", ingredients);
+        result.put("preparation", preparation);
+        result.put("diet", diet);
+        result.put("allergy", allergy);
+        result.put("mealTime", mealTime);
+        result.put("image", image);
+        return result;
     }
 }
