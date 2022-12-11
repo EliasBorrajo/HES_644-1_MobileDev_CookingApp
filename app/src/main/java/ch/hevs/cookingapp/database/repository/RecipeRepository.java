@@ -4,10 +4,17 @@ import android.app.Application;
 
 import androidx.lifecycle.LiveData;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.List;
 
 import ch.hevs.cookingapp.BaseApp;
 import ch.hevs.cookingapp.database.entity.RecipeEntity;
+import ch.hevs.cookingapp.database.firebase.RecipeLiveData;
+import ch.hevs.cookingapp.database.firebase.RecipesListCreatorLiveData;
+import ch.hevs.cookingapp.database.firebase.RecipesListMealLiveData;
+import ch.hevs.cookingapp.database.pojo.CookWithRecipes;
 import ch.hevs.cookingapp.util.OnAsyncEventListener;
 
 /**
@@ -17,6 +24,8 @@ import ch.hevs.cookingapp.util.OnAsyncEventListener;
  */
 public class RecipeRepository
 {
+    private static final String TAG = "RecipeRepository";
+
     private static RecipeRepository instance;
 
     private RecipeRepository()
@@ -38,41 +47,78 @@ public class RecipeRepository
         return instance;
     }
 
-    public LiveData<RecipeEntity> getRecipe(final Long id, Application application)
+    public LiveData<RecipeEntity> getRecipe(final String id)
     {
-        return ((BaseApp) application).getDatabase().recipeDao().getById(id);
+        DatabaseReference reference = FirebaseDatabase.getInstance()
+                .getReference("recipes")
+                .child(id);
+        return new RecipeLiveData(reference);
     }
 
-    public LiveData<List<RecipeEntity>> getRecipes(Application application)
+/* TODO    public LiveData<List<RecipeEntity>> getRecipes(Application application)
     {
         return ((BaseApp) application).getDatabase().recipeDao().getAll();
+    }*/
+
+    public LiveData<List<RecipeEntity>> getByCreator(final String creator)
+    {
+        DatabaseReference reference = FirebaseDatabase.getInstance()
+                .getReference("recipes");
+        return new RecipesListCreatorLiveData(reference, creator);
     }
 
-    public LiveData<List<RecipeEntity>> getByCreator(final String creator, Application application)
+    public LiveData<List<RecipeEntity>> getByMeal(final String mealTime)
     {
-        return ((BaseApp) application).getDatabase().recipeDao().getOwned(creator);
+        DatabaseReference reference = FirebaseDatabase.getInstance()
+                .getReference("recipes")
+                .child(mealTime);
+        return new RecipesListMealLiveData(reference, mealTime);
     }
 
-    public LiveData<List<RecipeEntity>> getByMeal(final String mealTime, Application application)
+    public void insert(final RecipeEntity recipe, final OnAsyncEventListener callback)
     {
-        return ((BaseApp) application).getDatabase().recipeDao().getByMeal(mealTime);
+        DatabaseReference reference = FirebaseDatabase.getInstance()
+                .getReference("recipes")
+                .child(recipe.getCreator());
+        String key = reference.push().getKey();
+        FirebaseDatabase.getInstance()
+                .getReference("recipes")
+                .child(recipe.getCreator())
+                .child(key)
+                .setValue(recipe, (databaseError, databaseReference) -> {
+                    if (databaseError != null) {
+                        callback.onFailure(databaseError.toException());
+                    } else {
+                        callback.onSuccess();
+                    }
+                });
     }
 
-    public void insert(final RecipeEntity recipe, OnAsyncEventListener callback,
-                       Application application)
+    public void update(final RecipeEntity recipe, OnAsyncEventListener callback)
     {
-        new CreateRecipe(application, callback).execute(recipe);
+        FirebaseDatabase.getInstance()
+                .getReference("recipes")
+                .child(recipe.getId())
+                .updateChildren(recipe.toMap(), (databaseError, databaseReference) -> {
+                    if (databaseError != null) {
+                        callback.onFailure(databaseError.toException());
+                    } else {
+                        callback.onSuccess();
+                    }
+                });
     }
 
-    public void update(final RecipeEntity recipe, OnAsyncEventListener callback,
-                       Application application)
+    public void delete(final RecipeEntity recipe, OnAsyncEventListener callback)
     {
-        new UpdateRecipe(application, callback).execute(recipe);
-    }
-
-    public void delete(final RecipeEntity recipe, OnAsyncEventListener callback,
-                       Application application)
-    {
-        new DeleteRecipe(application, callback).execute(recipe);
+        FirebaseDatabase.getInstance()
+                .getReference("recipes")
+                .child(recipe.getId())
+                .removeValue((databaseError, databaseReference) -> {
+                    if (databaseError != null) {
+                        callback.onFailure(databaseError.toException());
+                    } else {
+                        callback.onSuccess();
+                    }
+                });
     }
 }

@@ -30,7 +30,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 import ch.hevs.cookingapp.R;
-import ch.hevs.cookingapp.database.async.recipe.CreateRecipe;
 import ch.hevs.cookingapp.database.entity.RecipeEntity;
 import ch.hevs.cookingapp.database.enumeration.Allergy;
 import ch.hevs.cookingapp.database.enumeration.Diet;
@@ -75,8 +74,9 @@ public class RecipeCreateActivity extends BaseActivity {
 
         initiateView();
 
+        //TODO controler si ça fou la m avec le OL
         RecipeViewModel.Factory factory = new RecipeViewModel.Factory(
-                getApplication(), 0L);
+                getApplication(), "0L");
         recipeViewModel = ViewModelProviders.of((FragmentActivity) this, (ViewModelProvider.Factory) factory).get(RecipeViewModel.class);
     }
 

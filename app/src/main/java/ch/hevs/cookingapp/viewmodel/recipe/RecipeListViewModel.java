@@ -58,10 +58,10 @@ public class RecipeListViewModel extends AndroidViewModel
         // User selects the type of meal he wants, we send the request with the method of the Repository giving him which type of meal we want to retrieve.
         // If the value in the "Meals" column matches, it is one of the rows we want to retrieve from the DB
         // BreakFast / Lunch / Dinner are the values we want to evaluate in the "Meals" column of the DB.
-        LiveData<List<RecipeEntity>> ownRecipes = recipeRepository.getByCreator(creator, application);
-        LiveData<List<RecipeEntity>> breakfastRecipes = recipeRepository.getByMeal("Breakfast", application);
-        LiveData<List<RecipeEntity>> lunchRecipes = recipeRepository.getByMeal("Lunch", application);
-        LiveData<List<RecipeEntity>> dinnerRecipes = recipeRepository.getByMeal("Dinner", application);
+        LiveData<List<RecipeEntity>> ownRecipes = recipeRepository.getByCreator(creator);
+        LiveData<List<RecipeEntity>> breakfastRecipes = recipeRepository.getByMeal("Breakfast");
+        LiveData<List<RecipeEntity>> lunchRecipes = recipeRepository.getByMeal("Lunch");
+        LiveData<List<RecipeEntity>> dinnerRecipes = recipeRepository.getByMeal("Dinner");
 
         // observe the changes of the entities from the database and forward them
         // On ajoute nos différentes sources que l'on veut observer.

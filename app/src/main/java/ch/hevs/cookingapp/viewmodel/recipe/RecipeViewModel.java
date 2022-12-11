@@ -20,19 +20,15 @@ import ch.hevs.cookingapp.util.OnAsyncEventListener;
  */
 public class RecipeViewModel extends AndroidViewModel
 {
-    private Application application;
-
     private RecipeRepository repository;
 
     // MediatorLiveData can observe other LiveData objects and react on their emissions.
     private final MediatorLiveData<RecipeEntity> observableRecipe;
 
     public RecipeViewModel(@NonNull Application application,
-                           final Long id, RecipeRepository recipeRepository)
+                           final String id, RecipeRepository recipeRepository)
     {
         super(application);
-
-        this.application = application;
 
         repository = recipeRepository;
 
@@ -40,7 +36,7 @@ public class RecipeViewModel extends AndroidViewModel
         // set by default null, until we get data from the database.
         observableRecipe.setValue(null);
 
-        LiveData<RecipeEntity> recipe = repository.getRecipe(id, application);
+        LiveData<RecipeEntity> recipe = repository.getRecipe(id);
 
         // observe the changes of the account entity from the database and forward them
         observableRecipe.addSource(recipe, observableRecipe::setValue);
@@ -55,11 +51,11 @@ public class RecipeViewModel extends AndroidViewModel
         @NonNull
         private final Application application;
 
-        private final Long id;
+        private final String id;
 
         private final RecipeRepository repository;
 
-        public Factory(@NonNull Application application, Long id)
+        public Factory(@NonNull Application application, String id)
         {
             this.application = application;
             this.id = id;
@@ -84,17 +80,17 @@ public class RecipeViewModel extends AndroidViewModel
 
     public void createRecipe(RecipeEntity recipe, OnAsyncEventListener callback)
     {
-        repository.insert(recipe, callback, application);
+        repository.insert(recipe, callback);
     }
 
     public void updateRecipe(RecipeEntity recipe, OnAsyncEventListener callback)
     {
-        repository.update(recipe, callback, application);
+        repository.update(recipe, callback);
     }
 
     public void deleteRecipe(RecipeEntity recipe, OnAsyncEventListener callback)
     {
-        repository.delete(recipe, callback, application);
+        repository.delete(recipe, callback);
 
     }
 }

@@ -105,7 +105,7 @@ public class RecipeDetailActivity extends BaseActivity
         setTitle(getString(R.string.title_activity_myrecipes));
         navigationView.setCheckedItem(position);
 
-        Long recipeId = getIntent().getLongExtra("recipeId", 0L);
+        String recipeId = getIntent().getStringExtra("recipeId");
         meals = getIntent().getStringExtra(String.valueOf(R.string.meals));
 
         initiateView();

@@ -10,18 +10,25 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
-import ch.hevs.cookingapp.database.entity.RecipeEntity;
+import java.util.ArrayList;
+import java.util.List;
 
-public class RecipeLiveData extends LiveData<RecipeEntity>
+import ch.hevs.cookingapp.database.entity.CookEntity;
+import ch.hevs.cookingapp.database.entity.RecipeEntity;
+import ch.hevs.cookingapp.database.pojo.CookWithRecipes;
+
+public class RecipesListCreatorLiveData extends LiveData<List<RecipeEntity>>
 {
-    private static final String TAG = "RecipeLiveData";
+    private static final String TAG = "RecipesListCreatorLiveData";
 
     private final DatabaseReference reference;
-    private final RecipeLiveData.MyValueEventListener listener = new RecipeLiveData.MyValueEventListener();
+    private final String creator;
+    private final MyValueEventListener listener = new MyValueEventListener();
 
-    public RecipeLiveData(DatabaseReference ref)
+    public RecipesListCreatorLiveData(DatabaseReference ref, String creator)
     {
         reference = ref;
+        this.creator = creator;
     }
 
     @Override
@@ -42,9 +49,7 @@ public class RecipeLiveData extends LiveData<RecipeEntity>
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot)
         {
-            RecipeEntity entity = dataSnapshot.getValue(RecipeEntity.class);
-            entity.setId(dataSnapshot.getKey());
-            setValue(entity);
+            setValue(toRecipes(dataSnapshot));
         }
 
         @Override
@@ -52,5 +57,18 @@ public class RecipeLiveData extends LiveData<RecipeEntity>
         {
             Log.e(TAG, "Can't listen to query " + reference, databaseError.toException());
         }
+    }
+
+    private List<RecipeEntity> toRecipes(DataSnapshot dataSnapshot)
+    {
+        List<RecipeEntity> recipes = new ArrayList<>();
+        for(DataSnapshot childSnapshot : dataSnapshot.getChildren())
+        {
+            RecipeEntity entity = childSnapshot.getValue(RecipeEntity.class);
+            entity.setId(childSnapshot.getKey());
+            entity.setCreator(creator);
+            recipes.add(entity);
+        }
+        return recipes;
     }
 }
