@@ -15,12 +15,11 @@ import java.util.Map;
  */
 public class CookEntity
 {
-    private String email;   // Est utilisé pour AuthentificationFirebase, mais aussi présent car variable que on afficherait dans l'application
+    private String email;       // Est utilisé pour AuthentificationFirebase, mais aussi présent car variable que on afficherait dans l'application
     private String firstName;
     private String lastName;
     private String phoneNumber;
-    private String password;
-    // Password ira dans AuthentificationFirebase
+    private String password;    // Password ira dans AuthentificationFirebase
     private byte[] image; // TODO : Ira dans le StorageFirebase, mais en attendant en B64 dans la DB
 
     // C O N S T R U C T E U R
@@ -29,16 +28,19 @@ public class CookEntity
     }
 
 
-    public CookEntity(String email, String firstName, String lastName, String phoneNumber, byte[] image)
+    // TODO : Password ?
+    public CookEntity(String email, String firstName, String lastName, String password,String phoneNumber, byte[] image)
     {
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.password = password;
         this.phoneNumber = phoneNumber;
         this.image = image;
     }
 
     // G E T T E R S   S E T T E R S
+    // Exclude : Permet de ne pas inclure la variable dans la DB
     @Exclude
     public String getPassword()
     {

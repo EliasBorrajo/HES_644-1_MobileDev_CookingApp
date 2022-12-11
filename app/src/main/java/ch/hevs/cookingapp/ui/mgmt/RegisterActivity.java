@@ -14,19 +14,22 @@ import android.widget.Toast;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import ch.hevs.cookingapp.BaseApp;
 import ch.hevs.cookingapp.R;
-import ch.hevs.cookingapp.database.async.cook.CreateCook;
 import ch.hevs.cookingapp.database.entity.CookEntity;
+import ch.hevs.cookingapp.database.repository.CookRepository;
 import ch.hevs.cookingapp.ui.BaseActivity;
 import ch.hevs.cookingapp.ui.MainActivity;
 import ch.hevs.cookingapp.util.OnAsyncEventListener;
 
 /**
- *  Register is the page to create a cook / user
+ * Register is the page to create a cook / user
  */
 public class RegisterActivity extends AppCompatActivity
 {
     private static final String TAG = "RegisterActivity";
+
+    private CookRepository repository;
 
     private Toast toast;
 
@@ -43,6 +46,7 @@ public class RegisterActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        repository = ((BaseApp) getApplication()).getCookRepository();
         initializeForm();
         toast = Toast.makeText(this, getString(R.string.cook_created), Toast.LENGTH_LONG);
     }
@@ -50,11 +54,11 @@ public class RegisterActivity extends AppCompatActivity
     private void initializeForm()
     {
         etFirstName = findViewById(R.id.firstName);
-        etLastName  = findViewById(R.id.lastName);
-        etEmail     = findViewById(R.id.email);
-        etPhone     = findViewById(R.id.phoneNumber);
-        etPwd1      = findViewById(R.id.password);
-        etPwd2      = findViewById(R.id.passwordRep);
+        etLastName = findViewById(R.id.lastName);
+        etEmail = findViewById(R.id.email);
+        etPhone = findViewById(R.id.phoneNumber);
+        etPwd1 = findViewById(R.id.password);
+        etPwd2 = findViewById(R.id.passwordRep);
 
         Button saveBtn = findViewById(R.id.editButton);
 
@@ -71,22 +75,25 @@ public class RegisterActivity extends AppCompatActivity
     }
 
     /**
-     *  Methode apellé lorsque on change du mode edit à show.
-     *  Lorsque on switch de mode, on veut sauvegarder les data dans la DB.
-     *  On commence par vérifier les paramètres entrées,
-     *  puis si ils sont bons on les SET
+     * Methode apellé lorsque on change du mode edit à show.
+     * Lorsque on switch de mode, on veut sauvegarder les data dans la DB.
+     * On commence par vérifier les paramètres entrées,
+     * puis si ils sont bons on les SET
      *
-     *  @param : Seront les paramètres du UI que on get leur valeurs
+     * @param : Seront les paramètres du UI que on get leur valeurs
      */
-    private void saveChanges(String firstName, String lastName, String email, String phone, String pwd, String pwd2) {
-        if (!pwd.equals(pwd2) || pwd.length() < 5) {
+    private void saveChanges(String firstName, String lastName, String email, String phone, String pwd, String pwd2)
+    {
+        if (!pwd.equals(pwd2) || pwd.length() < 5)
+        {
             etPwd1.setError(getString(R.string.error_invalid_password));
             etPwd1.requestFocus();
             etPwd1.setText("");
             etPwd2.setText("");
             return;
         }
-        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches())
+        {
             etEmail.setError(getString(R.string.error_invalid_email));
             etEmail.requestFocus();
             return;
@@ -102,23 +109,25 @@ public class RegisterActivity extends AppCompatActivity
             return;
         }
 
-        CookEntity newCook = new CookEntity(email,firstName,lastName, pwd, phone, null);
+        CookEntity newCook = new CookEntity(email, firstName, lastName, pwd, phone, null);
 
-        // On apelle Async --> CookDao --> Insert (cook)
-        new CreateCook(getApplication(), new OnAsyncEventListener()
-        {
-            @Override
-            public void onSuccess() {
-                Log.d(TAG, "createUserWithEmail: success");
-                setResponse(true);
-            }
+        // On crée le user
+        repository.insert(newCook, new OnAsyncEventListener()
+                                    {
+                                        @Override
+                                        public void onSuccess()
+                                        {
+                                            Log.d(TAG, "createUserWithEmail: success");
+                                            setResponse(true);
+                                        }
 
-            @Override
-            public void onFailure(Exception e) {
-                Log.d(TAG, "createUserWithEmail: failure", e);
-                setResponse(false);
-            }
-        }).execute(newCook);
+                                        @Override
+                                        public void onFailure(Exception e)
+                                        {
+                                            Log.d(TAG, "createUserWithEmail: failure", e);
+                                            setResponse(false);            }
+                                    });
+
     }
 
     // En fonction de si on arrive à enregistrer le cook dans la ROOM, on peut ouvrir une nouvelle activité, ou rester sur la même fenêtre.
@@ -134,7 +143,8 @@ public class RegisterActivity extends AppCompatActivity
             startActivity(intent);
         }
         // Si on n'arrive pas à acceder à la ROOM avec le nouveau cook
-        else {
+        else
+        {
             etEmail.setError(getString(R.string.error_used_email));
             etEmail.requestFocus();
         }

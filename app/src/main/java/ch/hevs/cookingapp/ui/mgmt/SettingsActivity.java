@@ -5,8 +5,10 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Switch;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
+
 import ch.hevs.cookingapp.R;
 import ch.hevs.cookingapp.ui.BaseActivity;
 
@@ -32,6 +34,7 @@ public class SettingsActivity extends BaseActivity
 
     /**
      * Action liée au switch, permet de changer le thème de l'application
+     *
      * @param view : Switch de l'UI
      */
     public void changeTheme(View view)

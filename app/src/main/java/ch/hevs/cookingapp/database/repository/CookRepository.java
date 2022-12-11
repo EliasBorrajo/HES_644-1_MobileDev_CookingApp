@@ -53,8 +53,8 @@ public class CookRepository
                        final OnCompleteListener<AuthResult> listener)
     {
         FirebaseAuth.getInstance()
-                .signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(listener);
+                    .signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(listener);
     }
 
     public LiveData<CookEntity> getCook(final String accountId)
@@ -65,11 +65,11 @@ public class CookRepository
         return new CookLiveData(reference);
     }
 
-    public LiveData<List<CookEntity>> getCooks(final String owner)
+    public LiveData<List<CookEntity>> getCooks()
     {
         DatabaseReference reference = FirebaseDatabase.getInstance()
                                                       .getReference("cooks");
-        return new CooksListLiveData(reference, owner);
+        return new CooksListLiveData(reference);
     }
 
     public void insert(final CookEntity cook, final OnAsyncEventListener callback)
@@ -127,14 +127,29 @@ public class CookRepository
         FirebaseAuth.getInstance()
                     .getCurrentUser()
                     .updatePassword(cook.getPassword())
-                    .addOnFailureListener(
-                            e -> Log.d(TAG, "updatePassword:failure", e));
+                    .addOnFailureListener(e -> Log.d(TAG, "updatePassword:failure", e));
 
     }
 
-    public void delete(final CookEntity cook, OnAsyncEventListener callback,
-                       Application application)
+    public void delete(final CookEntity cook, OnAsyncEventListener callback)
     {
-        new DeleteCook(application, callback).execute(cook);
+        FirebaseDatabase.getInstance()
+                        .getReference("cooks")
+                        .child(cook.getEmail())
+                        .removeValue((databaseError, databaseReference) ->
+                            {
+                                if (databaseError != null)
+                                {
+                                    callback.onFailure(databaseError.toException());
+                                }
+                                else
+                                {
+                                    callback.onSuccess();
+                                }
+                            });
+        FirebaseAuth.getInstance()
+                    .getCurrentUser()
+                    .delete()
+                    .addOnFailureListener(e -> Log.d(TAG, "delete:failure", e));
     }
 }

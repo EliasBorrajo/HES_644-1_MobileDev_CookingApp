@@ -33,7 +33,8 @@ public class AboutActivity extends PreferenceActivity
     private static Preference.OnPreferenceChangeListener sBindPreferenceSummaryToValueListener = (preference, value) -> {
         String stringValue = value.toString();
 
-        if (preference instanceof ListPreference) {
+        if (preference instanceof ListPreference)
+        {
             // For list preferences, look up the correct display value in
             // the preference's 'entries' list.
             ListPreference listPreference = (ListPreference) preference;
@@ -45,7 +46,9 @@ public class AboutActivity extends PreferenceActivity
                             ? listPreference.getEntries()[index]
                             : null);
 
-        } else {
+        }
+        else
+        {
             // For all other preferences, set the summary to the value's
             // simple string representation.
             preference.setSummary(stringValue);
@@ -57,7 +60,8 @@ public class AboutActivity extends PreferenceActivity
      * Helper method to determine if the device has an extra-large screen. For
      * example, 10" tablets are extra-large.
      */
-    private static boolean isXLargeTablet(Context context) {
+    private static boolean isXLargeTablet(Context context)
+    {
         return (context.getResources().getConfiguration().screenLayout
                 & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_XLARGE;
     }
@@ -71,7 +75,8 @@ public class AboutActivity extends PreferenceActivity
      *
      * @see #sBindPreferenceSummaryToValueListener
      */
-    private static void bindPreferenceSummaryToValue(Preference preference) {
+    private static void bindPreferenceSummaryToValue(Preference preference)
+    {
         // Set the listener to watch for value changes.
         preference.setOnPreferenceChangeListener(sBindPreferenceSummaryToValueListener);
 
@@ -84,7 +89,8 @@ public class AboutActivity extends PreferenceActivity
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setupActionBar();
         setActionBarTitle(getString(R.string.title_activity_about));
@@ -93,23 +99,29 @@ public class AboutActivity extends PreferenceActivity
     /**
      * Set up the {@link android.app.ActionBar}, if the API is available.
      */
-    private void setupActionBar() {
+    private void setupActionBar()
+    {
         ActionBar actionBar = getActionBar();
-        if (actionBar != null) {
+        if (actionBar != null)
+        {
             // Show the Up button in the action bar.
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
     }
 
-    public void setActionBarTitle(String title) {
+    public void setActionBarTitle(String title)
+    {
         setTitle(title);
     }
 
     @Override
-    public boolean onMenuItemSelected(int featureId, MenuItem item) {
+    public boolean onMenuItemSelected(int featureId, MenuItem item)
+    {
         int id = item.getItemId();
-        if (id == android.R.id.home) {
-            if (!super.onMenuItemSelected(featureId, item)) {
+        if (id == android.R.id.home)
+        {
+            if (!super.onMenuItemSelected(featureId, item))
+            {
                 NavUtils.navigateUpFromSameTask(this);
             }
             return true;
@@ -121,7 +133,8 @@ public class AboutActivity extends PreferenceActivity
      * {@inheritDoc}
      */
     @Override
-    public boolean onIsMultiPane() {
+    public boolean onIsMultiPane()
+    {
         return isXLargeTablet(this);
     }
 
@@ -130,7 +143,8 @@ public class AboutActivity extends PreferenceActivity
      */
     @Override
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    public void onBuildHeaders(List<Header> target) {
+    public void onBuildHeaders(List<Header> target)
+    {
         loadHeadersFromResource(R.xml.pref_headers, target);
     }
 
@@ -138,7 +152,8 @@ public class AboutActivity extends PreferenceActivity
      * This method stops fragment injection in malicious applications.
      * Make sure to deny any unknown fragments here.
      */
-    protected boolean isValidFragment(String fragmentName) {
+    protected boolean isValidFragment(String fragmentName)
+    {
         return PreferenceFragment.class.getName().equals(fragmentName)
                 || AboutPreferenceFragment.class.getName().equals(fragmentName);
     }
@@ -148,9 +163,11 @@ public class AboutActivity extends PreferenceActivity
      * activity is showing a two-pane settings UI.
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    public static class AboutPreferenceFragment extends PreferenceFragment {
+    public static class AboutPreferenceFragment extends PreferenceFragment
+    {
         @Override
-        public void onCreate(Bundle savedInstanceState) {
+        public void onCreate(Bundle savedInstanceState)
+        {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.pref_about);
             setHasOptionsMenu(true);
@@ -162,9 +179,11 @@ public class AboutActivity extends PreferenceActivity
         }
 
         @Override
-        public boolean onOptionsItemSelected(MenuItem item) {
+        public boolean onOptionsItemSelected(MenuItem item)
+        {
             int id = item.getItemId();
-            if (id == android.R.id.home) {
+            if (id == android.R.id.home)
+            {
                 startActivity(new Intent(getActivity(), SettingsActivity.class));
                 return true;
             }

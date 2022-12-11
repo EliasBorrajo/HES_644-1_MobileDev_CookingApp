@@ -42,7 +42,7 @@ public class CookViewModel extends AndroidViewModel
         // set by default null, until we get data from the database.
         observableCook.setValue(null);
 
-        LiveData<CookEntity> cook = repository.getCook(email, application);
+        LiveData<CookEntity> cook = repository.getCook(email);
 
         // observe the changes of the account entity from the database and forward them
         observableCook.addSource(cook, observableCook::setValue);
@@ -88,12 +88,12 @@ public class CookViewModel extends AndroidViewModel
 
     public void updateCook(CookEntity cook, OnAsyncEventListener callback)
     {
-        repository.update(cook, callback, application);
+        repository.update(cook, callback); // TODO, maybe aller voir le code du prof ?
     }
 
     public void deleteCook(CookEntity cook, OnAsyncEventListener callback)
     {
-        repository.delete(cook, callback, application);
+        repository.delete(cook, callback);
 
     }
 }
