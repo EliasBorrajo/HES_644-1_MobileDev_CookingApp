@@ -44,7 +44,7 @@ public class CookListViewModel extends AndroidViewModel
         // set by default null, until we get data from the database.
         observableCooks.setValue(null);
 
-        LiveData<List<CookEntity>> allCooks = cookRepository.getCooks(application);
+        LiveData<List<CookEntity>> allCooks = cookRepository.getCooks();
 
         // observe the changes of the entities from the database and forward them
         observableCooks.addSource(allCooks, observableCooks::setValue);

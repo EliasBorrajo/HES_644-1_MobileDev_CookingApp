@@ -33,6 +33,7 @@ public class RecipeEntity
     }
 
 
+    // TODO Creator ?
     public RecipeEntity(String creator, String name, int prepTime, String ingredients, String preparation, String diet, String allergy, String mealTime, byte[] image)
     {
         this.creator = creator;

@@ -15,20 +15,17 @@ import java.util.List;
 
 import ch.hevs.cookingapp.database.entity.CookEntity;
 import ch.hevs.cookingapp.database.entity.RecipeEntity;
-import ch.hevs.cookingapp.database.pojo.CookWithRecipes;
 
-public class CooksListLiveData extends LiveData<List<CookEntity>> // TODO : Changer le POJO en ENTITY normale ici :)
+public class CooksListLiveData extends LiveData<List<CookEntity>>
 {
     private static final String TAG = "CooksListLiveData";
 
     private final DatabaseReference reference;
-    private final String owner;
     private final CooksListLiveData.MyValueEventListener listener = new CooksListLiveData.MyValueEventListener();
 
-    public CooksListLiveData(DatabaseReference ref, String owner)
+    public CooksListLiveData(DatabaseReference ref)
     {
         reference = ref;
-        this.owner = owner;
     }
 
     @Override
@@ -46,35 +43,19 @@ public class CooksListLiveData extends LiveData<List<CookEntity>> // TODO : Chan
 
 
 
-    private List<CookWithRecipes> toCookWithRecipesList (DataSnapshot snapshot)
+    private List<CookEntity> toCookList(DataSnapshot snapshot)
     {
-        List<CookWithRecipes> cooksWithRecipesList = new ArrayList<>();
+        List<CookEntity> cooksList = new ArrayList<>();
         for (DataSnapshot childSnapshot : snapshot.getChildren())
         {
-            if( !childSnapshot.getKey().equals(owner) )
-            {
-                CookWithRecipes cookWithRecipes = new CookWithRecipes();
-                cookWithRecipes.cook = childSnapshot.getValue(CookEntity.class);
-                cookWithRecipes.cook.setEmail(childSnapshot.getKey());
-                cookWithRecipes.recipes = toRecipes(childSnapshot.child("recipes"), childSnapshot.getKey());
 
-                cooksWithRecipesList.add(cookWithRecipes);
-            }
-        }
-        return cooksWithRecipesList;
-    }
+            CookEntity entity = childSnapshot.getValue(CookEntity.class); // This is the entity that will be created from the DataSnapshot
+            entity.setEmail(childSnapshot.getKey()); // This is the key of the node (e.g. "user1")
 
-    private List<RecipeEntity> toRecipes (DataSnapshot snapshot, String cookEmail)
-    {
-        List<RecipeEntity> recipesList = new ArrayList<>();
-        for (DataSnapshot childSnapshot : snapshot.getChildren())
-        {
-            RecipeEntity recipe = childSnapshot.getValue(RecipeEntity.class);
-            recipe.setId(childSnapshot.getKey());
-            recipe.setCreator(owner);
-            recipesList.add(recipe);
+            cooksList.add(entity);
+
         }
-        return recipesList;
+        return cooksList;
     }
 
     private class MyValueEventListener implements ValueEventListener
@@ -82,7 +63,7 @@ public class CooksListLiveData extends LiveData<List<CookEntity>> // TODO : Chan
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot)
         {
-            setValue(toCookWithRecipesList(dataSnapshot));
+            setValue(toCookList(dataSnapshot));
         }
 
         @Override

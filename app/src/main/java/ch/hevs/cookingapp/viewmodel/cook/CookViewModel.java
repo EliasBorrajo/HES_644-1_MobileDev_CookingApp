@@ -88,12 +88,12 @@ public class CookViewModel extends AndroidViewModel
 
     public void updateCook(CookEntity cook, OnAsyncEventListener callback)
     {
-        repository.update(cook, callback);
+        repository.update(cook, callback); // TODO, maybe aller voir le code du prof ?
     }
 
     public void deleteCook(CookEntity cook, OnAsyncEventListener callback)
     {
-        repository.delete(cook, callback, application);
+        repository.delete(cook, callback);
 
     }
 }
