@@ -20,9 +20,10 @@ public class BaseApp extends Application {
         super.onCreate();
     }
 
+    /* TODO : SUPPRIMER. Remplcer par un truc firebase ?
     public AppDatabase getDatabase() {
         return AppDatabase.getInstance(this);
-    }
+    }*/
 
     public CookRepository getCookRepository() {
         return CookRepository.getInstance();
