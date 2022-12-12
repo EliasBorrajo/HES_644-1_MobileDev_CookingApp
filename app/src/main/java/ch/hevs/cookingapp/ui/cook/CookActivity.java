@@ -28,6 +28,11 @@ import androidx.core.view.GravityCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.regex.Matcher;
@@ -118,15 +123,15 @@ public class CookActivity extends BaseActivity
 
     private void initiateView()
     {
-        isEditable = false;
+        isEditable  = false;
         etFirstName = findViewById(R.id.et_firstName);
-        etLastName = findViewById(R.id.et_lastName);
-        etEmail = findViewById(R.id.et_mail);
-        etPhone = findViewById(R.id.et_phone);
-        etNewPwd = findViewById(R.id.et_newPassword);
-        etPwd1 = findViewById(R.id.password);
-        etPwd2 = findViewById(R.id.passwordRep);
-        imageCook = findViewById(R.id.image_profilePicture);
+        etLastName  = findViewById(R.id.et_lastName);
+        etEmail     = findViewById(R.id.et_mail);
+        etPhone     = findViewById(R.id.et_phone);
+        etNewPwd    = findViewById(R.id.et_newPassword);
+        etPwd1      = findViewById(R.id.password);
+        etPwd2      = findViewById(R.id.passwordRep);
+        imageCook   = findViewById(R.id.image_profilePicture);
     }
 
     /**
@@ -335,14 +340,32 @@ public class CookActivity extends BaseActivity
     private void saveChanges(String firstName, String lastName, String email, String phone,String newPasswd ,String pwd, String pwd2, byte[] bytes)
     {
         // Vérification des inputs
-        if (!pwd.equals(pwd2) || pwd.length() < 5 || !pwd.equals(cook.getPassword()))
+        passwordIsValide(email, pwd, new PasswordValidityListener() {
+            @Override
+            public void onValid()
+            {
+                // Password is valid, continue with saveChanges()
+                if (!pwd.equals(pwd2) || pwd.length() < 5) {
+                    invalidPassword();
+                } else {
+                    // Save changes, continue...
+                }
+            }
+
+            @Override
+            public void onInvalid() {
+                // Password is invalid, show error message
+                invalidPassword();
+            }
+        });
+        /*if (!pwd.equals(pwd2) || pwd.length() < 5 || !passwordIsValide(email,pwd))
         {
             toast = Toast.makeText(this, getString(R.string.error_edit_invalid_password), Toast.LENGTH_LONG);
             toast.show();
             etPwd1.setText("");
             etPwd2.setText("");
             return;
-        }
+        }*/
         if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches())
         {            // c'est un REGEX de si on a bien un mail ou non
             etEmail.setError(getString(R.string.error_invalid_email));
@@ -362,6 +385,7 @@ public class CookActivity extends BaseActivity
             return;
         }
         // Le nouveau mot de passe
+       /*  TODO
         if (newPasswd.length() < 5)
         {
             etNewPwd.setError(getString(R.string.toast_newPass));
@@ -371,7 +395,7 @@ public class CookActivity extends BaseActivity
             etNewPwd.setText("");
 
             return;
-        }
+        }*/
 
 
         // On SET nos paramètres de l'entity, pour ensuite les update quand l'entity est prête à passer à la DB
@@ -379,7 +403,14 @@ public class CookActivity extends BaseActivity
         cook.setFirstName(firstName);
         cook.setLastName(lastName);
         cook.setPhoneNumber(phone);
-        cook.setPassword(newPasswd);
+        if (newPasswd.equals(""))
+        {
+            cook.setPassword(pwd);
+        }
+        else
+        {
+            cook.setPassword(newPasswd);
+        }
 
         etPwd1.setText("");
         etPwd2.setText("");
@@ -518,5 +549,38 @@ public class CookActivity extends BaseActivity
                               .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
         }
 
+    }
+
+    public void passwordIsValide(String email, String password, final PasswordValidityListener listener)
+    {
+        FirebaseAuth.getInstance()
+                .signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in successful
+                            listener.onValid();
+                        } else {
+                            // Sign in failed
+                            listener.onInvalid();
+                        }
+                    }
+                });
+    }
+
+    // This is an interface that you can use to communicate the result of the password validation
+    public interface PasswordValidityListener {
+        void onValid();
+        void onInvalid();
+    }
+
+    public void invalidPassword()
+    {
+        toast = Toast.makeText(this, getString(R.string.error_edit_invalid_password), Toast.LENGTH_LONG);
+        toast.show();
+        etPwd1.setText("");
+        etPwd2.setText("");
+        return;
     }
 }

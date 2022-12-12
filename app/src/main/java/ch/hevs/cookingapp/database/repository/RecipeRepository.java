@@ -78,13 +78,11 @@ public class RecipeRepository
 
     public void insert(final RecipeEntity recipe, final OnAsyncEventListener callback)
     {
-        DatabaseReference reference = FirebaseDatabase.getInstance()
-                .getReference("recipes")
-                .child(B64Converter.encodeEmailB64(recipe.getCreator()));
-        String key = reference.push().getKey();
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("recipe");
+
+        String key = reference.getKey();
         FirebaseDatabase.getInstance()
                 .getReference("recipes")
-                .child(B64Converter.encodeEmailB64(recipe.getCreator()))
                 .child(key)
                 .setValue(recipe, (databaseError, databaseReference) -> {
                     if (databaseError != null) {
