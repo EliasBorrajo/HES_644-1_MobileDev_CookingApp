@@ -53,8 +53,6 @@ public class LoginActivity extends AppCompatActivity
                 new Intent(LoginActivity.this, RegisterActivity.class))
         );
 
-        Button demoDataButton = findViewById(R.id.demo_data_button);        // Only for demo purpose. Here the button is hide because we want to keep it for future improvement
-        demoDataButton.setOnClickListener(view -> reinitializeDatabase());
     }
 
     @Override
@@ -203,23 +201,4 @@ public class LoginActivity extends AppCompatActivity
         return password.length() > 4;
     }
 
-    /**
-     * Reinitialise DB for DEMO PURPOSE
-     */
-    private void reinitializeDatabase()
-    {
-        final AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-        alertDialog.setTitle(getString(R.string.action_demo_data));
-        alertDialog.setCancelable(false);
-        alertDialog.setMessage(getString(R.string.reset_msg));
-        // Syntaxe : setButton (param1, param2, param3-->Lambda)
-        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getString(R.string.action_reset), (dialog, which) ->
-                {
-                    //initializeData(AppDatabase.getInstance(this)); // TODO Supprimer cette ligne
-                    Toast.makeText(this, getString(R.string.demo_data_initiated), Toast.LENGTH_LONG).show();
-                }
-        );
-        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, getString(R.string.action_cancel), (dialog, which) -> alertDialog.dismiss());
-        alertDialog.show();
-    }
 }
