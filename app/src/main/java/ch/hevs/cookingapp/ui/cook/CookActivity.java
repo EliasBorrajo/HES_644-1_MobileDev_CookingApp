@@ -579,6 +579,7 @@ public class CookActivity extends BaseActivity
         void onInvalid();
     }
 
+
     public void invalidPassword()
     {
         toast = Toast.makeText(this, getString(R.string.error_edit_invalid_password), Toast.LENGTH_LONG);
