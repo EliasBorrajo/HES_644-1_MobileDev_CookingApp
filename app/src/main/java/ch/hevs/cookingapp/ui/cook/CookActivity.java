@@ -104,9 +104,7 @@ public class CookActivity extends BaseActivity
             userConnected = intent_selectedUserSource; // get email of cook
         }
 
-
         CookViewModel.Factory factory = new CookViewModel.Factory(getApplication(), userConnected);
-
         // Créer un viewModel
         viewModel_Cook = new ViewModelProvider((ViewModelStoreOwner) this, (ViewModelProvider.Factory) factory).get(CookViewModel.class); // Donne nous un ViewModel, grâce à la Factory, pour me donner un CookViewModel
         // Recuperer les données de la DB
@@ -190,7 +188,7 @@ public class CookActivity extends BaseActivity
         SharedPreferences settings = getSharedPreferences(BaseActivity.PREFS_NAME, 0);
         String user = settings.getString(PREFS_USER, null);
 
-        if (user.equals(etEmail.getText().toString()))
+        if (user.equals(userConnected))
         {
             menu.add(0, EDIT_COOK, Menu.NONE, getString(R.string.action_edit))
                     .setIcon(R.drawable.ic_edit_white_24dp)
@@ -340,101 +338,107 @@ public class CookActivity extends BaseActivity
     private void saveChanges(String firstName, String lastName, String email, String phone,String newPasswd ,String pwd, String pwd2, byte[] bytes)
     {
         // Vérification des inputs
-        passwordIsValide(email, pwd, new PasswordValidityListener() {
+        if (pwd.equals("") )
+        {
+            return;
+        }
+        passwordIsValide(email, pwd, new PasswordValidityListener()
+        {
             @Override
             public void onValid()
             {
                 // Password is valid, continue with saveChanges()
-                if (!pwd.equals(pwd2) || pwd.length() < 5) {
+                if (!pwd.equals(pwd2) || pwd.length() < 6) {
                     invalidPassword();
-                } else {
+                }
+                else
+                {
                     // Save changes, continue...
+                    if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches())
+                    {            // c'est un REGEX de si on a bien un mail ou non
+                        etEmail.setError(getString(R.string.error_invalid_email));
+                        etEmail.requestFocus();
+                        Toast.makeText(CookActivity.this, R.string.error_invalid_email_format, Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                    // Verification que le phone number est bon
+                    // Phone Regex Pattern : upto length 10 - 13 and including character "+" infront.
+                    Pattern regex = Pattern.compile("^[+]?[0-9]{10,13}$");
+                    Matcher phonePattern = regex.matcher(phone);
+                    if (!phonePattern.find())
+                    {
+                        etPhone.setError(getString(R.string.error_invalid_phone));
+                        etPhone.requestFocus();
+                        Toast.makeText(CookActivity.this, R.string.error_invalid_phone_format, Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                    // Le nouveau mot de passe
+                    // Vérification que le mot de passe change
+                    if (!newPasswd.equals("") )
+                    {
+                        if (newPasswd.length() < 6)
+                        {
+                            etNewPwd.setError(getString(R.string.toast_newPass));
+                            etNewPwd.requestFocus();
+                            Toast.makeText(CookActivity.this, getString(R.string.toast_newPass), Toast.LENGTH_LONG);
+                            toast.show();
+                            etNewPwd.setText("");
+
+                            return;
+                        }
+                        else
+                        {
+                            FirebaseAuth.getInstance().getCurrentUser().updatePassword(newPasswd);
+                        }
+                    }
+
+
+                    // On SET nos paramètres de l'entity, pour ensuite les update quand l'entity est prête à passer à la DB
+                    cook.setEmail(email);
+                    cook.setFirstName(firstName);
+                    cook.setLastName(lastName);
+                    cook.setPhoneNumber(phone);
+                    if (newPasswd.equals(""))
+                    {
+                        cook.setPassword(pwd);
+                    }
+                    else
+                    {
+                        cook.setPassword(newPasswd);
+                    }
+
+                    etPwd1.setText("");
+                    etPwd2.setText("");
+
+                    if(bytes != null) {
+                        cook.setImage(bytes);
+                    }
+
+                    viewModel_Cook.updateCook(cook, new OnAsyncEventListener()
+                    {
+                        @Override
+                        public void onSuccess()
+                        {
+                            setResponse(true);
+                        }
+
+                        @Override
+                        public void onFailure(Exception e)
+                        {
+                            setResponse(false);
+                        }
+                    });
+
                 }
             }
-
             @Override
             public void onInvalid() {
                 // Password is invalid, show error message
                 invalidPassword();
             }
         });
-        /*if (!pwd.equals(pwd2) || pwd.length() < 5 || !passwordIsValide(email,pwd))
-        {
-            toast = Toast.makeText(this, getString(R.string.error_edit_invalid_password), Toast.LENGTH_LONG);
-            toast.show();
-            etPwd1.setText("");
-            etPwd2.setText("");
-            return;
-        }*/
-        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches())
-        {            // c'est un REGEX de si on a bien un mail ou non
-            etEmail.setError(getString(R.string.error_invalid_email));
-            etEmail.requestFocus();
-            Toast.makeText(this, R.string.error_invalid_email_format, Toast.LENGTH_LONG).show();
-            return;
-        }
-        // Verification que le phone number est bon
-        // Phone Regex Pattern : upto length 10 - 13 and including character "+" infront.
-        Pattern regex = Pattern.compile("^[+]?[0-9]{10,13}$");
-        Matcher phonePattern = regex.matcher(phone);
-        if (!phonePattern.find())
-        {
-            etPhone.setError(getString(R.string.error_invalid_phone));
-            etPhone.requestFocus();
-            Toast.makeText(this, R.string.error_invalid_phone_format, Toast.LENGTH_LONG).show();
-            return;
-        }
-        // Le nouveau mot de passe
-       /*  TODO
-        if (newPasswd.length() < 5)
-        {
-            etNewPwd.setError(getString(R.string.toast_newPass));
-            etNewPwd.requestFocus();
-            Toast.makeText(this, getString(R.string.toast_newPass), Toast.LENGTH_LONG);
-            toast.show();
-            etNewPwd.setText("");
-
-            return;
-        }*/
 
 
-        // On SET nos paramètres de l'entity, pour ensuite les update quand l'entity est prête à passer à la DB
-        cook.setEmail(email);
-        cook.setFirstName(firstName);
-        cook.setLastName(lastName);
-        cook.setPhoneNumber(phone);
-        if (newPasswd.equals(""))
-        {
-            cook.setPassword(pwd);
-        }
-        else
-        {
-            cook.setPassword(newPasswd);
-        }
-
-        etPwd1.setText("");
-        etPwd2.setText("");
-
-        if(bytes != null) {
-            cook.setImage(bytes);
-        }
-
-        viewModel_Cook.updateCook(cook, new OnAsyncEventListener()
-        {
-            @Override
-            public void onSuccess()
-            {
-                setResponse(true);
-            }
-
-            @Override
-            public void onFailure(Exception e)
-            {
-                setResponse(false);
-            }
-        });
-
-        return;
     }
 
     /**
@@ -581,6 +585,6 @@ public class CookActivity extends BaseActivity
         toast.show();
         etPwd1.setText("");
         etPwd2.setText("");
-        return;
+
     }
 }
