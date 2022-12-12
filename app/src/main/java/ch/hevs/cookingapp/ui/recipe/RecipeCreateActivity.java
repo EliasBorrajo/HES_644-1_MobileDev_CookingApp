@@ -36,6 +36,7 @@ import ch.hevs.cookingapp.database.enumeration.Diet;
 import ch.hevs.cookingapp.database.enumeration.Meal;
 import ch.hevs.cookingapp.ui.BaseActivity;
 import ch.hevs.cookingapp.ui.MainActivity;
+import ch.hevs.cookingapp.util.B64Converter;
 import ch.hevs.cookingapp.util.OnAsyncEventListener;
 import ch.hevs.cookingapp.viewmodel.recipe.RecipeViewModel;
 

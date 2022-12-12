@@ -23,9 +23,9 @@ public class RecipesListMealLiveData extends LiveData<List<RecipeEntity>>
     private final String meal;
     private final MyValueEventListener listener = new MyValueEventListener();
 
-    public RecipesListMealLiveData(DatabaseReference reference, String meal)
+    public RecipesListMealLiveData(DatabaseReference ref, String meal)
     {
-        this.reference = reference;
+        reference = ref;
         this.meal = meal;
     }
 
@@ -61,8 +61,9 @@ public class RecipesListMealLiveData extends LiveData<List<RecipeEntity>>
         {
             RecipeEntity entity = childSnapshot.getValue(RecipeEntity.class);
             entity.setId(childSnapshot.getKey());
-            entity.setCreator(meal);
-            recipes.add(entity);
+            if (entity.getMealTime().contains(meal)) {
+                recipes.add(entity);
+            }
         }
         return recipes;
     }

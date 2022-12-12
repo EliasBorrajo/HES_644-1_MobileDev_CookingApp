@@ -96,7 +96,7 @@ public class RecipeEntity
     {
         this.mealTime = mealTime;
     }
-    @Exclude
+
     public String getCreator()
     {
         return creator;

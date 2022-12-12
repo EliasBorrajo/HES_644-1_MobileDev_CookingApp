@@ -4,6 +4,7 @@ import android.app.Application;
 
 import androidx.lifecycle.LiveData;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -71,20 +72,17 @@ public class RecipeRepository
     public LiveData<List<RecipeEntity>> getByMeal(final String mealTime)
     {
         DatabaseReference reference = FirebaseDatabase.getInstance()
-                .getReference("recipes")
-                .child(mealTime);
+                .getReference("recipes");
         return new RecipesListMealLiveData(reference, mealTime);
     }
 
     public void insert(final RecipeEntity recipe, final OnAsyncEventListener callback)
     {
         DatabaseReference reference = FirebaseDatabase.getInstance()
-                .getReference("recipes")
-                .child(B64Converter.encodeEmailB64(recipe.getCreator()));
+                .getReference("recipes");
         String key = reference.push().getKey();
         FirebaseDatabase.getInstance()
                 .getReference("recipes")
-                .child(B64Converter.encodeEmailB64(recipe.getCreator()))
                 .child(key)
                 .setValue(recipe, (databaseError, databaseReference) -> {
                     if (databaseError != null) {
