@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,14 +33,19 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import ch.hevs.cookingapp.R;
 import ch.hevs.cookingapp.database.entity.CookEntity;
+import ch.hevs.cookingapp.database.repository.CookRepository;
 import ch.hevs.cookingapp.ui.BaseActivity;
 import ch.hevs.cookingapp.ui.MainActivity;
 import ch.hevs.cookingapp.util.OnAsyncEventListener;
@@ -71,7 +77,7 @@ public class CookActivity extends BaseActivity
     private EditText etPwd1;
     private EditText etPwd2;
     private ImageButton imageCook;
-    private byte[] bytes;
+    private String bytes;
 
     private CookViewModel viewModel_Cook;
 
@@ -147,9 +153,12 @@ public class CookActivity extends BaseActivity
             etNewPwd.setText(cook.getPassword());
             imageCook.setClickable(false);
             imageCook.setFocusable(false);
-            if(cook.getImage() != null) {
-                Bitmap bitmap = BitmapFactory.decodeByteArray(cook.getImage(), 0, cook.getImage().length);
+            if(!cook.getImage().equals(""))
+            {
+                byte[] imageToByte = convertStringToByteArray(cook.getImage());
+                Bitmap bitmap = BitmapFactory.decodeByteArray(imageToByte, 0, imageToByte.length);
                 imageCook.setImageBitmap(bitmap);
+
             }
         }
     }
@@ -335,7 +344,7 @@ public class CookActivity extends BaseActivity
      *
      *  @param : Seront les paramètres du UI que on get leur valeurs
      */
-    private void saveChanges(String firstName, String lastName, String email, String phone,String newPasswd ,String pwd, String pwd2, byte[] bytes)
+    private void saveChanges(String firstName, String lastName, String email, String phone,String newPasswd ,String pwd, String pwd2, String bytes)
     {
         // Vérification des inputs
         if (pwd.equals("") )
@@ -410,7 +419,7 @@ public class CookActivity extends BaseActivity
                     etPwd1.setText("");
                     etPwd2.setText("");
 
-                    if(bytes != null) {
+                    if(!bytes.equals("")) {
                         cook.setImage(bytes);
                     }
 
@@ -514,15 +523,16 @@ public class CookActivity extends BaseActivity
                 // compress Bitmap
                 bitmap.compress(Bitmap.CompressFormat.JPEG,100,stream);
                 // Initialize byte array
-                bytes = stream.toByteArray();
+                byte[] bytesImage = stream.toByteArray();
                 // get base64 encoded string
-                String sImage= Base64.encodeToString(bytes,Base64.DEFAULT);
+                String sImage= Base64.encodeToString(bytesImage,Base64.DEFAULT);
                 // decode base64 string
-                bytes = Base64.decode(sImage,Base64.DEFAULT);
+                bytesImage = Base64.decode(sImage,Base64.DEFAULT);
                 // Initialize bitmap
-                bitmap = BitmapFactory.decodeByteArray(bytes,0,bytes.length);
+                bitmap = BitmapFactory.decodeByteArray(bytesImage,0, bytesImage.length);
                 // set bitmap on imageView
-                imageCook.setImageBitmap(bitmap);
+                imageCook.setImageBitmap(bitmap); // set image on image view from bitmap object (image)
+                bytes = convertByteToString( bytesImage );
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -586,6 +596,48 @@ public class CookActivity extends BaseActivity
         toast.show();
         etPwd1.setText("");
         etPwd2.setText("");
+    }
 
+    /**
+     * Convertit : byte[] en List<Byte>
+     * @param bytes
+     * @return
+     */
+    public List<Byte> convertToByteList(byte[] bytes)
+    {
+        List<Byte> byteList = new ArrayList<>();
+        for (byte b : bytes)
+        {
+            byteList.add(b);
+        }
+        return byteList;
+    }
+
+    /**
+     * Convertit : List<Byte> en byte[]
+     */
+    public byte[] convertToByteArray(List<Byte> byteList)
+    {
+        byte[] bytes = new byte[byteList.size()];
+        for (int i = 0; i < byteList.size(); i++)
+        {
+            bytes[i] = byteList.get(i);
+        }
+        return bytes;
+    }
+
+    // Convert byte array to String
+    public String convertByteToString(byte[] byteValue)
+    {
+        String output = Base64.encodeToString(byteValue, Base64.DEFAULT);
+        return output;
+    }
+
+    // Convert String to byte array
+    public byte[] convertStringToByteArray(String stringValue)
+    {
+        byte[] output = Base64.decode(stringValue, Base64.DEFAULT);
+
+        return output;
     }
 }
