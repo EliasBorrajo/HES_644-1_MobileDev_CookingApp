@@ -1,6 +1,7 @@
 package ch.hevs.cookingapp.database.repository;
 
 import android.app.Application;
+import android.util.Base64;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -17,6 +18,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import ch.hevs.cookingapp.database.entity.CookEntity;
 import ch.hevs.cookingapp.database.firebase.CookLiveData;
 import ch.hevs.cookingapp.database.firebase.CooksListLiveData;
+import ch.hevs.cookingapp.util.B64Converter;
 import ch.hevs.cookingapp.util.OnAsyncEventListener;
 
 /**
@@ -48,6 +50,26 @@ public class CookRepository
         return instance;
     }
 
+    public void register(CookEntity newCook, OnAsyncEventListener onAsyncEventListener)
+    {
+        FirebaseAuth.getInstance()
+                    .createUserWithEmailAndPassword(newCook.getEmail(),
+                                                    newCook.getPassword())
+                    .addOnCompleteListener(task -> {
+                    if (task.isSuccessful())
+                    {
+                        Log.d(TAG, "createUserWithEmail:success");
+                        String encodedEmail = B64Converter.encodeEmailB64(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+                        newCook.setEmail(encodedEmail);
+                        insert(newCook, onAsyncEventListener);
+                    }
+                    else
+                    {
+                        Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                        onAsyncEventListener.onFailure(task.getException());
+                    }
+                });
+    }
 
     public void signIn(final String email, final String password,
                        final OnCompleteListener<AuthResult> listener)
@@ -57,11 +79,14 @@ public class CookRepository
                     .addOnCompleteListener(listener);
     }
 
-    public LiveData<CookEntity> getCook(final String accountId)
+    public LiveData<CookEntity> getCook(final String email)
     {
+        // Encode the email to Base64
+        String encodedEmail = B64Converter.encodeEmailB64(email);
+
         DatabaseReference reference = FirebaseDatabase.getInstance()
                                                       .getReference("cooks")
-                                                      .child(accountId);
+                                                      .child(encodedEmail);
         return new CookLiveData(reference);
     }
 
@@ -72,32 +97,55 @@ public class CookRepository
         return new CooksListLiveData(reference);
     }
 
-    public void register(CookEntity newCook, OnAsyncEventListener onAsyncEventListener)
+    /**
+     * Insert a cook in the database. If the cook already exists, replace it.
+     * If it does not exist, insert it.
+     * @param cook : the cook to be inserted in the database.
+     * @param callback : the callback to be called when the operation is done.
+     */
+    public void insert2(final CookEntity cook, final OnAsyncEventListener callback)
     {
-        FirebaseAuth.getInstance()
-                    .createUserWithEmailAndPassword(newCook.getEmail(),
-                                                    newCook.getPassword())
-                    .addOnCompleteListener(task -> {
-                        if (task.isSuccessful())
+        String key = cook.getEmail(); // Use the email address as the key
+        FirebaseDatabase.getInstance()
+                        .getReference("cooks")
+                        .child(key)
+                        .setValue(cook, (databaseError, databaseReference) ->
                         {
-                            Log.d(TAG, "createUserWithEmail:success");
-                            String id = task.getResult().getUser().getUid();
-                            newCook.setEmail(FirebaseAuth.getInstance().getCurrentUser().getUid());
-                            insert(newCook, onAsyncEventListener);
-                        }
-                        else
-                        {
-                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            onAsyncEventListener.onFailure(task.getException());
-                        }
-                    });
+                            if (databaseError != null)
+                            {
+                                callback.onFailure(databaseError.toException());
+                                FirebaseAuth.getInstance()
+                                            .getCurrentUser()
+                                            .delete()
+                                            .addOnCompleteListener(task ->
+                                            {
+                                                if (task.isSuccessful())
+                                                {
+                                                    callback.onFailure(null);
+                                                    Log.d(TAG, "Rollback successful: Cook account deleted");
+                                                }
+                                                else
+                                                {
+                                                    callback.onFailure(task.getException());
+                                                    Log.d(TAG, "Rollback failed: signInWithEmail:failure",
+                                                            task.getException());
+                                                }
+                                            });
+
+                            }
+                            else
+                            {
+                                callback.onSuccess();
+                            }
+                        });
     }
+
 
     public void insert(final CookEntity cook, final OnAsyncEventListener callback)
     {
         FirebaseDatabase.getInstance()
                         .getReference("cooks")
-                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                        .child(cook.getEmail())
                         .setValue(cook, (databaseError, databaseReference) ->
                             {
                                 if (databaseError != null)
@@ -173,6 +221,8 @@ public class CookRepository
                     .delete()
                     .addOnFailureListener(e -> Log.d(TAG, "delete:failure", e));
     }
+
+
 
 
 }

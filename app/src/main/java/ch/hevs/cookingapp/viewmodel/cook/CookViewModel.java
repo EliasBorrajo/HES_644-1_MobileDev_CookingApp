@@ -42,6 +42,7 @@ public class CookViewModel extends AndroidViewModel
         // set by default null, until we get data from the database.
         observableCook.setValue(null);
 
+
         LiveData<CookEntity> cook = repository.getCook(email);
 
         // observe the changes of the account entity from the database and forward them
