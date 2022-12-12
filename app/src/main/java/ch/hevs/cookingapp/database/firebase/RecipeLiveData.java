@@ -43,8 +43,10 @@ public class RecipeLiveData extends LiveData<RecipeEntity>
         public void onDataChange(@NonNull DataSnapshot dataSnapshot)
         {
             RecipeEntity entity = dataSnapshot.getValue(RecipeEntity.class);
-            entity.setId(dataSnapshot.getKey());
-            setValue(entity);
+            if(entity != null) {
+                entity.setId(dataSnapshot.getKey());
+                setValue(entity);
+            }
         }
 
         @Override

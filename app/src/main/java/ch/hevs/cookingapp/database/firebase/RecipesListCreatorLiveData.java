@@ -66,8 +66,9 @@ public class RecipesListCreatorLiveData extends LiveData<List<RecipeEntity>>
         {
             RecipeEntity entity = childSnapshot.getValue(RecipeEntity.class);
             entity.setId(childSnapshot.getKey());
-            entity.setCreator(creator);
-            recipes.add(entity);
+            if (entity.getCreator().equals(creator)) {
+                recipes.add(entity);
+            }
         }
         return recipes;
     }
