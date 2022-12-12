@@ -112,7 +112,7 @@ public class RegisterActivity extends AppCompatActivity
         CookEntity newCook = new CookEntity(email, firstName, lastName, pwd, phone, null);
 
         // On crée le user
-        repository.insert(newCook, new OnAsyncEventListener()
+        repository.register(newCook, new OnAsyncEventListener()
                                     {
                                         @Override
                                         public void onSuccess()

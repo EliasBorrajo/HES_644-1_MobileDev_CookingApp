@@ -72,6 +72,27 @@ public class CookRepository
         return new CooksListLiveData(reference);
     }
 
+    public void register(CookEntity newCook, OnAsyncEventListener onAsyncEventListener)
+    {
+        FirebaseAuth.getInstance()
+                    .createUserWithEmailAndPassword(newCook.getEmail(),
+                                                    newCook.getPassword())
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful())
+                        {
+                            Log.d(TAG, "createUserWithEmail:success");
+                            String id = task.getResult().getUser().getUid();
+                            newCook.setEmail(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                            insert(newCook, onAsyncEventListener);
+                        }
+                        else
+                        {
+                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                            onAsyncEventListener.onFailure(task.getException());
+                        }
+                    });
+    }
+
     public void insert(final CookEntity cook, final OnAsyncEventListener callback)
     {
         FirebaseDatabase.getInstance()
@@ -152,4 +173,6 @@ public class CookRepository
                     .delete()
                     .addOnFailureListener(e -> Log.d(TAG, "delete:failure", e));
     }
+
+
 }
