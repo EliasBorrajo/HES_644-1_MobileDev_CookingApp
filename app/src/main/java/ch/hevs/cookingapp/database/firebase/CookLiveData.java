@@ -11,6 +11,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 import ch.hevs.cookingapp.database.entity.CookEntity;
+import ch.hevs.cookingapp.util.B64Converter;
 
 /**
  * A Firebase query LiveData implementation.
@@ -82,7 +83,7 @@ public class CookLiveData extends LiveData<CookEntity>
         public void onDataChange(@NonNull DataSnapshot dataSnapshot)
         {
             CookEntity entity = dataSnapshot.getValue(CookEntity.class); // This is the entity that will be created from the DataSnapshot
-            entity.setEmail(dataSnapshot.getKey()); // This is the key of the node (e.g. "user1")
+            entity.setEmail(B64Converter.decodeEmailB64(dataSnapshot.getKey())); // This is the key of the node (e.g. "user1")
             setValue(entity);                       // This sets the value of the LiveData object to the entity
         }
 

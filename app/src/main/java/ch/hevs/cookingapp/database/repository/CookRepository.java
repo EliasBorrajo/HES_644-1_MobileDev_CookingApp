@@ -50,6 +50,7 @@ public class CookRepository
         return instance;
     }
 
+
     public void register(CookEntity newCook, OnAsyncEventListener onAsyncEventListener)
     {
         FirebaseAuth.getInstance()
@@ -59,8 +60,7 @@ public class CookRepository
                     if (task.isSuccessful())
                     {
                         Log.d(TAG, "createUserWithEmail:success");
-                        String encodedEmail = B64Converter.encodeEmailB64(FirebaseAuth.getInstance().getCurrentUser().getEmail());
-                        newCook.setEmail(encodedEmail);
+                        newCook.setEmail(FirebaseAuth.getInstance().getCurrentUser().getEmail());
                         insert(newCook, onAsyncEventListener);
                     }
                     else
@@ -71,12 +71,14 @@ public class CookRepository
                 });
     }
 
+
     public void signIn(final String email, final String password,
                        final OnCompleteListener<AuthResult> listener)
     {
         FirebaseAuth.getInstance()
                     .signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(listener);
+
     }
 
     public LiveData<CookEntity> getCook(final String email)
@@ -145,7 +147,7 @@ public class CookRepository
     {
         FirebaseDatabase.getInstance()
                         .getReference("cooks")
-                        .child(cook.getEmail())
+                        .child(B64Converter.encodeEmailB64(cook.getEmail()))
                         .setValue(cook, (databaseError, databaseReference) ->
                             {
                                 if (databaseError != null)
@@ -181,7 +183,7 @@ public class CookRepository
     {
         FirebaseDatabase.getInstance()
                         .getReference("cooks")
-                        .child(cook.getEmail())
+                        .child(B64Converter.encodeEmailB64(cook.getEmail()))
                         .updateChildren(cook.toMap(), (databaseError, databaseReference) ->
                             {
                                 if (databaseError != null)
@@ -204,7 +206,7 @@ public class CookRepository
     {
         FirebaseDatabase.getInstance()
                         .getReference("cooks")
-                        .child(cook.getEmail())
+                        .child(B64Converter.encodeEmailB64(cook.getEmail()))
                         .removeValue((databaseError, databaseReference) ->
                             {
                                 if (databaseError != null)

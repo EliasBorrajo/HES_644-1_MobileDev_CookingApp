@@ -118,13 +118,12 @@ public class LoginActivity extends AppCompatActivity
             {
                 if (task.isSuccessful())
                 {
-                    /** TODO : Voir si on en a encore besoin des SharedPreferences
                      // We need an Editor object to make preference changes.
                      // All objects are from android.context.Context
                      SharedPreferences.Editor editor = getSharedPreferences(BaseActivity.PREFS_NAME, 0).edit();  // On vient editer notre HASHTABLE LOGIN
-                     editor.putString(BaseActivity.PREFS_USER, cookEntity.getEmail());       // ON MET LA VALEUR A LA CLE
+                     editor.putString(BaseActivity.PREFS_USER, email);       // ON MET LA VALEUR A LA CLE
                      editor.apply();                                                         // On n'oublie pas d'appliquer les changements
-                     */
+
 
                     // Sign in success, update UI with the signed-in user's information
                     Toast.makeText(LoginActivity.this, "Authentication successful.",Toast.LENGTH_SHORT).show();

@@ -15,6 +15,7 @@ import ch.hevs.cookingapp.database.firebase.RecipeLiveData;
 import ch.hevs.cookingapp.database.firebase.RecipesListCreatorLiveData;
 import ch.hevs.cookingapp.database.firebase.RecipesListMealLiveData;
 import ch.hevs.cookingapp.database.pojo.CookWithRecipes;
+import ch.hevs.cookingapp.util.B64Converter;
 import ch.hevs.cookingapp.util.OnAsyncEventListener;
 
 /**
@@ -79,11 +80,11 @@ public class RecipeRepository
     {
         DatabaseReference reference = FirebaseDatabase.getInstance()
                 .getReference("recipes")
-                .child(recipe.getCreator());
+                .child(B64Converter.encodeEmailB64(recipe.getCreator()));
         String key = reference.push().getKey();
         FirebaseDatabase.getInstance()
                 .getReference("recipes")
-                .child(recipe.getCreator())
+                .child(B64Converter.encodeEmailB64(recipe.getCreator()))
                 .child(key)
                 .setValue(recipe, (databaseError, databaseReference) -> {
                     if (databaseError != null) {

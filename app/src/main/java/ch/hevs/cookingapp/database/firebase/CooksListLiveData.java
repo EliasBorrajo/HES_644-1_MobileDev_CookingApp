@@ -15,7 +15,17 @@ import java.util.List;
 
 import ch.hevs.cookingapp.database.entity.CookEntity;
 import ch.hevs.cookingapp.database.entity.RecipeEntity;
+import ch.hevs.cookingapp.util.B64Converter;
 
+/**
+ * A class that implements the LiveData class to be able to observe the changes in the database.
+ * This class is used to observe the changes in the database for the cooks.
+ * It converts the DataSnapshot to a list of entities.
+ * The class is generic, so it can be used with any class that extends {@link CookEntity}.
+ *
+ * It uses the {@link CooksListLiveData} class to observe the changes in the database for the cooks.
+ * It uses the {@link CookLiveData} class to observe the changes in the database for a single cook.
+ */
 public class CooksListLiveData extends LiveData<List<CookEntity>>
 {
     private static final String TAG = "CooksListLiveData";
@@ -50,7 +60,7 @@ public class CooksListLiveData extends LiveData<List<CookEntity>>
         {
 
             CookEntity entity = childSnapshot.getValue(CookEntity.class); // This is the entity that will be created from the DataSnapshot
-            entity.setEmail(childSnapshot.getKey()); // This is the key of the node (e.g. "user1")
+            entity.setEmail(B64Converter.decodeEmailB64(childSnapshot.getKey())); // This is the key of the node (e.g. "user1")
 
             cooksList.add(entity);
 
