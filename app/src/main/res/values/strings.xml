@@ -7,7 +7,7 @@
     <string name="action_sign_in_short">Sign in</string>
     <string name="error_invalid_email">Invalid login credentials</string>
     <string name="error_used_email">Email already in use</string>
-    <string name="error_invalid_password">This password is too short (&lt;5 characters)</string>
+    <string name="error_invalid_password">This password is too short (&lt;6 characters)</string>
     <string name="error_edit_invalid_password">You need to specify a password. Otherwise Changes will not be saved.</string>
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
@@ -139,5 +139,5 @@
     <string name="MessageSaveChanges">Your changes wont be apply, some fields are wrong</string>
     <string name="tv_newPassword">To change password</string>
     <string name="hint_newPassword">Enter new password here</string>
-    <string name="toast_newPass">New password not valid. has to be a minimum of 5 characters long.</string>
+    <string name="toast_newPass">New password not valid. has to be a minimum of 6 characters long.</string>
 </resources>

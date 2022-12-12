@@ -84,7 +84,7 @@ public class RegisterActivity extends AppCompatActivity
      */
     private void saveChanges(String firstName, String lastName, String email, String phone, String pwd, String pwd2)
     {
-        if (!pwd.equals(pwd2) || pwd.length() < 5)
+        if (!pwd.equals(pwd2) || pwd.length() < 6)
         {
             etPwd1.setError(getString(R.string.error_invalid_password));
             etPwd1.requestFocus();
@@ -109,7 +109,7 @@ public class RegisterActivity extends AppCompatActivity
             return;
         }
 
-        CookEntity newCook = new CookEntity(email, firstName, lastName, pwd, phone, null);
+        CookEntity newCook = new CookEntity(email, firstName, lastName, pwd, phone, "");
 
         // On crée le user
         repository.register(newCook, new OnAsyncEventListener()

@@ -83,8 +83,12 @@ public class CookLiveData extends LiveData<CookEntity>
         public void onDataChange(@NonNull DataSnapshot dataSnapshot)
         {
             CookEntity entity = dataSnapshot.getValue(CookEntity.class); // This is the entity that will be created from the DataSnapshot
-            entity.setEmail(B64Converter.decodeEmailB64(dataSnapshot.getKey())); // This is the key of the node (e.g. "user1")
-            setValue(entity);                       // This sets the value of the LiveData object to the entity
+            if(entity != null)
+            {
+                entity.setEmail(B64Converter.decodeEmailB64(dataSnapshot.getKey())); // This is the key of the node (e.g. "user1")
+                setValue(entity);                       // This sets the value of the LiveData object to the entity
+            }
+
         }
 
         /**

@@ -100,49 +100,9 @@ public class CookRepository
     }
 
     /**
-     * Insert a cook in the database. If the cook already exists, replace it.
-     * If it does not exist, insert it.
-     * @param cook : the cook to be inserted in the database.
-     * @param callback : the callback to be called when the operation is done.
+     * Insert a new cook in the database and in the Firebase Authentication system (email/password)
+     * @param cook the new cook to insert in the database and in the Firebase Authentication system (email/password)
      */
-    public void insert2(final CookEntity cook, final OnAsyncEventListener callback)
-    {
-        String key = cook.getEmail(); // Use the email address as the key
-        FirebaseDatabase.getInstance()
-                        .getReference("cooks")
-                        .child(key)
-                        .setValue(cook, (databaseError, databaseReference) ->
-                        {
-                            if (databaseError != null)
-                            {
-                                callback.onFailure(databaseError.toException());
-                                FirebaseAuth.getInstance()
-                                            .getCurrentUser()
-                                            .delete()
-                                            .addOnCompleteListener(task ->
-                                            {
-                                                if (task.isSuccessful())
-                                                {
-                                                    callback.onFailure(null);
-                                                    Log.d(TAG, "Rollback successful: Cook account deleted");
-                                                }
-                                                else
-                                                {
-                                                    callback.onFailure(task.getException());
-                                                    Log.d(TAG, "Rollback failed: signInWithEmail:failure",
-                                                            task.getException());
-                                                }
-                                            });
-
-                            }
-                            else
-                            {
-                                callback.onSuccess();
-                            }
-                        });
-    }
-
-
     public void insert(final CookEntity cook, final OnAsyncEventListener callback)
     {
         FirebaseDatabase.getInstance()

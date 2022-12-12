@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,13 +29,23 @@ import androidx.core.view.GravityCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import ch.hevs.cookingapp.R;
 import ch.hevs.cookingapp.database.entity.CookEntity;
+import ch.hevs.cookingapp.database.repository.CookRepository;
 import ch.hevs.cookingapp.ui.BaseActivity;
 import ch.hevs.cookingapp.ui.MainActivity;
 import ch.hevs.cookingapp.util.OnAsyncEventListener;
@@ -66,7 +77,7 @@ public class CookActivity extends BaseActivity
     private EditText etPwd1;
     private EditText etPwd2;
     private ImageButton imageCook;
-    private byte[] bytes;
+    private String bytes;
 
     private CookViewModel viewModel_Cook;
 
@@ -99,9 +110,7 @@ public class CookActivity extends BaseActivity
             userConnected = intent_selectedUserSource; // get email of cook
         }
 
-
         CookViewModel.Factory factory = new CookViewModel.Factory(getApplication(), userConnected);
-
         // Créer un viewModel
         viewModel_Cook = new ViewModelProvider((ViewModelStoreOwner) this, (ViewModelProvider.Factory) factory).get(CookViewModel.class); // Donne nous un ViewModel, grâce à la Factory, pour me donner un CookViewModel
         // Recuperer les données de la DB
@@ -118,15 +127,15 @@ public class CookActivity extends BaseActivity
 
     private void initiateView()
     {
-        isEditable = false;
+        isEditable  = false;
         etFirstName = findViewById(R.id.et_firstName);
-        etLastName = findViewById(R.id.et_lastName);
-        etEmail = findViewById(R.id.et_mail);
-        etPhone = findViewById(R.id.et_phone);
-        etNewPwd = findViewById(R.id.et_newPassword);
-        etPwd1 = findViewById(R.id.password);
-        etPwd2 = findViewById(R.id.passwordRep);
-        imageCook = findViewById(R.id.image_profilePicture);
+        etLastName  = findViewById(R.id.et_lastName);
+        etEmail     = findViewById(R.id.et_mail);
+        etPhone     = findViewById(R.id.et_phone);
+        etNewPwd    = findViewById(R.id.et_newPassword);
+        etPwd1      = findViewById(R.id.password);
+        etPwd2      = findViewById(R.id.passwordRep);
+        imageCook   = findViewById(R.id.image_profilePicture);
     }
 
     /**
@@ -144,9 +153,12 @@ public class CookActivity extends BaseActivity
             etNewPwd.setText(cook.getPassword());
             imageCook.setClickable(false);
             imageCook.setFocusable(false);
-            if(cook.getImage() != null) {
-                Bitmap bitmap = BitmapFactory.decodeByteArray(cook.getImage(), 0, cook.getImage().length);
+            if(!cook.getImage().equals(""))
+            {
+                byte[] imageToByte = convertStringToByteArray(cook.getImage());
+                Bitmap bitmap = BitmapFactory.decodeByteArray(imageToByte, 0, imageToByte.length);
                 imageCook.setImageBitmap(bitmap);
+
             }
         }
     }
@@ -185,7 +197,7 @@ public class CookActivity extends BaseActivity
         SharedPreferences settings = getSharedPreferences(BaseActivity.PREFS_NAME, 0);
         String user = settings.getString(PREFS_USER, null);
 
-        if (user.equals(etEmail.getText().toString()))
+        if (user.equals(userConnected))
         {
             menu.add(0, EDIT_COOK, Menu.NONE, getString(R.string.action_edit))
                     .setIcon(R.drawable.ic_edit_white_24dp)
@@ -332,78 +344,110 @@ public class CookActivity extends BaseActivity
      *
      *  @param : Seront les paramètres du UI que on get leur valeurs
      */
-    private void saveChanges(String firstName, String lastName, String email, String phone,String newPasswd ,String pwd, String pwd2, byte[] bytes)
+    private void saveChanges(String firstName, String lastName, String email, String phone,String newPasswd ,String pwd, String pwd2, String bytes)
     {
         // Vérification des inputs
-        if (!pwd.equals(pwd2) || pwd.length() < 5 || !pwd.equals(cook.getPassword()))
+        if (pwd.equals("") )
         {
-            toast = Toast.makeText(this, getString(R.string.error_edit_invalid_password), Toast.LENGTH_LONG);
-            toast.show();
-            etPwd1.setText("");
-            etPwd2.setText("");
             return;
         }
-        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches())
-        {            // c'est un REGEX de si on a bien un mail ou non
-            etEmail.setError(getString(R.string.error_invalid_email));
-            etEmail.requestFocus();
-            Toast.makeText(this, R.string.error_invalid_email_format, Toast.LENGTH_LONG).show();
-            return;
-        }
-        // Verification que le phone number est bon
-        // Phone Regex Pattern : upto length 10 - 13 and including character "+" infront.
-        Pattern regex = Pattern.compile("^[+]?[0-9]{10,13}$");
-        Matcher phonePattern = regex.matcher(phone);
-        if (!phonePattern.find())
-        {
-            etPhone.setError(getString(R.string.error_invalid_phone));
-            etPhone.requestFocus();
-            Toast.makeText(this, R.string.error_invalid_phone_format, Toast.LENGTH_LONG).show();
-            return;
-        }
-        // Le nouveau mot de passe
-        if (newPasswd.length() < 5)
-        {
-            etNewPwd.setError(getString(R.string.toast_newPass));
-            etNewPwd.requestFocus();
-            Toast.makeText(this, getString(R.string.toast_newPass), Toast.LENGTH_LONG);
-            toast.show();
-            etNewPwd.setText("");
-
-            return;
-        }
-
-
-        // On SET nos paramètres de l'entity, pour ensuite les update quand l'entity est prête à passer à la DB
-        cook.setEmail(email);
-        cook.setFirstName(firstName);
-        cook.setLastName(lastName);
-        cook.setPhoneNumber(phone);
-        cook.setPassword(newPasswd);
-
-        etPwd1.setText("");
-        etPwd2.setText("");
-
-        if(bytes != null) {
-            cook.setImage(bytes);
-        }
-
-        viewModel_Cook.updateCook(cook, new OnAsyncEventListener()
+        passwordIsValide(email, pwd, new PasswordValidityListener()
         {
             @Override
-            public void onSuccess()
+            public void onValid()
             {
-                setResponse(true);
+                // Password is valid, continue with saveChanges()
+                if (!pwd.equals(pwd2) || pwd.length() < 6) {
+                    invalidPassword();
+                }
+                else
+                {
+                    // Save changes, continue...
+                    if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches())
+                    {            // c'est un REGEX de si on a bien un mail ou non
+                        etEmail.setError(getString(R.string.error_invalid_email));
+                        etEmail.requestFocus();
+                        Toast.makeText(CookActivity.this, R.string.error_invalid_email_format, Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                    // Verification que le phone number est bon
+                    // Phone Regex Pattern : upto length 10 - 13 and including character "+" infront.
+                    Pattern regex = Pattern.compile("^[+]?[0-9]{10,13}$");
+                    Matcher phonePattern = regex.matcher(phone);
+                    if (!phonePattern.find())
+                    {
+                        etPhone.setError(getString(R.string.error_invalid_phone));
+                        etPhone.requestFocus();
+                        Toast.makeText(CookActivity.this, R.string.error_invalid_phone_format, Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                    // Le nouveau mot de passe
+                    // Vérification que le mot de passe change
+                    if (!newPasswd.equals("") )
+                    {
+                        if (newPasswd.length() < 6)
+                        {
+                            etNewPwd.setError(getString(R.string.toast_newPass));
+                            etNewPwd.requestFocus();
+                            Toast.makeText(CookActivity.this, getString(R.string.toast_newPass), Toast.LENGTH_LONG);
+                            toast.show();
+                            etNewPwd.setText("");
+
+                            return;
+                        }
+                        else
+                        {
+                            FirebaseAuth.getInstance().getCurrentUser().updatePassword(newPasswd);
+                        }
+                    }
+
+
+                    // On SET nos paramètres de l'entity, pour ensuite les update quand l'entity est prête à passer à la DB
+                    cook.setEmail(email);
+                    cook.setFirstName(firstName);
+                    cook.setLastName(lastName);
+                    cook.setPhoneNumber(phone);
+                    if (newPasswd.equals(""))
+                    {
+                        cook.setPassword(pwd);
+                    }
+                    else
+                    {
+                        cook.setPassword(newPasswd);
+                    }
+
+                    etPwd1.setText("");
+                    etPwd2.setText("");
+
+                    if(!bytes.equals("")) {
+                        cook.setImage(bytes);
+                    }
+
+                    viewModel_Cook.updateCook(cook, new OnAsyncEventListener()
+                    {
+                        @Override
+                        public void onSuccess()
+                        {
+                            setResponse(true);
+                        }
+
+                        @Override
+                        public void onFailure(Exception e)
+                        {
+                            setResponse(false);
+                        }
+                    });
+
+                }
             }
-
             @Override
-            public void onFailure(Exception e)
-            {
-                setResponse(false);
+            public void onInvalid() {
+                // Password is invalid, show error message
+                invalidPassword();
             }
         });
 
-        return;
+
     }
 
     /**
@@ -479,15 +523,16 @@ public class CookActivity extends BaseActivity
                 // compress Bitmap
                 bitmap.compress(Bitmap.CompressFormat.JPEG,100,stream);
                 // Initialize byte array
-                bytes = stream.toByteArray();
+                byte[] bytesImage = stream.toByteArray();
                 // get base64 encoded string
-                String sImage= Base64.encodeToString(bytes,Base64.DEFAULT);
+                String sImage= Base64.encodeToString(bytesImage,Base64.DEFAULT);
                 // decode base64 string
-                bytes = Base64.decode(sImage,Base64.DEFAULT);
+                bytesImage = Base64.decode(sImage,Base64.DEFAULT);
                 // Initialize bitmap
-                bitmap = BitmapFactory.decodeByteArray(bytes,0,bytes.length);
+                bitmap = BitmapFactory.decodeByteArray(bytesImage,0, bytesImage.length);
                 // set bitmap on imageView
-                imageCook.setImageBitmap(bitmap);
+                imageCook.setImageBitmap(bitmap); // set image on image view from bitmap object (image)
+                bytes = convertByteToString( bytesImage );
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -518,5 +563,81 @@ public class CookActivity extends BaseActivity
                               .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
         }
 
+    }
+
+    public void passwordIsValide(String email, String password, final PasswordValidityListener listener)
+    {
+        FirebaseAuth.getInstance()
+                .signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in successful
+                            listener.onValid();
+                        } else {
+                            // Sign in failed
+                            listener.onInvalid();
+                        }
+                    }
+                });
+    }
+
+    // This is an interface that you can use to communicate the result of the password validation
+    public interface PasswordValidityListener {
+        void onValid();
+        void onInvalid();
+    }
+
+
+    public void invalidPassword()
+    {
+        toast = Toast.makeText(this, getString(R.string.error_edit_invalid_password), Toast.LENGTH_LONG);
+        toast.show();
+        etPwd1.setText("");
+        etPwd2.setText("");
+    }
+
+    /**
+     * Convertit : byte[] en List<Byte>
+     * @param bytes
+     * @return
+     */
+    public List<Byte> convertToByteList(byte[] bytes)
+    {
+        List<Byte> byteList = new ArrayList<>();
+        for (byte b : bytes)
+        {
+            byteList.add(b);
+        }
+        return byteList;
+    }
+
+    /**
+     * Convertit : List<Byte> en byte[]
+     */
+    public byte[] convertToByteArray(List<Byte> byteList)
+    {
+        byte[] bytes = new byte[byteList.size()];
+        for (int i = 0; i < byteList.size(); i++)
+        {
+            bytes[i] = byteList.get(i);
+        }
+        return bytes;
+    }
+
+    // Convert byte array to String
+    public String convertByteToString(byte[] byteValue)
+    {
+        String output = Base64.encodeToString(byteValue, Base64.DEFAULT);
+        return output;
+    }
+
+    // Convert String to byte array
+    public byte[] convertStringToByteArray(String stringValue)
+    {
+        byte[] output = Base64.decode(stringValue, Base64.DEFAULT);
+
+        return output;
     }
 }

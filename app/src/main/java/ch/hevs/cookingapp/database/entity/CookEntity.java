@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 import com.google.firebase.database.Exclude;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -20,7 +21,7 @@ public class CookEntity
     private String lastName;
     private String phoneNumber;
     private String password;    // Password ira dans AuthentificationFirebase
-    private byte[] image; // TODO : Ira dans le StorageFirebase, mais en attendant en B64 dans la DB
+    private String image; // TODO : Ira dans le StorageFirebase, mais en attendant en B64 dans la DB
 
     // C O N S T R U C T E U R
     public CookEntity()
@@ -28,8 +29,7 @@ public class CookEntity
     }
 
 
-    // TODO : Password ?
-    public CookEntity(String email, String firstName, String lastName, String password,String phoneNumber, byte[] image)
+    public CookEntity(String email, String firstName, String lastName, String password,String phoneNumber, String image)
     {
         this.email = email;
         this.firstName = firstName;
@@ -52,11 +52,13 @@ public class CookEntity
         this.password = password;
     }
 
-    public byte[] getImage() {
+    public String getImage()
+    {
         return image;
     }
 
-    public void setImage(byte[] image) {
+    public void setImage(String image)
+    {
         this.image = image;
     }
 
@@ -123,7 +125,6 @@ public class CookEntity
     public Map<String, Object> toMap()
     {
         HashMap<String, Object> result = new HashMap<>();
-        //result.put("email", email);
         result.put("firstName", firstName);
         result.put("lastName", lastName);
         result.put("phoneNumber", phoneNumber);
