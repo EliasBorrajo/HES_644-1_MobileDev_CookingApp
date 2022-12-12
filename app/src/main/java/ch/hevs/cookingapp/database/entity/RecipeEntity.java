@@ -25,7 +25,7 @@ public class RecipeEntity
     private String allergy;
     private String mealTime;
     // On veut que l'image soit stockée en BLOB dans la DB (byte[]) et non en String (text).
-    private byte[] image;       // TODO : Ira dans le StorageFirebase, mais en attendant en B64 dans la DB
+    private String image;       // TODO : Ira dans le StorageFirebase, mais en attendant en B64 dans la DB
 
     // C O N S T R U C T E U R
     public RecipeEntity()
@@ -34,7 +34,7 @@ public class RecipeEntity
 
 
     // TODO Creator ?
-    public RecipeEntity(String creator, String name, int prepTime, String ingredients, String preparation, String diet, String allergy, String mealTime, byte[] image)
+    public RecipeEntity(String creator, String name, int prepTime, String ingredients, String preparation, String diet, String allergy, String mealTime, String image)
     {
         this.creator = creator;
         this.name = name;
@@ -59,11 +59,11 @@ public class RecipeEntity
         this.id = id;
     }
 
-    public byte[] getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(byte[] image) {
+    public void setImage(String image) {
         this.image = image;
     }
 

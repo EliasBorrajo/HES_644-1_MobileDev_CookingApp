@@ -69,7 +69,7 @@ public class RecipeDetailActivity extends BaseActivity
     private EditText etRecipeName;
 
     private ImageButton imageRecipe;
-    private byte[] bytes;
+    private String bytes;
 
     private TextView tvPrepTime;
     private EditText etTime;
@@ -162,8 +162,9 @@ public class RecipeDetailActivity extends BaseActivity
             etRecipeName.setText(recipe.getName());
             imageRecipe.setClickable(false);
             imageRecipe.setFocusable(false);
-            if(recipe.getImage() != null) {
-                Bitmap bitmap = BitmapFactory.decodeByteArray(recipe.getImage(), 0, recipe.getImage().length);
+            if(!recipe.getImage().equals("")) {
+                byte[] imgToByte = convertStringToByteArray(recipe.getImage());
+                Bitmap bitmap = BitmapFactory.decodeByteArray(imgToByte, 0, imgToByte.length);
                 imageRecipe.setImageBitmap(bitmap);
             }
             if (recipe.getPrepTime() != 0)
@@ -434,7 +435,7 @@ public class RecipeDetailActivity extends BaseActivity
      *
      *  @param : Seront les paramètres du UI que on get leur valeurs
      */
-    private void saveChanges(String name, int time, String ingredients, String preparation, String diet, String allergy, String mealTime, byte[] bytes) {
+    private void saveChanges(String name, int time, String ingredients, String preparation, String diet, String allergy, String mealTime, String bytes) {
         // Vérification des inputs
         if(name.equals("")) {
             etRecipeName.setError(getString(R.string.error_empty_recipe_name));
@@ -469,7 +470,7 @@ public class RecipeDetailActivity extends BaseActivity
         recipe.setDiet(diet);
         recipe.setAllergy(allergy);
         recipe.setMealTime(mealTime);
-        if(bytes != null) {
+        if(!bytes.equals("")) {
             recipe.setImage(bytes);
         }
 
@@ -544,15 +545,16 @@ public class RecipeDetailActivity extends BaseActivity
                 // compress Bitmap
                 bitmap.compress(Bitmap.CompressFormat.JPEG,100,stream);
                 // Initialize byte array
-                bytes = stream.toByteArray();
+                byte[] byteImg = stream.toByteArray();
                 // get base64 encoded string
-                String sImage= Base64.encodeToString(bytes,Base64.DEFAULT);
+                String sImage= Base64.encodeToString(byteImg,Base64.DEFAULT);
                 // decode base64 string
-                bytes = Base64.decode(sImage,Base64.DEFAULT);
+                byteImg = Base64.decode(sImage,Base64.DEFAULT);
                 // Initialize bitmap
-                bitmap = BitmapFactory.decodeByteArray(bytes,0,bytes.length);
+                bitmap = BitmapFactory.decodeByteArray(byteImg,0,byteImg.length);
                 // set bitmap on imageView
                 imageRecipe.setImageBitmap(bitmap);
+                bytes = convertByteToString(byteImg);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -693,5 +695,18 @@ public class RecipeDetailActivity extends BaseActivity
         startActivity(new Intent(RecipeDetailActivity.this, RecipesActivity.class)
                                 .putExtra(String.valueOf(R.string.meals), meals)
                                 .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+    }
+
+    // Convert byte array to String
+    public String convertByteToString(byte[] byteValue)
+    {
+        String output = Base64.encodeToString(byteValue, Base64.DEFAULT);
+        return output;
+    }
+    // Convert String to byte array
+    public byte[] convertStringToByteArray(String stringValue)
+    {
+        byte[] output = Base64.decode(stringValue, Base64.DEFAULT);
+        return output;
     }
 }

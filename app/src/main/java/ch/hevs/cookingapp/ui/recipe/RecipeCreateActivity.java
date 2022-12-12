@@ -61,7 +61,7 @@ public class RecipeCreateActivity extends BaseActivity {
     private String mealTimeSelection;
 
     private ImageButton btnimage;
-    private byte[] bytes;
+    private String bytes = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,7 +114,7 @@ public class RecipeCreateActivity extends BaseActivity {
      *
      *  @param : Seront les paramètres du UI que on get leur valeurs
      */
-    private void saveRecipe(String creator, String name, int time, String ingredients, String preparation, String diet, String allergy, String mealTime, byte[] image) {
+    private void saveRecipe(String creator, String name, int time, String ingredients, String preparation, String diet, String allergy, String mealTime, String image) {
         if(name.equals("")) {
             etRecipeName.setError(getString(R.string.error_empty_recipe_name));
             etRecipeName.requestFocus();
@@ -209,15 +209,16 @@ public class RecipeCreateActivity extends BaseActivity {
                 // compress Bitmap
                 bitmap.compress(Bitmap.CompressFormat.JPEG,100,stream);
                 // Initialize byte array
-                bytes = stream.toByteArray();
+                byte[] byteImg = stream.toByteArray();
                 // get base64 encoded string
-                String sImage= Base64.encodeToString(bytes,Base64.DEFAULT);
+                String sImage= Base64.encodeToString(byteImg,Base64.DEFAULT);
                 // decode base64 string
-                bytes = Base64.decode(sImage,Base64.DEFAULT);
+                byteImg = Base64.decode(sImage,Base64.DEFAULT);
                 // Initialize bitmap
-                bitmap = BitmapFactory.decodeByteArray(bytes,0,bytes.length);
+                bitmap = BitmapFactory.decodeByteArray(byteImg,0,byteImg.length);
                 // set bitmap on imageView
                 btnimage.setImageBitmap(bitmap);
+                bytes = convertByteToString(byteImg);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -356,5 +357,18 @@ public class RecipeCreateActivity extends BaseActivity {
         }
         super.onBackPressed();
         startActivity(new Intent(this, MainActivity.class));
+    }
+
+    // Convert byte array to String
+    public String convertByteToString(byte[] byteValue)
+    {
+        String output = Base64.encodeToString(byteValue, Base64.DEFAULT);
+        return output;
+    }
+    // Convert String to byte array
+    public byte[] convertStringToByteArray(String stringValue)
+    {
+        byte[] output = Base64.decode(stringValue, Base64.DEFAULT);
+        return output;
     }
 }
