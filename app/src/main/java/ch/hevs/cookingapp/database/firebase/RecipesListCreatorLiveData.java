@@ -13,9 +13,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import ch.hevs.cookingapp.database.entity.CookEntity;
 import ch.hevs.cookingapp.database.entity.RecipeEntity;
-import ch.hevs.cookingapp.database.pojo.CookWithRecipes;
 
 /**
  * A class that implements the LiveData class to be able to observe the changes in the database.

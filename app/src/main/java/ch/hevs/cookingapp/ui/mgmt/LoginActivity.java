@@ -1,6 +1,5 @@
 package ch.hevs.cookingapp.ui.mgmt;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -141,40 +140,7 @@ public class LoginActivity extends AppCompatActivity
                     passwordView.setText("");
                 }
             });
-            /* TODO : Voir si ça sert encore
-            repository.getCook(email).observe(LoginActivity.this, cookEntity ->
-            {
-                if (cookEntity != null)
-                {
-                    if (cookEntity.getPassword().equals(password))
-                    {
-                        // We need an Editor object to make preference changes.
-                        // All objects are from android.context.Context
-                        SharedPreferences.Editor editor = getSharedPreferences(BaseActivity.PREFS_NAME, 0).edit();  // On vient editer notre HASHTABLE LOGIN
-                        editor.putString(BaseActivity.PREFS_USER, cookEntity.getEmail());       // ON MET LA VALEUR A LA CLE
-                        editor.apply();                                                         // On n'oublie pas d'appliquer les changements
 
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                        startActivity(intent);
-                        emailView.setText("");
-                        passwordView.setText("");
-                    }
-                    else
-                    {
-                        passwordView.setError(getString(R.string.error_incorrect_password));
-                        passwordView.requestFocus();
-                        passwordView.setText("");
-                    }
-                }
-                else
-                {
-                    emailView.setError(getString(R.string.error_invalid_email));
-                    emailView.requestFocus();
-                    passwordView.setText("");
-                }
-            });
-
-             */
         }
     }
 

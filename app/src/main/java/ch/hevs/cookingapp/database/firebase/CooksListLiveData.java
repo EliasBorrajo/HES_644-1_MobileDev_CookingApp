@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ch.hevs.cookingapp.database.entity.CookEntity;
-import ch.hevs.cookingapp.database.entity.RecipeEntity;
 import ch.hevs.cookingapp.util.B64Converter;
 
 /**

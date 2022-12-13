@@ -75,7 +75,6 @@ public class RecipeCreateActivity extends BaseActivity {
 
         initiateView();
 
-        //TODO controler si ça fou la m avec le OL
         RecipeViewModel.Factory factory = new RecipeViewModel.Factory(
                 getApplication(), "0L");
         recipeViewModel = ViewModelProviders.of((FragmentActivity) this, (ViewModelProvider.Factory) factory).get(RecipeViewModel.class);
