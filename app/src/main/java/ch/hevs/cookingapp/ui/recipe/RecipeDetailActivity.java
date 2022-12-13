@@ -30,8 +30,15 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.UUID;
 
 import ch.hevs.cookingapp.R;
 import ch.hevs.cookingapp.database.entity.RecipeEntity;
@@ -97,6 +104,11 @@ public class RecipeDetailActivity extends BaseActivity
 
     private TextView tvCreator;
 
+    // instance for firebase storage and StorageReference
+    FirebaseStorage storage;
+    StorageReference storageReference;
+    private Uri filePath;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -109,6 +121,10 @@ public class RecipeDetailActivity extends BaseActivity
         meals = getIntent().getStringExtra(String.valueOf(R.string.meals));
 
         initiateView();
+
+        // get the Firebase  storage reference
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
 
         RecipeViewModel.Factory factory = new RecipeViewModel.Factory(getApplication(), recipeId);
 
@@ -162,11 +178,28 @@ public class RecipeDetailActivity extends BaseActivity
             etRecipeName.setText(recipe.getName());
             imageRecipe.setClickable(false);
             imageRecipe.setFocusable(false);
+
+            // download img
             if(!recipe.getImage().equals("")) {
-                byte[] imgToByte = convertStringToByteArray(recipe.getImage());
-                Bitmap bitmap = BitmapFactory.decodeByteArray(imgToByte, 0, imgToByte.length);
-                imageRecipe.setImageBitmap(bitmap);
+
+                StorageReference pathReference = storageReference.child("RecipesImages/"+recipe.getImage());
+
+                final long ONE_MEGABYTE = 1024 * 1024;
+                pathReference.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                    @Override
+                    public void onSuccess(byte[] bytes) {
+                        Log.d(TAG, "Download image: success");
+                        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                        imageRecipe.setImageBitmap(bitmap);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        Log.d(TAG, "Download image: fail");
+                    }
+                });
             }
+
             if (recipe.getPrepTime() != 0)
             {
                 tvPrepTime.setVisibility(View.VISIBLE);
@@ -435,7 +468,7 @@ public class RecipeDetailActivity extends BaseActivity
      *
      *  @param : Seront les paramètres du UI que on get leur valeurs
      */
-    private void saveChanges(String name, int time, String ingredients, String preparation, String diet, String allergy, String mealTime, String bytes) {
+    private void saveChanges(String name, int time, String ingredients, String preparation, String diet, String allergy, String mealTime, String image) {
         // Vérification des inputs
         if(name.equals("")) {
             etRecipeName.setError(getString(R.string.error_empty_recipe_name));
@@ -455,13 +488,13 @@ public class RecipeDetailActivity extends BaseActivity
             Toast.makeText(this, R.string.MessageSaveChanges, Toast.LENGTH_LONG).show();
             return;
         }
-
         if(mealTime.equals("")) {
             etPreparation.setError(getString(R.string.error_empty_meal_time));
             etPreparation.requestFocus();
             Toast.makeText(this, R.string.MessageSaveChanges, Toast.LENGTH_LONG).show();
             return;
         }
+
         // On recupère les paramètres à SET à notre entité
         recipe.setName(name);
         recipe.setPrepTime(time);
@@ -470,8 +503,10 @@ public class RecipeDetailActivity extends BaseActivity
         recipe.setDiet(diet);
         recipe.setAllergy(allergy);
         recipe.setMealTime(mealTime);
-        if(!bytes.equals("")) {
-            recipe.setImage(bytes);
+
+        // upload img
+        if (filePath != null) {
+            recipe.setImage(image);
         }
 
         viewModel.updateRecipe(recipe, new OnAsyncEventListener()
@@ -535,13 +570,36 @@ public class RecipeDetailActivity extends BaseActivity
         if (requestCode==100 && resultCode==RESULT_OK && data!=null)
         {
             // when result is ok
-            // initialize uri
-            Uri uri=data.getData();
+            // initialize
+            filePath = data.getData();
+
+            // upload
+            bytes = UUID.randomUUID().toString();
+            StorageReference ref = storageReference.child("RecipesImages/"+ bytes);
+            ref.putFile(filePath)
+                    .addOnSuccessListener(
+                            new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                @Override
+                                public void onSuccess(
+                                        UploadTask.TaskSnapshot taskSnapshot)
+                                {
+                                    // Image uploaded successfully
+                                    Log.d(TAG, "Upload image: success");
+                                }
+                            }) .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e)
+                        {
+                            // Error, Image not uploaded
+                            Log.d(TAG, "Upload image: fail");
+                        }
+                    });
+
             // Initialize bitmap
             try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),uri);
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),filePath);
                 // initialize byte stream
-                ByteArrayOutputStream stream=new ByteArrayOutputStream();
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 // compress Bitmap
                 bitmap.compress(Bitmap.CompressFormat.JPEG,100,stream);
                 // Initialize byte array
@@ -554,7 +612,6 @@ public class RecipeDetailActivity extends BaseActivity
                 bitmap = BitmapFactory.decodeByteArray(byteImg,0,byteImg.length);
                 // set bitmap on imageView
                 imageRecipe.setImageBitmap(bitmap);
-                bytes = convertByteToString(byteImg);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -695,18 +752,5 @@ public class RecipeDetailActivity extends BaseActivity
         startActivity(new Intent(RecipeDetailActivity.this, RecipesActivity.class)
                                 .putExtra(String.valueOf(R.string.meals), meals)
                                 .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-    }
-
-    // Convert byte array to String
-    public String convertByteToString(byte[] byteValue)
-    {
-        String output = Base64.encodeToString(byteValue, Base64.DEFAULT);
-        return output;
-    }
-    // Convert String to byte array
-    public byte[] convertStringToByteArray(String stringValue)
-    {
-        byte[] output = Base64.decode(stringValue, Base64.DEFAULT);
-        return output;
     }
 }
