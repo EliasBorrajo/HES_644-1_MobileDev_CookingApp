@@ -30,8 +30,8 @@ public class CooksListLiveData extends LiveData<List<CookEntity>>
 {
     private static final String TAG = "CooksListLiveData";
 
-    private final DatabaseReference reference;
-    private final CooksListLiveData.MyValueEventListener listener = new CooksListLiveData.MyValueEventListener();
+    private final DatabaseReference reference;        // This is the reference to the database node where the data is stored (e.g. "cooks")
+    private final CooksListLiveData.MyValueEventListener listener = new CooksListLiveData.MyValueEventListener();   // This is the listener that will be called when the data changes in the database node (e.g. "cooks")
 
     public CooksListLiveData(DatabaseReference ref)
     {
@@ -52,7 +52,6 @@ public class CooksListLiveData extends LiveData<List<CookEntity>>
     }
 
 
-
     private List<CookEntity> toCookList(DataSnapshot snapshot)
     {
         List<CookEntity> cooksList = new ArrayList<>();
@@ -68,6 +67,18 @@ public class CooksListLiveData extends LiveData<List<CookEntity>>
         return cooksList;
     }
 
+    /**
+     * This class implements the ValueEventListener interface.
+     * It is used to listen to the changes in the database.
+     *
+     * When the data changes, the onDataChange method is called.
+     * The onDataChange method converts the DataSnapshot to a list of entities and sets the value of the LiveData object.
+     * The LiveData object is observed by the activity and when the value of the LiveData object changes, the activity is notified.
+     * The activity then updates the UI.
+     * The onDataChange method is also called when the activity is first created.
+     *
+     * @return
+     */
     private class MyValueEventListener implements ValueEventListener
     {
         @Override

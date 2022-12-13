@@ -10,22 +10,20 @@ import java.util.Map;
 /**
  * Entity class for the Recipe table
  * Relation with the Cook table : Many to One (One Cook can have many Recipes).
- * Cook <-1----*-> Recipe
  */
 public class RecipeEntity
 {
     private String id;
     private String creator;
     private String name;
-    private int prepTime;       //temps de préparation de la recette en minutes
+    private int prepTime;       // time in minutes
     private String ingredients;
-    private String preparation; //instructions de la recette
+    private String preparation;
 
     private String diet;
     private String allergy;
     private String mealTime;
-    // On veut que l'image soit stockée en BLOB dans la DB (byte[]) et non en String (text).
-    private String image;       // TODO : Ira dans le StorageFirebase, mais en attendant en B64 dans la DB
+    private String image;       // Goes in the StorageFirebase, but in the meantime in B64 in the DB
 
     // C O N S T R U C T E U R
     public RecipeEntity()
@@ -46,6 +44,7 @@ public class RecipeEntity
     }
 
     // G E T T E R S   S E T T E R S
+    // Exclude : Does not include the field in the database table (Firebase)
     @Exclude
     public String getId()
     {
@@ -161,6 +160,10 @@ public class RecipeEntity
                 '}';
     }
 
+    /**
+     * Method to convert the RecipeEntity object to a Map object (for Firebase) : to be able to push it to the DB.
+     * @return Map<String, Object> : the RecipeEntity object converted to a Map object
+     */
     @Exclude
     public Map<String, Object> toMap()
     {

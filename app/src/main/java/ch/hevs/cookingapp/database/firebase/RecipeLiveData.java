@@ -12,6 +12,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import ch.hevs.cookingapp.database.entity.RecipeEntity;
 
+/**
+ * A LiveData class for observing a single RecipeEntity from Firebase Realtime Database.
+ */
 public class RecipeLiveData extends LiveData<RecipeEntity>
 {
     private static final String TAG = "RecipeLiveData";

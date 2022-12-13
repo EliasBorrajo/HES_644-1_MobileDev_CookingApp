@@ -15,6 +15,10 @@ import java.util.List;
 
 import ch.hevs.cookingapp.database.entity.RecipeEntity;
 
+/**
+ * A class that implements the LiveData class to be able to observe the changes in the database.
+ * This class is used to observe the changes in the database for the recipes.
+ */
 public class RecipesListMealLiveData extends LiveData<List<RecipeEntity>>
 {
     private static final String TAG = "RecipesListMealLiveData";

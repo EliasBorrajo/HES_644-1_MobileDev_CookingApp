@@ -17,6 +17,11 @@ import ch.hevs.cookingapp.database.entity.CookEntity;
 import ch.hevs.cookingapp.database.entity.RecipeEntity;
 import ch.hevs.cookingapp.database.pojo.CookWithRecipes;
 
+/**
+ * A class that implements the LiveData class to be able to observe the changes in the database.
+ * This class is used to observe the changes in the database for the cooks.
+ * It converts the DataSnapshot to a list of entities.
+ */
 public class RecipesListCreatorLiveData extends LiveData<List<RecipeEntity>>
 {
     private static final String TAG = "RecipesListCreatorLiveData";
@@ -44,6 +49,9 @@ public class RecipesListCreatorLiveData extends LiveData<List<RecipeEntity>>
         Log.d(TAG, "onInactive");
     }
 
+    /**
+     * This method converts the DataSnapshot to a list of entities.
+     */
     private class MyValueEventListener implements ValueEventListener
     {
         @Override
@@ -59,6 +67,13 @@ public class RecipesListCreatorLiveData extends LiveData<List<RecipeEntity>>
         }
     }
 
+    /**
+     * Converts the DataSnapshot to a list of entities.
+     * @param dataSnapshot The DataSnapshot to convert.
+     * @return The list of entities.
+     * @param dataSnapshot
+     * @return
+     */
     private List<RecipeEntity> toRecipes(DataSnapshot dataSnapshot)
     {
         List<RecipeEntity> recipes = new ArrayList<>();

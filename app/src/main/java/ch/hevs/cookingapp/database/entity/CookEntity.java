@@ -12,7 +12,6 @@ import java.util.Map;
 /**
  * Entity class for the Cook table
  * Relation with the Recipe table : One to Many (One Cook can have many Recipes).
- * Cook <-1----*-> Recipe
  */
 public class CookEntity
 {
@@ -21,7 +20,7 @@ public class CookEntity
     private String lastName;
     private String phoneNumber;
     private String password;    // Password ira dans AuthentificationFirebase
-    private String image; // TODO : Ira dans le StorageFirebase, mais en attendant en B64 dans la DB
+    private String image;       // Ira dans le StorageFirebase, mais en attendant en B64 dans la DB
 
     // C O N S T R U C T E U R
     public CookEntity()
@@ -40,7 +39,7 @@ public class CookEntity
     }
 
     // G E T T E R S   S E T T E R S
-    // Exclude : Permet de ne pas inclure la variable dans la DB
+    // Exclude : Does not include the field in the database table (Firebase)
     @Exclude
     public String getPassword()
     {
