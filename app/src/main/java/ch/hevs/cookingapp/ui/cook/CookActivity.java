@@ -598,34 +598,6 @@ public class CookActivity extends BaseActivity
         etPwd2.setText("");
     }
 
-    /**
-     * Convertit : byte[] en List<Byte>
-     * @param bytes
-     * @return
-     */
-    public List<Byte> convertToByteList(byte[] bytes)
-    {
-        List<Byte> byteList = new ArrayList<>();
-        for (byte b : bytes)
-        {
-            byteList.add(b);
-        }
-        return byteList;
-    }
-
-    /**
-     * Convertit : List<Byte> en byte[]
-     */
-    public byte[] convertToByteArray(List<Byte> byteList)
-    {
-        byte[] bytes = new byte[byteList.size()];
-        for (int i = 0; i < byteList.size(); i++)
-        {
-            bytes[i] = byteList.get(i);
-        }
-        return bytes;
-    }
-
     // Convert byte array to String
     public String convertByteToString(byte[] byteValue)
     {
