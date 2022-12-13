@@ -71,23 +71,38 @@ public class RecipeViewModel extends AndroidViewModel
     }
 
     /**
-     * Expose the LiveData ClientEntity query so the UI can observe it.
+     * Returns the Recipe entity as a LiveData object to observe, because we will use it in the UI to display the data.
      */
     public LiveData<RecipeEntity> getRecipe()
     {
         return observableRecipe;
     }
 
+    /**
+     * Create a new recipe in the database with the given parameters.
+     * @param recipe : the recipe to create in the DB
+     * @param callback : the callback to execute when the operation is done (success or not)
+     */
     public void createRecipe(RecipeEntity recipe, OnAsyncEventListener callback)
     {
         repository.insert(recipe, callback);
     }
 
+    /**
+     * Update a recipe in the database with the given parameters. The recipe must already exist in the DB.
+     * @param recipe : the recipe to update in the DB (must already exist)
+     * @param callback : the callback to execute when the operation is done (success or not)
+     */
     public void updateRecipe(RecipeEntity recipe, OnAsyncEventListener callback)
     {
         repository.update(recipe, callback);
     }
 
+    /**
+     * Delete a recipe in the database with the given parameters.
+     * @param recipe : the recipe to delete in the DB
+     * @param callback : the callback to execute when the operation is done (success or not)
+     */
     public void deleteRecipe(RecipeEntity recipe, OnAsyncEventListener callback)
     {
         repository.delete(recipe, callback);

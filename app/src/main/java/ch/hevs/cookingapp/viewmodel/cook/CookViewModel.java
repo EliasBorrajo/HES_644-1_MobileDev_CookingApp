@@ -21,8 +21,6 @@ import ch.hevs.cookingapp.util.OnAsyncEventListener;
 public class CookViewModel extends AndroidViewModel
 {
 
-    private Application application;
-
     private CookRepository repository;
 
     // MediatorLiveData can observe other LiveData objects and react on their emissions.
@@ -33,8 +31,6 @@ public class CookViewModel extends AndroidViewModel
                          final String email, CookRepository cookRepository)
     {
         super(application);
-
-        this.application = application;
 
         repository = cookRepository;
 
@@ -89,7 +85,7 @@ public class CookViewModel extends AndroidViewModel
 
     public void updateCook(CookEntity cook, OnAsyncEventListener callback)
     {
-        repository.update(cook, callback); // TODO, maybe aller voir le code du prof ?
+        repository.update(cook, callback);
     }
 
     public void deleteCook(CookEntity cook, OnAsyncEventListener callback)

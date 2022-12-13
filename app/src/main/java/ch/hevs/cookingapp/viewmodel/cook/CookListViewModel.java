@@ -24,7 +24,6 @@ import ch.hevs.cookingapp.viewmodel.recipe.RecipeListViewModel;
  */
 public class CookListViewModel extends AndroidViewModel
 {
-    private Application application;
     private CookRepository repository;
 
     // MediatorLiveData can observe other LiveData objects and react on their emissions.
@@ -35,7 +34,6 @@ public class CookListViewModel extends AndroidViewModel
                              CookRepository cookRepository)
     {
         super(application);
-        this.application = application;
 
         repository = cookRepository;
 

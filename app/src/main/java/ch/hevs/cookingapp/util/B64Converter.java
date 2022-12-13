@@ -10,6 +10,16 @@ import android.util.Base64;
 public class B64Converter
 {
     /**
+     * Avoids instantiation of this class.
+     * This class is only used to convert a string to a base64 string and vice versa.
+     * It is not necessary to instantiate this class.
+     */
+    private B64Converter()
+    {
+        throw new IllegalStateException("Utility class");
+    }
+
+    /**
      * Encode the email address using Base64 encoding to avoid special characters in the key name (e.g. ".")
      * that are not allowed in Firebase keys
      * @param userEmail : the email address to be encoded : example : "xolo@gmail.com"
