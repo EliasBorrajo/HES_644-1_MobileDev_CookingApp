@@ -44,6 +44,10 @@ public class RecipesListMealLiveData extends LiveData<List<RecipeEntity>>
         super.onInactive();
     }
 
+    /**
+     * This class implements the ValueEventListener interface to be able to observe the changes in the database.
+     * This class is used to observe the changes in the database for the recipes.
+     */
     private class MyValueEventListener implements ValueEventListener
     {
         @Override
@@ -59,6 +63,11 @@ public class RecipesListMealLiveData extends LiveData<List<RecipeEntity>>
         }
     }
 
+    /**
+     * This method converts the DataSnapshot to a list of entities.
+     * @param dataSnapshot : the DataSnapshot to convert to a list of entities.
+     * @return : the list of entities.
+     */
     private List<RecipeEntity> toRecipes(DataSnapshot dataSnapshot) {
         List<RecipeEntity> recipes = new ArrayList<>();
         for(DataSnapshot childSnapshot : dataSnapshot.getChildren())

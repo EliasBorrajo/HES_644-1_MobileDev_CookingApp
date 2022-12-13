@@ -40,6 +40,11 @@ public class RecipeLiveData extends LiveData<RecipeEntity>
         Log.d(TAG, "onInactive");
     }
 
+
+    /**
+     * This class implements the ValueEventListener interface to be able to observe the changes in the database.
+     * This class is used to observe the changes in the database for the recipes.
+     */
     private class MyValueEventListener implements ValueEventListener
     {
         @Override

@@ -51,6 +51,12 @@ public class CooksListLiveData extends LiveData<List<CookEntity>>
     }
 
 
+    /**
+     * This method converts the DataSnapshot to a list of entities.
+     * The DataSnapshot contains the data from the database node (e.g. "cooks"). It is a tree structure.
+     * @param snapshot
+     * @return
+     */
     private List<CookEntity> toCookList(DataSnapshot snapshot)
     {
         List<CookEntity> cooksList = new ArrayList<>();

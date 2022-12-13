@@ -48,7 +48,9 @@ public class RecipesListCreatorLiveData extends LiveData<List<RecipeEntity>>
     }
 
     /**
-     * This method converts the DataSnapshot to a list of entities.
+     * This class implements the ValueEventListener interface to be able to observe the changes in the database.
+     * This class is used to observe the changes in the database for the recipes.
+     * It converts the DataSnapshot to a list of entities.
      */
     private class MyValueEventListener implements ValueEventListener
     {

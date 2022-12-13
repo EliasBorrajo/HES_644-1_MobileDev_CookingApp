@@ -49,6 +49,11 @@ public class CookListViewModel extends AndroidViewModel
     }
 
 
+    /**
+     * Class Factory pattern to instantiate the ViewModel with parameters (the repository)
+     * that are not available in the constructor of the ViewModel itself.
+     * This is used to pass the repository to the ViewModel.
+     */
     public static class Factory extends ViewModelProvider.NewInstanceFactory
     {
         @NonNull
