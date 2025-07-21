@@ -1,3 +1,77 @@
+# 🍳 CookingApp (Academic Prototype)
+
+> Lightweight Android recipe‑sharing app built during the **Mobile Development** course at **HES‑SO Valais‑Wallis**.
+
+## Introduction
+
+CookingApp lets students experiment with local persistence using Room and cloud synchronisation through Firebase Firestore. Users create an account, publish their own recipes with images, browse other cooks’ creations and manage their profile.
+
+## Project Objectives
+
+- Explore **Room** for offline storage *(Rendu 1)*
+- Integrate **Firebase Authentication** and **Cloud Firestore** for cloud sync *(Rendu 2)*
+- Provide a clean single‑activity Navigation‑Component UI
+- Demonstrate cascade deletion between users, recipes and auth accounts
+
+## Features
+
+- Email / password sign‑up & Google Sign‑In
+- Add / edit / delete recipes with image picker (gallery)
+- Filter recipe list by allergies, diet or meal time
+- Profile editing with password re‑authentication
+- Automatic clean‑up of orphan data when a user is removed
+
+## Tech Stack
+
+| Layer         | Technologies / Tools                                                       |
+| ------------- | -------------------------------------------------------------------------- |
+| Mobile App    | **Android 11+, Java**, Jetpack libraries (Navigation, ViewModel, LiveData) |
+| Data ‑ Local  | Room, LiveData, ViewModel                                                  |
+| Data ‑ Cloud  | Firebase Cloud Firestore, Firebase Storage                                 |
+| Auth          | Firebase Authentication                                                    |
+| Build / Dev   | Gradle, Android Studio Arctic Fox or later                                 |
+| CI (optional) | GitHub Actions (unit‑test workflow)                                        |
+
+## 📁 Project Structure
+
+```text
+.
+├── app/
+│   ├── data/            # Entities, DAOs, repositories (Room)
+│   ├── firebase/        # Firestore & Auth helpers
+│   └── ui/              # Activities & fragments
+├── gradle/              # Wrapper
+└── gradle.properties    # JVM & AndroidX flags (no secrets)
+```
+
+## Installation / Quick Start
+
+```bash
+git clone https://github.com/EliasBorrajo/HES_644-1_MobileDev_CookingApp.git
+cd HES_644-1_MobileDev_CookingApp
+# Open with Android Studio (Arctic Fox ↑)
+# Select Pixel 3a API 30 emulator in portrait
+# 🔑 Add your own google-services.json inside app/ before building
+```
+
+## Requirements / Prerequisites
+
+- Android Studio Arctic Fox (2020.3.1) or newer
+- Android SDK 30 (API 30) image / emulator
+- A Firebase project with Email/Password and Google providers enabled
+
+## Authors / Contributors
+
+- **Elias Borrajo**
+- **Milena Lonfat**
+
+## Project Status
+
+📁 **Archived** — educational prototype, no further maintenance.
+
+---
+
+## 🇫🇷 Cahier des charges original
 # HES_644-1_MobileDev_CookingApp
 Authors : Borrajo Elias & Lonfat Milena
 Rendu 1 : ROOM Database - 20.11.2022
