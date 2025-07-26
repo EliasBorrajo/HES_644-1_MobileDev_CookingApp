@@ -1,77 +1,116 @@
-# 🍳 CookingApp (Academic Prototype)
+# 🍳 CookingApp
 
-> Lightweight Android recipe‑sharing app built during the **Mobile Development** course at **HES‑SO Valais‑Wallis**.
-
-## Introduction
-
-CookingApp lets students experiment with local persistence using Room and cloud synchronisation through Firebase Firestore. Users create an account, publish their own recipes with images, browse other cooks’ creations and manage their profile.
-
-## Project Objectives
-
-- Explore **Room** for offline storage *(Rendu 1)*
-- Integrate **Firebase Authentication** and **Cloud Firestore** for cloud sync *(Rendu 2)*
-- Provide a clean single‑activity Navigation‑Component UI
-- Demonstrate cascade deletion between users, recipes and auth accounts
-
-## Features
-
-- Email / password sign‑up & Google Sign‑In
-- Add / edit / delete recipes with image picker (gallery)
-- Filter recipe list by allergies, diet or meal time
-- Profile editing with password re‑authentication
-- Automatic clean‑up of orphan data when a user is removed
-
-## Tech Stack
-
-| Layer         | Technologies / Tools                                                       |
-| ------------- | -------------------------------------------------------------------------- |
-| Mobile App    | **Android 11+, Java**, Jetpack libraries (Navigation, ViewModel, LiveData) |
-| Data ‑ Local  | Room, LiveData, ViewModel                                                  |
-| Data ‑ Cloud  | Firebase Cloud Firestore, Firebase Storage                                 |
-| Auth          | Firebase Authentication                                                    |
-| Build / Dev   | Gradle, Android Studio Arctic Fox or later                                 |
-| CI (optional) | GitHub Actions (unit‑test workflow)                                        |
-
-## 📁 Project Structure
-
-```text
-.
-├── app/
-│   ├── data/            # Entities, DAOs, repositories (Room)
-│   ├── firebase/        # Firestore & Auth helpers
-│   └── ui/              # Activities & fragments
-├── gradle/              # Wrapper
-└── gradle.properties    # JVM & AndroidX flags (no secrets)
-```
-
-## Installation / Quick Start
-
-```bash
-git clone https://github.com/EliasBorrajo/HES_644-1_MobileDev_CookingApp.git
-cd HES_644-1_MobileDev_CookingApp
-# Open with Android Studio (Arctic Fox ↑)
-# Select Pixel 3a API 30 emulator in portrait
-# 🔑 Add your own google-services.json inside app/ before building
-```
-
-## Requirements / Prerequisites
-
-- Android Studio Arctic Fox (2020.3.1) or newer
-- Android SDK 30 (API 30) image / emulator
-- A Firebase project with Email/Password and Google providers enabled
-
-## Authors / Contributors
-
-- **Elias Borrajo**
-- **Milena Lonfat**
-
-## Project Status
-
-📁 **Archived** — educational prototype, no further maintenance.
+> *A recipe‑sharing app developed as part of the Mobile Development course at **************************HES‑SO Valais‑Wallis************************** (Autumn 2022‑23). The goal was to explore local persistence with **************************Room************************** and cloud synchronisation with **************************Firebase************************** in a real‑world Android project context.*
 
 ---
 
-## 🇫🇷 Cahier des charges original
+## 📚 Project Description
+
+CookingApp lets users register, publish their own recipes with photos, browse other cooks’ creations and edit their own profile.
+
+A **single‑activity MVVM** architecture coupled with Jetpack **Navigation Component** and **LiveData** delivers a clean and reactive experience. The project was developed in two academic milestones:
+
+> **Phase 1 –** Full offline CRUD with Room (`Rendu 1`, 20 Nov 2022)
+> 
+> **Phase 2 –** Cloud sync with Firebase (Firestore + Storage) & Google Sign‑In (`Rendu 2`, 13 Dec 2022)
+
+---
+
+## 🧪 Technologies Used
+
+| Type               | Tool / Library                                       | Version  |
+| ------------------ | ---------------------------------------------------- | -------- |
+| **Language**       | Java (source 8, compatible JDK 11)                   | 11       |
+| **Gradle Wrapper** | Gradle Wrapper                                       | 7.4      |
+| **Build Plugin**   | Android Gradle Plugin                                | 7.3.0    |
+| **Frameworks**     | Jetpack Navigation (Component), ViewModel, LiveData  | *-*      |
+| **Local DB**       | Room                                                 | 2.4.3    |
+| **Cloud**          | Firebase BoM (Firestore / Storage)                   | 31.0.0   |
+|                    |                                                      |          |
+| **IDE**            | Android Studio **Dolphin 2021.3.1** (bundled JDK 11) | 2021.3.1 |
+| **Emulator**       | Pixel 3a • API 30 (Android 11 R)                     | API 30   |
+| **SDK Levels**     | `compileSdk` 32 · `targetSdk` 32 · `minSdk` 30       | 32 / 30  |
+
+---
+
+## 🎯 Learning Objectives
+
+* Use **Room** for local persistence
+* Integrate **Firebase Authentication** & **Cloud Firestore**
+* Apply clean **MVVM + Navigation** architecture
+* Manage activity lifecycles and reactive UI components
+
+---
+
+## 🏗 Architecture
+
+The app follows a **single‑activity MVVM** pattern with a clear separation of concerns:
+
+* **UI Layer** – `MainActivity` and multiple *Fragments* orchestrated by Jetpack **Navigation Component** (*dependency pending*).
+* **ViewModel Layer** – Holds UI state, exposes **LiveData / StateFlow**, handles navigation events.
+* **Repository Layer** – Mediates between local (**Room DAOs**) and remote (**Firebase Services**) data sources.
+* **Data Layer** –
+
+  * **Room 2.4.3** entities & DAOs for offline persistence.
+  * **Firebase Firestore** for cloud documents. *TODO: integration pending in this branch*
+  * **Firebase Storage** for recipe images. *TODO*
+  * **Firebase Auth** for user identity. *TODO* 
+
+All data operations run on **Dispatchers.IO** coroutines; results are marshalled back to the main thread via **LiveData**.
+
+###
+
+---
+
+## 🔧 Features
+
+* Email/Password registration & Google Sign‑In 
+* Create / Read / Update / Delete recipes with gallery images
+* Filter recipes by allergies, diet and meal time
+* Profile editing with password re‑authentication
+* Automatic cleanup of orphan data when a user is deleted
+
+### 🔧 Bonus Features
+
+* Single‑activity Navigation architecture
+* Cascade deletion for data integrity (delete a Cook → delete all his recipes)
+
+---
+
+## ✅ Tests & Validation
+
+* Manual validation on **Pixel 3a API 30** emulator (Android 11).
+
+---
+
+## 👤 Authors
+
+* **Elias Borrajo**
+* **Milena Lonfat**
+
+---
+
+### Academic Info
+
+_Course: 644‑1 – Mobile Development_
+*Instructors: Dr Michael I. Schumacher & Yvan Pannatier – HES‑SO Valais‑Wallis*
+*Context: Bachelor of Science in Business IT, 4th semester*
+
+---
+
+## Project Status
+
+📁 **Archived** — educational prototype, no further maintenance planned.
+
+---
+
+<details>
+	<summary>
+		<h2>
+		Original Readme (FR)
+		</h2>
+	</summary>
+
 # HES_644-1_MobileDev_CookingApp
 Authors : Borrajo Elias & Lonfat Milena
 Rendu 1 : ROOM Database - 20.11.2022
@@ -113,3 +152,8 @@ un utilisateur crée un compte avec lequels il va pouvoir partager ses recettes.
 			- Empreinte de certificat SHA 1 & 256 configurés pour le projet firebase.
 
 	
+ 
+</details>
+
+
+
